@@ -1,0 +1,7 @@
+TODO
+
+-- Make a variety of n-gram processing functions to output in
+   several different formats (e.g., list of strings, tuple)
+-- Implement some sort of parser to count n-grams in files
+-- implement lexeme frequency counter
+-- implement n-gram frequency counter
