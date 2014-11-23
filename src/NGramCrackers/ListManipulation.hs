@@ -7,8 +7,8 @@ module NGramCrackers.ListManipulation
 import Data.List
 import Data.Char (isAlpha)
 
-getNGrams :: Int -> [String] -> [[String]]
-getNGrams n wordList = getNSeqFromList n wordList 
+getNGramsFromList :: Int -> [String] -> [[String]]
+getNGramsFromList n wordList = getNSeqFromList n wordList 
 
 {-| Return only alphabetic characters from a string and return the
     result as a string. Output of this function may need processing
