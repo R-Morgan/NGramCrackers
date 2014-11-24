@@ -35,6 +35,8 @@ getNGramsFromList n wordList = getNSeqFromList n wordList
 getAlphasOnlyToString :: [Char] -> [Char]
 getAlphasOnlyToString = (unwords . map (filter (isAlpha)) . words)
 
+{-| Return only alphabetic characters from a string and return the
+    result as a List.-}
 getAlphasOnlyToList :: [Char] -> [String]
 getAlphasOnlyToList = (map (filter (isAlpha)) . words . (map toLower))
 
