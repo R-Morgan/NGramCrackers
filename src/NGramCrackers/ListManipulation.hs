@@ -1,20 +1,10 @@
-module NGramCrackers.ListManipulation
+module ListManipulation
 (
- getNSeqFromList,
- intToList
+  getNSeqFromList
+, intToList
 ) where
 
 import Data.List
-import Data.Char (isAlpha)
-
-getNGramsFromList :: Int -> [String] -> [[String]]
-getNGramsFromList n wordList = getNSeqFromList n wordList 
-
-{-| Return only alphabetic characters from a string and return the
-    result as a string. Output of this function may need processing
-    into a list, tuple, etc. -}
-getAlphasOnly :: [Char] -> [Char]
-getAlphasOnly = (unwords . map (filter (isAlpha)) . words)
 
 {-| Function creates a list of lists of n length -}
 getNSeqFromList :: Int -> [a] -> [[a]]
