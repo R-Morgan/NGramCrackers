@@ -5,11 +5,15 @@ module NGramCrackers.NGramCrackers (
 , getAlphasOnlyToList
 ) where
 
-import Data.Char (isAlpha)
+import Data.Char (isAlpha, toLower)
 import ListManipulation
 
+bigrams :: [Char] -> [String]
+bigrams wordString = getNGramsFromString 2 wordString
+
 getNGramsFromString :: Int -> [Char] -> [String]
-getNGramsFromString n wordString = (map unwords . getNGramsFromList n . words) $ getAlphasOnly wordString
+getNGramsFromString n wordString = map unwords $ getNGramsFromList n wordList
+    where wordList = getAlphasOnlyToList wordString
 
 getNGramsFromList :: Int -> [String] -> [[String]]
 getNGramsFromList n wordList = getNSeqFromList n wordList 
@@ -21,5 +25,5 @@ getAlphasOnlyToString :: [Char] -> [Char]
 getAlphasOnlyToString = (unwords . map (filter (isAlpha)) . words)
 
 getAlphasOnlyToList :: [Char] -> [String]
-getAlphasOnlyToList = (map (filter (isAlpha)) . words)
+getAlphasOnlyToList = (map (map toLower) . map (filter (isAlpha)) . words)
 
