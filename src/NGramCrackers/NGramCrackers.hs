@@ -30,5 +30,5 @@ getAlphasOnlyToString :: [Char] -> [Char]
 getAlphasOnlyToString = (unwords . map (filter (isAlpha)) . words)
 
 getAlphasOnlyToList :: [Char] -> [String]
-getAlphasOnlyToList = (map (map toLower) . map (filter (isAlpha)) . words)
+getAlphasOnlyToList = (map (filter (isAlpha)) . words . (map toLower))
 
