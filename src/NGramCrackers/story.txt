@@ -1,7 +1,7 @@
-"The quick brown foxes jumped over a single wooden fence over by the river. The
+The quick brown foxes jumped over a single wooden fence over by the river. The
 farmer was a sad panda about the chickens who had run away and hopped on over 
 the bridge. The chickens pecked at the ground by the river, eating seeds and, if 
 very lucky, some tasty bugs. The foxes were vegetarians, so they ran off. A a 
 flock of geese flew in and landed by the river across from the chickens. The 
-geese wandered around eating grass."
+geese wandered around eating grass.
 
