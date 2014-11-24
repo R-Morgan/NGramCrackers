@@ -11,6 +11,9 @@ import ListManipulation
 bigrams :: [Char] -> [String]
 bigrams wordString = getNGramsFromString 2 wordString
 
+trigrams :: [Char] -> [String]
+trigrams wordString = getNGramsFromString 3 wordString
+
 getNGramsFromString :: Int -> [Char] -> [String]
 getNGramsFromString n wordString = map unwords $ getNGramsFromList n wordList
     where wordList = getAlphasOnlyToList wordString
