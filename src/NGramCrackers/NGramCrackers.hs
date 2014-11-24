@@ -1,5 +1,7 @@
 module NGramCrackers.NGramCrackers (
-  getNGramsFromString
+  bigrams
+, trigrams
+, getNGramsFromString
 , getNGramsFromList
 , getAlphasOnlyToString
 , getAlphasOnlyToList
