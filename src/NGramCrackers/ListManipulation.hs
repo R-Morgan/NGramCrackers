@@ -1,4 +1,4 @@
-module ListManipulation
+module NGramCrackers.ListManipulation
 (
   getNSeqFromList
 , intToList
