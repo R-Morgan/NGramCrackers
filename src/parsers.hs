@@ -3,7 +3,7 @@ import Data.Either.Unwrap (mapRight)
 import Data.List (concat, unwords)
 
 paragraph = endBy sentence eos
-sentence = sepBy word (char ' ') 
+sentence = sepBy word (oneOf " \n") 
 word     = many (noneOf " .\n") 
 eos = char '.'
 
