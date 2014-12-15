@@ -5,10 +5,12 @@ module NGramCrackers.NGramCrackers (
 , getNGramsFromList
 , getAlphasOnlyToString
 , getAlphasOnlyToList
+, getWordFrequency
 ) where
 
 import Data.Char (isAlpha, toLower)
 import NGramCrackers.ListManipulation
+
 
 {-| Extract bigrams from a string -}
 bigrams :: String -> [String]
@@ -39,5 +41,10 @@ getAlphasOnlyToString = unwords . map (filter isAlpha) . words
 getAlphasOnlyToList :: String -> [String]
 getAlphasOnlyToList = map (filter isAlpha) . words . map toLower
 
-getNWordFrequency:: String -> String -> Int
-getNWordFrequency word text = (length . filter (== word) . words) text
+{-| Get frequency of a single word's occurance in a string -}
+getWordFrequency:: String -> String -> Int
+getWordFrequency word text = (length . filter (== word) . words) text
+
+-- getWordFreq :: String -> String -> Int
+
+
