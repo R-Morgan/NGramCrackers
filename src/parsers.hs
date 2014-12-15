@@ -4,8 +4,8 @@ import Data.List (concat, unwords)
 
 paragraph = endBy sentence eos
 sentence = sepBy word (oneOf " \n") 
-word     = many (noneOf " .\n") 
-eos = char '.'
+word     = many (noneOf " .?!\n") 
+eos = oneOf ".?!"
 
 {-| -}
 parseParagraph :: String -> Either ParseError [[String]]
