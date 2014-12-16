@@ -1,7 +1,9 @@
 import Text.ParserCombinators.Parsec
 import Data.Either.Unwrap (mapRight)
 import Data.List (concat, unwords)
+import NGramCrackers.NGramCrackers
 
+{- Elementary parser combinataors. -}
 paragraph = endBy sentence eos
 sentence = sepBy word (oneOf " \n") 
 word     = many (noneOf " .?!\n") 
@@ -18,6 +20,16 @@ flattenEither xs = mapRight concat xs
 {-| -}
 mapUnwords :: [[String]] -> [String]
 mapUnwords  = map unwords
+
+mapNGrams :: (String -> [String]) -> [String] -> [[String]]
+mapNGrams nGramFunc sents = map nGramFunc sents
+
+mapBigrams :: [String] -> [[String]]
+mapBigrams = map bigrams
+
+countWord :: String -> [String] -> (String, Int) 
+countWord x xs = (x, count) where 
+                              count = length $ filter (= x) xs
 
 -- flattenEither e _  = 
 
