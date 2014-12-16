@@ -47,4 +47,11 @@ getWordFrequency word text = (length . filter (== word) . words) text
 
 -- getWordFreq :: String -> String -> Int
 
+mapBigrams :: [String] -> [[String]]
+mapBigrams = map bigrams
 
+countWord :: String -> [String] -> (String, Int) 
+countWord x xs = (x, count) where 
+                              count = length $ filter (== x) xs
+
+-
