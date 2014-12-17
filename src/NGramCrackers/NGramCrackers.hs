@@ -54,4 +54,9 @@ countWord :: String -> [String] -> (String, Int)
 countWord x xs = (x, count) where 
                               count = length $ filter (== x) xs
 
--
+getWordsFreqs :: [String] -> [String] -> [(String, Int)]
+getWordsFreqs _  [] = []
+getWordsFreqs [] _  = []
+getWordsFreqs (word:xs) tokens = countWord word tokens : getWordsFreqs xs newTokens
+                                   where newTokens = filter (/= word) tokens
+                                   
