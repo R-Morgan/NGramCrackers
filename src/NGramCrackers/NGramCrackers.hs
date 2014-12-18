@@ -51,13 +51,16 @@ getWordFrequency word text = (length . filter (== word) . words) text
 
 -- getWordFreq :: String -> String -> Int
 
+{-|  -}
 mapBigrams :: [String] -> [[String]]
 mapBigrams = map bigrams
 
+{-| -}
 countWord :: String -> [String] -> (String, Int) 
 countWord x xs = (x, count) where 
                               count = length $ filter (== x) xs
 
+{-| -}
 getWordsFreqs :: [String] -> [String] -> [(String, Int)]
 getWordsFreqs _  [] = []
 getWordsFreqs [] _  = []
@@ -71,9 +74,18 @@ getWordsFreqs (word:xs) tokens = countWord word tokens : getWordsFreqs xs newTok
 lexemeCountProfile :: [String] -> [(String, Int)]
 lexemeCountProfile tokens = getWordsFreqs types tokens where types = nub tokens
 
+{-| -}
 typeTokenRatio :: [String] -> (Double, Double, Double)
 typeTokenRatio tokens = (typesTotal, tokenTotal, ratio)
                           where typesTotal = (genericLength . nub) tokens
                                 tokenTotal = genericLength tokens
                                 ratio      = typesTotal / tokenTotal 
+
+{-| -}
+mapUnwords :: [[String]] -> [String]
+mapUnwords  = map unwords
+
+mapNGrams :: (String -> [String]) -> [String] -> [[String]]
+mapNGrams nGramFunc sents = map nGramFunc sents
+
 

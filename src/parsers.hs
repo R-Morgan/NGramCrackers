@@ -17,20 +17,6 @@ parseParagraph input = parse paragraph "(unknown)" input
 flattenEither :: Either a [[b]] -> Either a [b]
 flattenEither xs = mapRight concat xs
 
-{-| -}
-mapUnwords :: [[String]] -> [String]
-mapUnwords  = map unwords
-
-mapNGrams :: (String -> [String]) -> [String] -> [[String]]
-mapNGrams nGramFunc sents = map nGramFunc sents
-
-mapBigrams :: [String] -> [[String]]
-mapBigrams = map bigrams
-
-countWord :: String -> [String] -> (String, Int) 
-countWord x xs = (x, count) where 
-                              count = length $ filter (= x) xs
-
 -- flattenEither e _  = 
 
 {-
