@@ -6,10 +6,14 @@ module NGramCrackers.NGramCrackers (
 , getAlphasOnlyToString
 , getAlphasOnlyToList
 , getWordFrequency
+, countWord
+, getWordsFreqs
+, lexemeCountProfile 
 ) where
 
 import Data.Char (isAlpha, toLower)
 import NGramCrackers.ListManipulation
+import Data.List (genericLength, nub)
 
 
 {-| Extract bigrams from a string -}
@@ -60,3 +64,16 @@ getWordsFreqs [] _  = []
 getWordsFreqs (word:xs) tokens = countWord word tokens : getWordsFreqs xs newTokens
                                    where newTokens = filter (/= word) tokens
                                    
+{-| Takes a list of words and returns a count of each lexeme's occurance. It
+    should be noted that 'types' refers to the list of all words that occur
+    in a given text. It is commonly used in applied linguistics to refer to
+    type/token ratios to describe the complexity of sentences. -}
+lexemeCountProfile :: [String] -> [(String, Int)]
+lexemeCountProfile tokens = getWordsFreqs types tokens where types = nub tokens
+
+typeTokenRatio :: [String] -> (Double, Double, Double)
+typeTokenRatio tokens = (typesTotal, tokenTotal, ratio)
+                          where typesTotal = (genericLength . nub) tokens
+                                tokenTotal = genericLength tokens
+                                ratio      = typesTotal / tokenTotal 
+
