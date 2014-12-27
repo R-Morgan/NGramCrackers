@@ -13,7 +13,8 @@ module NGramCrackers.NGramCrackers (
 
 import Data.Char (isAlpha, toLower)
 import NGramCrackers.ListManipulation
-import Data.List (genericLength, nub)
+import NGramCrackers.ParagraphParsers 
+import Data.List (genericLength, nub, sort)
 
 
 {-| Extract bigrams from a string -}
@@ -72,7 +73,8 @@ getWordsFreqs (word:xs) tokens = countWord word tokens : getWordsFreqs xs newTok
     in a given text. It is commonly used in applied linguistics to refer to
     type/token ratios to describe the complexity of sentences. -}
 lexemeCountProfile :: [String] -> [(String, Int)]
-lexemeCountProfile tokens = getWordsFreqs types tokens where types = nub tokens
+lexemeCountProfile tokens = getWordsFreqs types tokens 
+                              where types = (sort . nub) tokens
 
 {-| -}
 typeTokenRatio :: [String] -> (Double, Double, Double)
