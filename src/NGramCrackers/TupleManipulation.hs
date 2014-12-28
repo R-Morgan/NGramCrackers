@@ -1,10 +1,11 @@
 module SolvingEuler.TupleManipulation
 (
-thrd,
-compareDoubles,
-compareDoublesInList, 
-compareTriples,
-compareTriplesInList
+  thrd
+, compareDoubles
+, compareDoublesInList
+, stringifyLexemeCount
+, compareTriples
+, compareTriplesInList
 ) where
 
 thrd :: (a , b , c) -> c
@@ -21,6 +22,8 @@ compareDoublesInList []     = error "Empty List"
 compareDoublesInList [x]    = x 
 compareDoublesInList (x:xs) = compareDoubles x (compareDoublesInList xs) 
 
+stringifyLexemeCount :: (String, Int) -> String
+stringifyLexemeCount x = "Word: " ++ fst x ++ " ----- Count: " ++ (show . snd) x 
 
 compareTriples :: Ord c => (a, b, c) -> (a, b, c) -> (a, b, c)
 compareTriples xs ys
@@ -33,4 +36,6 @@ compareTriplesInList :: Ord c => [(a, b, c)] -> (a, b, c)
 compareTriplesInList []     = error "Empty List"
 compareTriplesInList [x]    = x 
 compareTriplesInList (x:xs) = compareTriples x (compareTriplesInList xs) 
+
+--orderLexemeProfile :: Ord a => [(a, b)] -> [(a, b)]
 
