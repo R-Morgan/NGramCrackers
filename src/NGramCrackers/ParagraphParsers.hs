@@ -35,14 +35,14 @@ eos       = oneOf ".?!"
 
 {-| -}
 parseParagraph :: String -> Either ParseError [[String]]
-parseParagraph input = parse paragraph "unknown" input 
+parseParagraph = parse paragraph "unknown" 
 
 --parseParagraphFile :: String -> Either ParseError [[String]]
 --parseParagraphFile input = parse paragraphFile "(unknown)" input 
 
 {-| -}
 flattenEither :: Either a [[b]] -> Either a [b]
-flattenEither xs = mapRight concat xs
+flattenEither = mapRight concat
 
 -- flattenEither e _  = 
 
