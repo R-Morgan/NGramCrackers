@@ -1,21 +1,44 @@
 TODO
 
--- Make a variety of n-gram processing functions to output in
-   several different formats (e.g., list of strings, tuple)
 
--- Implement some sort of parser to count n-grams in files
+######
+High
+######
 
 -- implement lexeme frequency counter [Testing]
+
    -- The problem with this function is that it may count "".
       This will need to be corrected in the construction of
       lists
    
    -- countWord, getWordsFreqs, lexemeCountProfile are all
       related to this goal
-      
 
 -- implement n-gram frequency counter [Testing]
 
+   -- I have done this for 1-grams with lexemeCountProfile. Once
+      the n-grams are put into a list, the same sort of filtering
+      mechanism to reduce the list size may work for n-grams
+
+-- implement command line argument parsing and handling
+
+- 
+######
+Med
+######
+- implement functionality to parse multiple paragraphs. The Longman
+   documents should be a good guide to determine what actually separates
+   the paragraphs
+
+-- Implement some sort of parser to count n-grams in files
+
+######
+Low
+######
+
+-- Make a variety of n-gram processing functions to output in
+   several different formats (e.g., list of strings, tuple)
+
 -- implement quickCheck tests
 
--- implement data types like Corpus,  Document, Paragraph, Sentence, Word
+-- implement data types like Corpus, Document, Paragraph, Sentence, Word
