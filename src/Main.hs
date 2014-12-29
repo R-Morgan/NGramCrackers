@@ -10,12 +10,15 @@ import Data.Either.Unwrap (fromRight)
 
 main = do
     inHandle   <- openFile "NGramCrackers/spacelessStory.txt" ReadMode
-    outHandle  <- openFile "NGramCrackers/processedStory.txt" WriteMode
-    contents <- hGetContents inHandle -- contents :: String
+    outHandle  <- openFile "NGramCrackers/processed.csv" WriteMode
+    contents   <- hGetContents inHandle -- contents :: String
+    
     case parseParagraph contents of 
          Left e  -> do putStrLn "Error parsing input: "
                        print e
 
-         Right r   -> mapM_ (hPutStrLn outHandle . stringifyLexemeCount) (lexemeCountProfile $ concat r)
+         Right r -> hPutStrLn outHandle "word,count" >> 
+                    mapM_ (hPutStrLn outHandle . doubleToCSV) (lexemeCountProfile $ concat r)
+
     hClose inHandle
     hClose outHandle
