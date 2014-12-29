@@ -16,6 +16,6 @@ main = do
          Left e  -> do putStrLn "Error parsing input: "
                        print e
 
-         Right r   -> mapM_ (putStrLn . stringifyLexemeCount) (lexemeCountProfile $ concat r)
+         Right r   -> mapM_ (hPutStrLn outHandle . stringifyLexemeCount) (lexemeCountProfile $ concat r)
     hClose inHandle
     hClose outHandle
