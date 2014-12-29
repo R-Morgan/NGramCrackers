@@ -5,6 +5,8 @@ TODO
 High
 ######
 
+-- implement command line argument parsing and handling
+
 -- implement lexeme frequency counter [Testing]
 
    -- The problem with this function is that it may count "".
@@ -20,7 +22,6 @@ High
       the n-grams are put into a list, the same sort of filtering
       mechanism to reduce the list size may work for n-grams
 
--- implement command line argument parsing and handling
 
 ######
 Med
