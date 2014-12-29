@@ -32,8 +32,6 @@ Med
 
 -- Implement some sort of parser to count n-grams in files
 
--- Implement CSV-style outputs to files 
-
 ######
 Low
 ######
