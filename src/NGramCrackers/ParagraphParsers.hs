@@ -13,18 +13,18 @@ import Data.List (concat, unwords)
                   
 paragraph = sepBy sentence eos
 
-sentence  = sepBy word (oneOf " \n") 
+sentence  = sepBy word seppr -- (oneOf " \n") 
 
 word      = many (noneOf " .?!\n") 
 
 --sentence  = sepBy word seppr
 
-{- 
 seppr     =    try space 
-           <|> try (string "\n")
+           <|> try (char '\n')
            <?> "word separator"
 
 
+{- 
 eos       =    try (string ". ")
            <|> try (string "! ") 
            <|> try (string "? ")

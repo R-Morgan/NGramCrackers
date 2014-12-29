@@ -9,7 +9,7 @@ import Control.Monad (liftM)
 import Data.Either.Unwrap (fromRight)
 
 main = do
-    inHandle   <- openFile "NGramCrackers/spacelessStory.txt" ReadMode
+    inHandle   <- openFile "NGramCrackers/story.txt" ReadMode
     outHandle  <- openFile "NGramCrackers/processed.csv" WriteMode
     contents   <- hGetContents inHandle -- contents :: String
     
