@@ -46,7 +46,12 @@ getAlphasOnlyToString = unwords . map (filter isAlpha) . words
 getAlphasOnlyToList :: String -> [String]
 getAlphasOnlyToList = map (filter isAlpha) . words . map toLower
 
-{-| Get frequency of a single word's occurance in a string -}
+{-| Get frequency of a single word's occurance in a string. Is eta-reduction
+    the easiest reading way to do this function? The arguments are fairly
+    instructive. However, the type declaration does say what kind of args
+    it takes.  With type synonyms or further exploring the type system,
+    the declaration would be more informative-}
+
 getWordFrequency:: String -> String -> Int
 getWordFrequency word text = (length . filter (== word) . words) text
 
@@ -87,6 +92,7 @@ typeTokenRatio tokens = (typesTotal, tokenTotal, ratio)
 mapUnwords :: [[String]] -> [String]
 mapUnwords  = map unwords
 
+{-| What is this function for again? it seems like a synonym for map -}
 mapNGrams :: (String -> [String]) -> [String] -> [[String]]
 mapNGrams nGramFunc sents = map nGramFunc sents
 
