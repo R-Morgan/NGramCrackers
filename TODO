@@ -22,11 +22,11 @@ High
 
 -- implement command line argument parsing and handling
 
-- 
 ######
 Med
 ######
-- implement functionality to parse multiple paragraphs. The Longman
+
+-- implement functionality to parse multiple paragraphs. The Longman
    documents should be a good guide to determine what actually separates
    the paragraphs
 
@@ -42,3 +42,5 @@ Low
 -- implement quickCheck tests
 
 -- implement data types like Corpus, Document, Paragraph, Sentence, Word
+
+-- Write more README.md 
