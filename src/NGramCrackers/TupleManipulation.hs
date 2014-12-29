@@ -1,9 +1,10 @@
-module SolvingEuler.TupleManipulation
+module NGramCrackers.TupleManipulation
 (
   thrd
 , compareDoubles
 , compareDoublesInList
 , stringifyLexemeCount
+, doubleToCSV
 , compareTriples
 , compareTriplesInList
 ) where
@@ -24,6 +25,9 @@ compareDoublesInList (x:xs) = compareDoubles x (compareDoublesInList xs)
 
 stringifyLexemeCount :: (String, Int) -> String
 stringifyLexemeCount x = "Word: " ++ fst x ++ " ----- Count: " ++ (show . snd) x 
+
+doubleToCSV :: (String, Int) -> String
+doubleToCSV x = fst x ++ "," ++ (show . snd) x
 
 compareTriples :: Ord c => (a, b, c) -> (a, b, c) -> (a, b, c)
 compareTriples xs ys
