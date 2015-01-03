@@ -5,7 +5,9 @@ TODO
 High
 ######
 
--- implement command line argument parsing and handling
+-- implement command line argument parsing and handling [Testing]
+   -- Add summary and version information
+   -- Add file output capabilities
 
 -- implement lexeme frequency counter [Testing]
 
