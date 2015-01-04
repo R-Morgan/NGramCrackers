@@ -47,6 +47,7 @@ High
       the n-grams are put into a list, the same sort of filtering
       mechanism to reduce the list size may work for n-grams
 
+-- make sure all functions and such have type sigs
 
 ######
 Med
@@ -60,6 +61,11 @@ Med
 
 -- Implement normalising function to count words like "The" and "the" to
    be parsed as the same word
+   
+-- Add a Makefile
+
+-- organise Main.hs, possibly making an arg parsing submodule for the
+   whole project
 
 ######
 Low
@@ -69,6 +75,10 @@ Low
    several different formats (e.g., list of strings, tuple)
 
 -- implement quickCheck tests
+   
+   -- test the text manipulation stuff -- i.e., the pure code
+
+   -- IO tests -- not sure how to do that
 
 -- implement data types like Corpus, Document, Paragraph, Sentence, Word
 
