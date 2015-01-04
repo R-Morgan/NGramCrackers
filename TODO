@@ -6,8 +6,40 @@ High
 ######
 
 -- implement command line argument parsing and handling [Testing]
-   -- Add summary and version information
-   -- Add file output capabilities
+   -- Declare static functions for constant-ish strings like version,
+      summary, etc.
+
+   -- Although the programme now takes a file as input, it still
+      needs output file specification capabilities. 
+    
+      -- Add output field to to myArgs record
+      -- Add exception for output to optionHandler
+      -- Add code to exec to write to the outHandle
+
+   -- Implement multiple modes
+      
+      -- Profile:
+         
+         This will provide a way to obtain general stats about a
+         document. Some options will be:
+
+         -w        word count
+         -l        line count
+         -t        type token ratio
+
+      -- Extract:
+
+         The will provide ways to obtain a profile with counts of all words
+         and output it to a file. Ideally this will include functionality for
+         n-gram extraction. Some options will be:
+
+         -i        input file
+         -o        output file
+         -w        words
+         -b        bigrams
+         -t        trigrams
+         -n        ngrams
+   
 
 -- implement lexeme frequency counter [Testing]
 
