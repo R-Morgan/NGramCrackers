@@ -13,15 +13,18 @@ import System.Console.CmdArgs
 import Data.Maybe (fromMaybe)
 import Data.List (genericLength, nub)
 
-data Args = Args {  wordC :: Bool
-                  , ttr :: Bool
-                  , input :: FilePath
+data Args = Args {  wordC  :: Bool
+                  , ttr    :: Bool
+                  , input  :: FilePath
+                  , output :: FilePath
                  } deriving (Show, Data, Typeable)
 
 myArgs :: Args
 myArgs = Args {  wordC = def &= name "wc" &= help "Print word count"
                , ttr   = def &= help "Print type token ration (ttr)"
-               , input = def &= typFile &= help "Input file" }
+               , input = def &= typFile &= help "Input file"
+               , output = def &= typFile &= help "Output file"
+               }
                &= summary ("NGramCrackers CLI (C) R. Morgan.  The " ++
                            "source code provided here is licenced under " ++
                            "the GPLv 3 or greater. The binary is a command " ++
@@ -33,15 +36,17 @@ optionHandler opts@Args{..} = do
      when (not wordC) $ putStrLn "For word count, add -wc"
      when (not ttr)   $ putStrLn "For TTR, add -t"
      when (null input) $ putStrLn "Supply input file" >> exitWith (ExitFailure 1)
+     when (null output) $ putStrLn "Supply output file" >> exitWith (ExitFailure 1)
      exec opts
 
 exec :: Args -> IO ()
 exec opts@Args{..} = do inHandle <- openFile (input) ReadMode 
+                        outHandle <- openFile (output) WriteMode
                         contents <- hGetContents inHandle -- contents :: String
-                        when wordC $ putStrLn $ countWords contents
-                        when ttr   $ putStrLn $ typeTokenRatio contents
+                        when wordC $ hPutStrLn outHandle $ countWords contents
+                        when ttr   $ hPutStrLn outHandle $ typeTokenRatio contents
                         hClose inHandle
-                        
+                        hClose outHandle
 
 
 {- optionHandler Args { wordC = True } = countWords
