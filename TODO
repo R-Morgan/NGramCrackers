@@ -6,15 +6,6 @@ High
 ######
 
 -- implement command line argument parsing and handling [Testing]
-   -- Declare static functions for constant-ish strings like version,
-      summary, etc.
-
-   -- Although the programme now takes a file as input, it still
-      needs output file specification capabilities. 
-    
-      -- Add output field to to myArgs record
-      -- Add exception for output to optionHandler
-      -- Add code to exec to write to the outHandle
 
    -- Implement multiple modes
       
@@ -82,3 +73,6 @@ Low
 -- implement data types like Corpus, Document, Paragraph, Sentence, Word
 
 -- Write more README.md 
+   -- Complete V 0.0.1 Notes 
+   -- Add Version 0.1.0 definition
+
