@@ -29,7 +29,7 @@ main :: IO ()
 main = getArgs >>= \args ->  
        (if null args then withArgs ["--help"] else id) getOpts >>= optionHandler
 
-{-| Takes a set of Args (e.g., myArgs) and causes the program to exit under
+{-| Takes a set of Args (e.g., myArgs) and causes the program to exit 
     if the user does not supply an input or output file. If the programme
     does not fail, the exec function is called on opts -}
 optionHandler :: Args -> IO ()
@@ -48,7 +48,7 @@ getOpts = cmdArgs $ myArgs
     &= helpArg [explicit, name "help", name "h"]
     &= program _PROGRAM_NAME
 
-{-| Taks an Args and returns IO actions. 'input' seems to be evaluated on opts
+{-| Takes an Args and returns IO actions. 'input' seems to be evaluated on opts
     in ReadMode and is bound to a name. In a same way, the output file determined
     before some when expressions to determine what to print to file. The file
     handles are then closed. -}
@@ -76,11 +76,9 @@ fullMonty tokens = "Count: " ++ count ++ ", " ++ ttr where
                     count = (show . length . words) tokens
                     ttr   = typeTokenRatio tokens
 
--- These functions output the specified strings, so they can be kept and
--- developed separately from the lists that get used in generating the
--- the help, version, and about type displays
-
-{-| -}
+{-| These functions output the specified strings, so they can be kept and
+ developed separately from the lists that get used in generating the
+ the help, version, and about type displays -}
 _PROGRAM_NAME :: String
 _PROGRAM_NAME = "NGramCrackers CLI"
 
