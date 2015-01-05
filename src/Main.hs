@@ -81,13 +81,3 @@ fullMonty tokens = "Count: " ++ count ++ ", " ++ ttr where
                     count = (show . length . words) tokens
                     ttr   = typeTokenRatio tokens
 
-
-{- 
-   case parseParagraph input of 
-         Left e  -> do putStrLn "Error parsing input: "
-                       print e
-
-         Right r -> hPutStrLn outHandle "word,count" >> 
-                    mapM_ (hPutStrLn outHandle . doubleToCSV) (lexemeCountProfile $ concat r)
-
--}
