@@ -74,6 +74,9 @@ Low
 -- Make a variety of n-gram processing functions to output in
    several different formats (e.g., list of strings, tuple)
 
+   -- The API needs to be standardised so that the main functions
+      all take Strings, or somethign like that
+
 -- implement quickCheck tests
    
    -- test the text manipulation stuff -- i.e., the pure code
@@ -83,6 +86,7 @@ Low
 -- implement data types like Corpus, Document, Paragraph, Sentence, Word
 
 -- Write more README.md 
-   -- Complete V 0.0.1 Notes 
    -- Add Version 0.1.0 definition
+   -- Add Version 0.2.0 definition
+   -- Add Version 1.0.0 definition
 
