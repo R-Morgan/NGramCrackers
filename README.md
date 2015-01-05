@@ -106,11 +106,17 @@ Primary features:
      record for the programme. getOpts is an abstraction to handle the use of
      cmdArgs before being passed into the optionHandler
 
+
 Future Versions
 ---
 
 ### Version 0.2.0 -- Definition
-  -- 
+  -- Specific Data Types
+     -- NGrams (including 1-grams, i.e., words)
+     -- Sentences
+     -- Paragraph
+  -- Multi-paragraph Parsing
+
 
 ### Version 0.3.0 -- Definition
   -- Multimode CLI options
@@ -119,8 +125,7 @@ Future Versions
 
 My vision for 1.0.0 is a fully functional text analysis programme. This project
 is in the early stages, so I may revise this standard substantially over the
-comming months. Version 1.0.0 should include:
-
+coming months. Version 1.0.0 should include:
 
   -- Output options:
      
@@ -162,4 +167,7 @@ comming months. Version 1.0.0 should include:
 
   -- CLI Argument Handling
 
+  -- Testing Suite implemented in quickCheck
+
+  -- A Makefile!
 
