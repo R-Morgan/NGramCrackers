@@ -93,9 +93,12 @@ NGramCrackers. The programme is still quite unstable with major API changes
 planned.
 
 
-### Version 0.1.0 -- 03.01.2015
+### Version 0.1.0 -- Release Date: 04.01.2015
 
 Primary features:
+
+  -- First public alpha release. The CL tool and the backend library will be
+     changing a great deal.
 
   -- Very basic commandline argument parsing that enables the 
      specification of input and output files.
