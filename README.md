@@ -109,21 +109,21 @@ Primary features:
      record for the programme. getOpts is an abstraction to handle the use of
      cmdArgs before being passed into the optionHandler
 
-
 Future Versions
 ---
+
+### Version 0.1.1
+  -- Modualise the argument handling system
 
 ### Version 0.2.0
   -- Integration of paragraph parsing function into commandline user interface
   -- Multi-paragraph Parsing
 
-
 ### Version 0.3.0 -- Definition
-  -- Specific Data Types
+  -- Specific Data Types:
      -- NGrams (including 1-grams, i.e., words)
      -- Sentences
      -- Paragraph
-
 
 ### Version 0.4.0 -- Definition
   -- Multimode CLI options
