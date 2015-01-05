@@ -110,6 +110,9 @@ Primary features:
 Future Versions
 ---
 
+### Version 0.1.5 -- 03.01.2015
+    -- Integration of paragraph parsing function into commandline user interface
+
 ### Version 0.2.0 -- Definition
   -- Specific Data Types
      -- NGrams (including 1-grams, i.e., words)
