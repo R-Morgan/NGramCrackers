@@ -44,7 +44,7 @@ pure code and the verifiability that Haskell's strict typing provides since I
 first heard about the language in 2005.
 
 Generally, I tell my friends who are keen to start programming to learn Python,
-but I prefer Haskell. 
+but I prefer writing Haskell.
 
 ### Won't a CLI make it in accessible to your target audience?
 
@@ -92,6 +92,10 @@ next release and later versions constitutes the functionality goals for
 NGramCrackers. The programme is still quite unstable with major API changes
 planned.
 
+### Version 0.1.1
+  -- Modualised argument handling system for ease of future development. 
+     Future modifications to argument handling can take place in a contained
+     environment and can be reused in other applications
 
 ### Version 0.1.0 -- Release Date: 04.01.2015
 
@@ -111,9 +115,6 @@ Primary features:
 
 Future Versions
 ---
-
-### Version 0.1.1
-  -- Modualise the argument handling system
 
 ### Version 0.2.0
   -- Integration of paragraph parsing function into commandline user interface
