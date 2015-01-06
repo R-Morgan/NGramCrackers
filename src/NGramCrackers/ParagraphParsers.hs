@@ -55,3 +55,13 @@ eol = char '\n'
 parseCSV :: String -> Either ParseError [[String]]
 parseCSV input = parse csvFile "(unknown)" input
 -}
+
+{- 
+   case parseParagraph input of 
+         Left e  -> do putStrLn "Error parsing input: "
+                       print e
+
+         Right r -> hPutStrLn outHandle "word,count" >> 
+                    mapM_ (hPutStrLn outHandle . doubleToCSV) (lexemeCountProfile $ concat r)
+
+-}
