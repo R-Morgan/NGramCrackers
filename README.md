@@ -177,5 +177,5 @@ coming months. Version 1.0.0 should include:
 
   -- Testing Suite implemented in quickCheck
 
-  -- A Makefile!
+  -- Cabal-based installation of library!
 
