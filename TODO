@@ -61,11 +61,10 @@ Med
 
 -- Implement normalising function to count words like "The" and "the" to
    be parsed as the same word
-   
--- Add a Makefile
 
--- organise Main.hs, possibly making an arg parsing submodule for the
-   whole project
+-- Add cabal file
+
+-- Clean up ParagraphParser module code
 
 ######
 Low
@@ -86,7 +85,7 @@ Low
 -- implement data types like Corpus, Document, Paragraph, Sentence, Word
 
 -- Write more README.md 
-   -- Add Version 0.1.0 definition
+   -- Add Version 0.1.2 definition
    -- Add Version 0.2.0 definition
    -- Add Version 1.0.0 definition
 
