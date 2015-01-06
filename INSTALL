@@ -1,0 +1,5 @@
+The current command for "installing" is a very short ghc call:
+
+$ ghc -O2 -o GramCrackers Main.hs
+
+I use the -O2 flag, but -O will also work for optimising the compiled code.
