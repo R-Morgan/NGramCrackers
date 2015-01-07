@@ -92,6 +92,18 @@ next release and later versions constitutes the functionality goals for
 NGramCrackers. The programme is still quite unstable with major API changes
 planned.
 
+### Version 0.2.0 
+  -- Rudimentary profiling and extraction capabilities.
+     
+     NGramCrackers can now print a profile of a single paragraph input file
+     to a specified output file. The statistics provided are a word count
+     or a type-token-ratio report.
+
+     These very basic capabilities provide a very useful skeleton for adding
+     more functionality, such as ngram extraction, and more statistics, such
+     as mean words per sentence, mean words per paragraph, mean sentences per
+     paragraph, etc.
+
 ### Version 0.1.1
   -- Modualised argument handling system for ease of future development. 
      Future modifications to argument handling can take place in a contained
@@ -115,19 +127,18 @@ Primary features:
 
 Future Versions
 ---
+Planned releases. These are in a high degree of flux and will be tweaked as
+needed for the forseeable future.
 
-### Version 0.2.0
+### Version 0.3.0
   -- Integration of paragraph parsing function into commandline user interface
   -- Multi-paragraph Parsing
 
-### Version 0.3.0 -- Definition
+### Version 0.4.0 -- Definition
   -- Specific Data Types:
      -- NGrams (including 1-grams, i.e., words)
      -- Sentences
      -- Paragraph
-
-### Version 0.4.0 -- Definition
-  -- Multimode CLI options
 
 ### Version 1.0.0  -- Definition 4, Jan, 2015
 

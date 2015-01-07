@@ -1,5 +1,6 @@
 module NGramCrackers.ParagraphParsers (
   parseParagraph
+, parseMultiPara
 , flattenEither
 ) where
 
@@ -11,13 +12,13 @@ import Data.List (concat, unwords)
 
 --paragraphFile = do 
                   
+document = sepBy paragraph eop
+
 paragraph = sepBy sentence eos
 
 sentence  = sepBy word seppr -- (oneOf " \n") 
 
 word      = many (noneOf " .?!\n") 
-
---sentence  = sepBy word seppr
 
 seppr     =    try space 
            <|> try (char '\n')
@@ -31,11 +32,17 @@ eos       =    try (string ". ")
            <?> "end of sentence"
 -}
 
-eos       = oneOf ".?!"
+eop = string "<para>"
+
+eos       = oneOf ".?!" -- end of sentence
+
 
 {-| -}
 parseParagraph :: String -> Either ParseError [[String]]
 parseParagraph = parse paragraph "unknown" 
+
+parseMultiPara :: String ->  Either ParseError [[[String]]]
+parseMultiPara = parse document "unknown"
 
 --parseParagraphFile :: String -> Either ParseError [[String]]
 --parseParagraphFile input = parse paragraphFile "(unknown)" input 
@@ -44,18 +51,7 @@ parseParagraph = parse paragraph "unknown"
 flattenEither :: Either a [[b]] -> Either a [b]
 flattenEither = mapRight concat
 
--- flattenEither e _  = 
-
-{- 
-csvFile = endBy line eol
-line = sepBy cell (char ' ')
-cell = many (noneOf " \n")
-eol = char '\n'
-
-parseCSV :: String -> Either ParseError [[String]]
-parseCSV input = parse csvFile "(unknown)" input
--}
-
+-- Test code for writing a csv file after parsing
 {- 
    case parseParagraph input of 
          Left e  -> do putStrLn "Error parsing input: "

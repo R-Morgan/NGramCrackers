@@ -1,9 +1,8 @@
 {-# LANGUAGE DeriveDataTypeable, RecordWildCards #-}
 
 module NGramCrackers.ArgParser(
-   myArgs
- , optionHandler
- , getOpts
+   optionHandler
+ , myModes
  , exec
 ) where
 
@@ -12,41 +11,60 @@ import System.IO
 import System.Exit
 import Control.Monad (when)
 import Data.List (genericLength, nub)
+import NGramCrackers.ParagraphParsers
+import NGramCrackers.NGramCrackers
+import NGramCrackers.TupleManipulation
 
 {-| Data declaration of record type for programme options -}
-data Args = Args {  wordC  :: Bool
-                  , ttr    :: Bool
-                  , input  :: FilePath
-                  , output :: FilePath
-                 } deriving (Show, Data, Typeable)
+data Args = Profile {  wordC  :: Bool
+                     , ttr    :: Bool
+                     , input  :: FilePath
+                     , output :: FilePath
+                    } 
+            |
+            Extract {  input   :: FilePath
+                     , output  :: FilePath
+                     , lexemes :: Bool       -- word mode
+                    } deriving (Show, Data, Typeable)
 
 {-| Record of programme's actual flag descriptions-}
-myArgs :: Args
-myArgs = Args {  wordC = def &= name "wc" &= help "Print word count"
+profile :: Args
+profile =  Profile { wordC = def &= name "wc" &= help "Print word count"
                , ttr   = def &= help "Print type token ration (ttr)"
                , input = def &= typFile &= help "Input file"
                , output = def &= typFile &= help "Output file"
                }
 
+extract :: Args
+extract = Extract { input = def &= typFile &= help "Input file"
+                  , output = def &= typFile &= help "Output file"
+                  , lexemes = def &= name "words" &= help "Word mode"
+                  }
+
 {-| Takes a set of Args (e.g., myArgs) and causes the program to exit 
     if the user does not supply an input or output file. If the programme
     does not fail, the exec function is called on opts -}
 optionHandler :: Args -> IO ()
-optionHandler opts@Args{..} = do
+optionHandler opts@Profile{..} = do
      when (null input) $ putStrLn "Supply input file" >> exitWith (ExitFailure 1)
      when (null output) $ putStrLn "Supply output file" >> exitWith (ExitFailure 1)
      exec opts
-
+optionHandler opts@Extract{..} = do
+     when (null input)  $ putStrLn "Supply input file"  >> exitWith (ExitFailure 1)
+     when (null output) $ putStrLn "Supply output file" >> exitWith (ExitFailure 1)
+     when (not lexemes)   $ putStrLn "Supply a mode"      >> exitWith (ExitFailure 1)
+     exec opts
 
 {-| Makes IO args out of myArgs -}
-getOpts :: IO Args
-getOpts = cmdArgs $ myArgs
+myModes :: Mode (CmdArgs Args) 
+myModes = cmdArgsMode $ modes [profile, extract]
     &= verbosityArgs [explicit, name "Verbose", name "V"] []
     &= versionArg [explicit, name "version", name "v", summary _PROGRAM_INFO]
     &= summary (_PROGRAM_INFO ++ ", " ++ _COPYRIGHT)
     &= help _PROGRAM_ABOUT
     &= helpArg [explicit, name "help", name "h"]
     &= program _PROGRAM_NAME
+
 _PROGRAM_NAME :: String
 _PROGRAM_NAME = "NGramCrackers CLI"
 
@@ -67,13 +85,26 @@ _COPYRIGHT = "(C) Rianna Morgan 2015"
     before some when expressions to determine what to print to file. The file
     handles are then closed. -}
 exec :: Args -> IO ()
-exec opts@Args{..} = do inHandle <- openFile (input) ReadMode 
-                        outHandle <- openFile (output) WriteMode
-                        contents <- hGetContents inHandle -- contents :: String
-                        when wordC $ hPutStrLn outHandle $ countWords contents
-                        when ttr   $ hPutStrLn outHandle $ typeTokenRatio contents
-                        hClose inHandle
-                        hClose outHandle
+exec opts@Profile{..} = do inHandle <- openFile (input) ReadMode 
+                           outHandle <- openFile (output) WriteMode
+                           contents <- hGetContents inHandle -- contents :: String
+                           when wordC $ hPutStrLn outHandle $ countWords contents
+                           when ttr   $ hPutStrLn outHandle $ typeTokenRatio contents
+                           hClose inHandle
+                           hClose outHandle
+
+exec opts@Extract{..} = do inHandle <- openFile (input) ReadMode 
+                           outHandle <- openFile (output) WriteMode
+                           contents <- hGetContents inHandle -- contents :: String
+                           when lexemes $ 
+                             case parseParagraph contents of
+                                Left e  -> do putStrLn "Error parsing input: "
+                                              print e
+
+                                Right r -> hPutStrLn outHandle "word,count" >> 
+                                           mapM_ (hPutStrLn outHandle . doubleToCSV) (lexemeCountProfile $ concat r)
+                           hClose inHandle
+                           hClose outHandle
 
 -- These functions are the backend of the basic functionalities of 0.1.0
 {-| These functions output the specified strings, so they can be kept and
