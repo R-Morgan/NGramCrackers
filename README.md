@@ -3,6 +3,7 @@ NGramCrackers! A program for quantitative text analysis.
 
 LICENCING INFO
 ---
+NGramCrackers, Copyright 2015, Arianna Morgan
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -23,28 +24,41 @@ While studying Applied Linguistics and working on my MA, I got into the study
 of automated, corpus-based text analysis. Unfortunately, many of the most
 well-known programmes in my AppLing circles are non-Free. For instance, the
 language of implementation of MonoconcPro is not readily acertained, much less
-the source code. Similarly, AntConc, which is provided gratis, does not ship 
-with the source! If this has changed, I'd love to know. 
+the source code. Similarly, AntConc, which is provided gratis and written in 
+Perl, does not ship with the source! If this has changed, I'd love to know. 
 
 As a Free software user, programmer, and advocate, this was extremely 
-frustrating because the progs simply don't do what I wish, and there was
-no way to fix it to provide that sort of functionality to other users. Moreover, 
-these programmes were designed with non-expert shell users in mind, so they 
+frustrating because the progs simply don't do all of what I wish, and there was
+no way to fix them to provide that functionality to other users. Moreover, 
+these programmes were designed with non-expert, non-CLIusers in mind, so they 
 feature GUIs that can get in the way of more advanced users. 
 
+Corpus linguists need high quality, Free software analytic tools that are
+capable of handling 5+ million word corpora spread over many documents.
+Corpus linguists should not be bound to proprietary OSes because the best
+tools available are not cross-platform. Similarly, there needs to be an
+intermediary step from consumer-GUI frontends to fully functional text
+processing APIs. I also find it a bit disturbing when academics with tenure
+release proprietary software without source code that prevents others from
+studying and learning how the programme works. If your code isn't easily
+peer-reviewable, why should anyone use, much less pay, for it?
+ 
 Thus, the idea of NGramCrackers was born: A GPLed, CLI for doing simple text
 analysis. 
 
 ### But Python NLTK!
 
 While I have played with the wonderful Python Natural Language Toolkit, I am not
-a Pythonista. I was drawn to Haskell because of the possibility for excellent
-performance from a high-level language. I've also been obsessed with the idea of
-pure code and the verifiability that Haskell's strict typing provides since I 
-first heard about the language in 2005.
+a Pythonista. Python is a great language, and I encourage friends who want to 
+start coding to learn it. That said, I see no reason to limit development of NLP
+tools to Python.
 
-Generally, I tell my friends who are keen to start programming to learn Python,
-but I prefer writing Haskell.
+I was first introduced to Haskell in about 2005 by a friend who was writing an
+HPSG grammar of Dutch in it. He told me about how because of Haskell's rich,
+strict typing system, it was possible to write verifiable code. I didn't understand the
+significance at the time, but it sounded sweet. Fast forward 9 years, I decided
+to give it a try as my first general-purpose language because of these reasons
+and the possibility for excellent performance from a high-level language. 
 
 ### Won't a CLI make it in accessible to your target audience?
 
@@ -65,24 +79,19 @@ The gaps this project is intended to fill:
      Windows functionality will depend on my ability to cross-compile to
      such a binary.
     
-     I have met few programmers like me: non-professional, self-taught (with 
-     community support!), hobbiest programmers. During the writing of my thesis,
-     I was frustrated by what sort of tools were available: Consumer products 
-     intended for non-programmers or full libraries for much better programmers 
-     than I was at that time. NGramCrackers is both a CLI tool and Libre backend
-     API, written in Haskell, of the same name.
+   I have met few programmers like me: non-professional, self-taught (with 
+   community support!), hobbiest programmers. During the writing of my thesis,
+   I was frustrated by what sort of tools were available: Consumer products 
+   intended for non-programmers or full libraries for much better programmers 
+   than I was at that time. NGramCrackers is both a CLI tool and Libre backend
+   API, written in Haskell, of the same name.
 
-     Corpus linguists need high quality, Free software analytic tools that are
-     capable of handling 5+ million word corpora spread over many documents.
-     Corpus linguists should not be bound to proprietary OSes because the best
-     tools available are not cross-platform. Similarly, there needs to be an
-     intermediary step from consumer-GUI frontends to fully functional text
-     processing APIs.
+
 
   -- NGramCrackers is intended to provide easy outputting of usefully formatted
      (e.g., .csv, .tsv, etc.) data. No one should ever have to manually copy and
      paste output from a GUI to a spreadsheet programme to get a CSV to use in 
-     an analysis conducted with R (or whatever other statistical package).
+     an analysis conducted with external software.
 
 Versioning Information
 ------------------------
