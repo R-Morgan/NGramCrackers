@@ -4,6 +4,8 @@ TODO
 High
 ######
 
+-- hlint new code
+
 -- implement command line argument parsing and handling [Testing]
 
    -- Implement multiple modes [Testing]
