@@ -16,7 +16,6 @@ import NGramCrackers.ListManipulation
 import NGramCrackers.ParagraphParsers 
 import Data.List (genericLength, nub, sort)
 
-
 {-| Extract bigrams from a string -}
 bigrams :: String -> [String]
 bigrams = getNGramsFromString 2 
@@ -54,8 +53,6 @@ getAlphasOnlyToList = map (filter isAlpha) . words . map toLower
 
 getWordFrequency:: String -> String -> Int
 getWordFrequency word text = (length . filter (== word) . words) text
-
--- getWordFreq :: String -> String -> Int
 
 {-|  -}
 mapBigrams :: [String] -> [[String]]
