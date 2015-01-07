@@ -39,6 +39,7 @@ extract :: Args
 extract = Extract { input = def &= typFile &= help "Input file"
                   , output = def &= typFile &= help "Output file"
                   , lexemes = def &= name "words" &= help "Word mode"
+                  , bigrams = def &= help "Bigram mode"
                   }
 
 {-| Takes a set of Args (e.g., myArgs) and causes the program to exit 
@@ -124,5 +125,3 @@ fullMonty :: String -> String
 fullMonty tokens = "Count: " ++ count ++ ", " ++ ttr where
                     count = (show . length . words) tokens
                     ttr   = typeTokenRatio tokens
-
-
