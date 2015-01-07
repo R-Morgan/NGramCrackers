@@ -1,13 +1,12 @@
 TODO
 
-
 ######
 High
 ######
 
 -- implement command line argument parsing and handling [Testing]
 
-   -- Implement multiple modes
+   -- Implement multiple modes [Testing]
       
       -- Profile:
          
@@ -31,7 +30,6 @@ High
          -t        trigrams
          -n        ngrams
    
-
 -- implement lexeme frequency counter [Testing]
 
    -- The problem with this function is that it may count "".
@@ -47,13 +45,13 @@ High
       the n-grams are put into a list, the same sort of filtering
       mechanism to reduce the list size may work for n-grams
 
--- make sure all functions and such have type sigs
+-- make sure all non-parser functions and such have type sigs
 
 ######
 Med
 ######
 
--- implement functionality to parse multiple paragraphs. The Longman
+-- implement functionality to parse multiple paragraphs. The L.
    documents should be a good guide to determine what actually separates
    the paragraphs
 
@@ -64,7 +62,7 @@ Med
 
 -- Add cabal file
 
--- Clean up ParagraphParser module code
+-- Clean up ParagraphParser module code [In progress]
 
 ######
 Low
@@ -85,7 +83,5 @@ Low
 -- implement data types like Corpus, Document, Paragraph, Sentence, Word
 
 -- Write more README.md 
-   -- Add Version 0.1.2 definition
-   -- Add Version 0.2.0 definition
    -- Add Version 1.0.0 definition
 
