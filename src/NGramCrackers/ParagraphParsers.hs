@@ -10,8 +10,6 @@ import Data.List (concat, unwords)
 
 {- Elementary parser combinataors. -}
 
---paragraphFile = do 
-                  
 document = sepBy paragraph eop
 
 paragraph = sepBy sentence eos
