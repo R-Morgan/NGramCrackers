@@ -51,13 +51,3 @@ parseMultiPara = parse document "unknown"
 flattenEither :: Either a [[b]] -> Either a [b]
 flattenEither = mapRight concat
 
--- Test code for writing a csv file after parsing
-{- 
-   case parseParagraph input of 
-         Left e  -> do putStrLn "Error parsing input: "
-                       print e
-
-         Right r -> hPutStrLn outHandle "word,count" >> 
-                    mapM_ (hPutStrLn outHandle . doubleToCSV) (lexemeCountProfile $ concat r)
-
--}
