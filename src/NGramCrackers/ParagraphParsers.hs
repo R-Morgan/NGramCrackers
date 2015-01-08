@@ -16,9 +16,10 @@ paragraph = sepBy sentence eos
 
 sentence  = sepBy word seppr -- (oneOf " \n") 
 
-word      = many (noneOf " .?!\n") 
+word      = many letter
 
 seppr     =    try space 
+           <|> try (char ',')
            <|> try (char '\n')
            <?> "word separator"
 
