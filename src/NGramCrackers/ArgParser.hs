@@ -25,6 +25,7 @@ data Args = Profile {  wordC  :: Bool
             Extract {  input   :: FilePath
                      , output  :: FilePath
                      , lexemes :: Bool       -- word mode
+                     , bigrams :: Bool
                     } deriving (Show, Data, Typeable)
 
 {-| Record of programme's actual flag descriptions-}
@@ -70,7 +71,7 @@ _PROGRAM_NAME :: String
 _PROGRAM_NAME = "NGramCrackers CLI"
 
 _PROGRAM_VERSION :: String
-_PROGRAM_VERSION = "0.1.1"
+_PROGRAM_VERSION = "0.2.0"
 
 _PROGRAM_INFO :: String
 _PROGRAM_INFO = _PROGRAM_NAME ++ " version " ++ _PROGRAM_VERSION
@@ -98,12 +99,12 @@ exec opts@Extract{..} = do inHandle <- openFile (input) ReadMode
                            outHandle <- openFile (output) WriteMode
                            contents <- hGetContents inHandle -- contents :: String
                            when lexemes $ 
-                             case parseParagraph contents of
+                             case parseMultiPara contents of
                                 Left e  -> do putStrLn "Error parsing input: "
                                               print e
 
                                 Right r -> hPutStrLn outHandle "word,count" >> 
-                                           mapM_ (hPutStrLn outHandle . doubleToCSV) (lexemeCountProfile $ concat r)
+                                           mapM_ (hPutStrLn outHandle . doubleToCSV) (lexemeCountProfile $ (concat . map concat) r)
                            hClose inHandle
                            hClose outHandle
 
