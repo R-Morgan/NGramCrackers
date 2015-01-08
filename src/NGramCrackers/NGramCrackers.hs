@@ -6,9 +6,9 @@ module NGramCrackers.NGramCrackers (
 , getAlphasOnlyToString
 , getAlphasOnlyToList
 , getWordFrequency
-, countWord
-, getWordsFreqs
-, lexemeCountProfile 
+, countNGram
+, getNGramFreqs
+, ngramCountProfile 
 ) where
 
 import Data.Char (isAlpha, toLower)
@@ -59,25 +59,25 @@ mapBigrams :: [String] -> [[String]]
 mapBigrams = map bigrams
 
 {-| -}
-countWord :: String -> [String] -> (String, Int) 
-countWord x xs = (x, count) where 
+countNGram :: String -> [String] -> (String, Int) 
+countNGram x xs = (x, count) where 
                               count = length $ filter (== x) xs
 
 {-| Gets counts of words in one list from the words in another. This function
     is an internal function used in lexemeCountProfile. A neat feature is that
     with each pass, the list of words to count is reduced through filtering. -}
-getWordsFreqs :: [String] -> [String] -> [(String, Int)]
-getWordsFreqs _  [] = []
-getWordsFreqs [] _  = []
-getWordsFreqs (word:xs) tokens = countWord word tokens : getWordsFreqs xs newTokens
-                                   where newTokens = filter (/= word) tokens
-                                   
+getNGramFreqs :: [String] -> [String] -> [(String, Int)]
+getNGramFreqs _  [] = []
+getNGramFreqs [] _  = []
+getNGramFreqs (ngram:xs) tokens = countNGram ngram tokens : getNGramFreqs xs newTokens
+                                   where newTokens = filter (/= ngram) tokens
+
 {-| Takes a list of words and returns a count of each lexeme's occurance. It
     should be noted that 'types' refers to the list of all words that occur
     in a given text. It is commonly used in applied linguistics to refer to
     type/token ratios to describe the complexity of sentences. -}
-lexemeCountProfile :: [String] -> [(String, Int)]
-lexemeCountProfile tokens = getWordsFreqs types tokens 
+ngramCountProfile :: [String] -> [(String, Int)]
+ngramCountProfile tokens = getNGramFreqs types tokens 
                               where types = (sort . nub) tokens
 
 {-| -}
