@@ -86,8 +86,6 @@ The gaps this project is intended to fill:
    than I was at that time. NGramCrackers is both a CLI tool and Libre backend
    API, written in Haskell, of the same name.
 
-
-
   -- NGramCrackers is intended to provide easy outputting of usefully formatted
      (e.g., .csv, .tsv, etc.) data. No one should ever have to manually copy and
      paste output from a GUI to a spreadsheet programme to get a CSV to use in 
@@ -100,6 +98,14 @@ Below are the definitions of versions for this project. The definition for the
 next release and later versions constitutes the functionality goals for 
 NGramCrackers. The programme is still quite unstable with major API changes
 planned.
+
+### Version 0.2.2
+    -- Changes to backend profiling functions now reflect their general
+       nature: Such functions will also profile larger ngrams than just
+       words.
+
+### Version 0.2.1
+    -- Limited multiparagraph parsing is now available in NGramCrackers!
 
 ### Version 0.2.0 
   -- Rudimentary profiling and extraction capabilities.
