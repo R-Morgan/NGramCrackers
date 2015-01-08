@@ -9,7 +9,7 @@ module NGramCrackers.ArgParser(
 import System.Console.CmdArgs
 import System.IO
 import System.Exit
-import Control.Monad (when)
+import Control.Monad (unless, when)
 import Data.List (genericLength, nub)
 import NGramCrackers.ParagraphParsers
 import NGramCrackers.NGramCrackers
@@ -54,7 +54,7 @@ optionHandler opts@Profile{..} = do
 optionHandler opts@Extract{..} = do
      when (null input)  $ putStrLn "Supply input file"  >> exitWith (ExitFailure 1)
      when (null output) $ putStrLn "Supply output file" >> exitWith (ExitFailure 1)
-     when (not lexemes)   $ putStrLn "Supply a mode"      >> exitWith (ExitFailure 1)
+     unless lexemes   $ putStrLn "Supply a mode"      >> exitWith (ExitFailure 1)
      exec opts
 
 {-| Makes IO args out of myArgs -}
@@ -87,16 +87,16 @@ _COPYRIGHT = "(C) Rianna Morgan 2015"
     before some when expressions to determine what to print to file. The file
     handles are then closed. -}
 exec :: Args -> IO ()
-exec opts@Profile{..} = do inHandle <- openFile (input) ReadMode 
-                           outHandle <- openFile (output) WriteMode
+exec opts@Profile{..} = do inHandle <- openFile input ReadMode 
+                           outHandle <- openFile output WriteMode
                            contents <- hGetContents inHandle -- contents :: String
                            when wordC $ hPutStrLn outHandle $ countWords contents
                            when ttr   $ hPutStrLn outHandle $ typeTokenRatio contents
                            hClose inHandle
                            hClose outHandle
 
-exec opts@Extract{..} = do inHandle <- openFile (input) ReadMode 
-                           outHandle <- openFile (output) WriteMode
+exec opts@Extract{..} = do inHandle <- openFile input ReadMode 
+                           outHandle <- openFile output WriteMode
                            contents <- hGetContents inHandle -- contents :: String
                            when lexemes $ 
                              case parseMultiPara contents of
@@ -104,7 +104,7 @@ exec opts@Extract{..} = do inHandle <- openFile (input) ReadMode
                                               print e
 
                                 Right r -> hPutStrLn outHandle "word,count" >> 
-                                           mapM_ (hPutStrLn outHandle . doubleToCSV) (lexemeCountProfile $ (concat . map concat) r)
+                                           mapM_ (hPutStrLn outHandle . doubleToCSV) (ngramCountProfile $ concatMap concat r)
                            hClose inHandle
                            hClose outHandle
 
