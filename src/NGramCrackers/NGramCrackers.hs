@@ -63,7 +63,9 @@ countWord :: String -> [String] -> (String, Int)
 countWord x xs = (x, count) where 
                               count = length $ filter (== x) xs
 
-{-| -}
+{-| Gets counts of words in one list from the words in another. This function
+    is an internal function used in lexemeCountProfile. A neat feature is that
+    with each pass, the list of words to count is reduced through filtering. -}
 getWordsFreqs :: [String] -> [String] -> [(String, Int)]
 getWordsFreqs _  [] = []
 getWordsFreqs [] _  = []
