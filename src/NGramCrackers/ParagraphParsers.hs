@@ -43,9 +43,6 @@ parseParagraph = parse paragraph "unknown"
 parseMultiPara :: String ->  Either ParseError [[[String]]]
 parseMultiPara = parse document "unknown"
 
---parseParagraphFile :: String -> Either ParseError [[String]]
---parseParagraphFile input = parse paragraphFile "(unknown)" input 
-
 {-| -}
 flattenEither :: Either a [[b]] -> Either a [b]
 flattenEither = mapRight concat
