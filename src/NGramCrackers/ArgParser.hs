@@ -27,6 +27,7 @@ data Args = Profile {  wordC  :: Bool
                      , output  :: FilePath
                      , lexemes :: Bool       -- word mode
                      , bigram  :: Bool
+                     , trigram  :: Bool
                     } deriving (Show, Data, Typeable)
 
 {-| Record of programme's actual flag descriptions-}
@@ -42,6 +43,7 @@ extract = Extract { input = def &= typFile &= help "Input file"
                   , output = def &= typFile &= help "Output file"
                   , lexemes = def &= name "words" &= help "Word mode"
                   , bigram = def &= help "Bigram mode"
+                  , trigram = def &= help "Trigram mode"
                   }
 
 {-| Takes a set of Args (e.g., myArgs) and causes the program to exit 
@@ -55,7 +57,8 @@ optionHandler opts@Profile{..} = do
 optionHandler opts@Extract{..} = do
      when (null input)  $ putStrLn "Supply input file"  >> exitWith (ExitFailure 1)
      when (null output) $ putStrLn "Supply output file" >> exitWith (ExitFailure 1)
-     unless (lexemes || bigram)  $ putStrLn "Supply a mode"      >> exitWith (ExitFailure 1)
+     unless (lexemes || bigram || trigram)  $ putStrLn "Supply a mode"  >> 
+       exitWith (ExitFailure 1)
      exec opts
 
 {-| Makes IO args out of myArgs -}
@@ -113,6 +116,13 @@ exec opts@Extract{..} = do inHandle <- openFile input ReadMode
                                               print e
                                 Right r -> mapM_ (hPutStrLn outHandle . doubleToCSV) 
                                              (ngramCountProfile $ concatMap bigrams $ 
+                                             map unwords $ concat r)
+                           when trigram $
+                             case parseMultiPara contents of
+                                Left e  -> do putStrLn "Error parsing input: "
+                                              print e
+                                Right r -> mapM_ (hPutStrLn outHandle . doubleToCSV) 
+                                             (ngramCountProfile $ concatMap trigrams $ 
                                              map unwords $ concat r)
                            hClose inHandle
                            hClose outHandle
