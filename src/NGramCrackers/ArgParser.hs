@@ -111,7 +111,9 @@ exec opts@Extract{..} = do inHandle <- openFile input ReadMode
                              case parseMultiPara contents of
                                 Left e  -> do putStrLn "Error parsing input: "
                                               print e
-                                Right r -> mapM_ (hPutStrLn outHandle) $ map unwords $ concat r
+                                Right r -> mapM_ (hPutStrLn outHandle . doubleToCSV) 
+                                             (ngramCountProfile $ concatMap bigrams $ 
+                                             map unwords $ concat r)
                            hClose inHandle
                            hClose outHandle
 
