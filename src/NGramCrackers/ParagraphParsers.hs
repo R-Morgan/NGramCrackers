@@ -24,7 +24,7 @@ seppr     =    try space
            <?> "word separator"
 
 
-{- 
+{-  It might be useful to get this rolling for a more flexible eos
 eos       =    try (string ". ")
            <|> try (string "! ") 
            <|> try (string "? ")
@@ -34,7 +34,6 @@ eos       =    try (string ". ")
 eop = string "<para>"
 
 eos       = oneOf ".?!" -- end of sentence
-
 
 {-| -}
 parseParagraph :: String -> Either ParseError [[String]]
@@ -46,4 +45,3 @@ parseMultiPara = parse document "unknown"
 {-| -}
 flattenEither :: Either a [[b]] -> Either a [b]
 flattenEither = mapRight concat
-
