@@ -4,7 +4,9 @@ TODO
 High
 ######
 
--- hlint new code
+-- write a bash-based execution script to compile, then run
+
+-- Add texts that actually work in the parser to the repository
 
 -- implement command line argument parsing and handling [Testing]
 
