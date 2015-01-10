@@ -114,14 +114,16 @@ exec opts@Extract{..} = do inHandle <- openFile input ReadMode
                              case parseMultiPara contents of
                                 Left e  -> do putStrLn "Error parsing input: "
                                               print e
-                                Right r -> mapM_ (hPutStrLn outHandle . doubleToCSV) 
+                                Right r -> hPutStrLn outHandle "bigram,count" >>
+                                           mapM_ (hPutStrLn outHandle . doubleToCSV) 
                                              (ngramCountProfile $ concatMap bigrams $ 
                                              map unwords $ concat r)
                            when trigram $
                              case parseMultiPara contents of
                                 Left e  -> do putStrLn "Error parsing input: "
                                               print e
-                                Right r -> mapM_ (hPutStrLn outHandle . doubleToCSV) 
+                                Right r -> hPutStrLn outHandle "trigram,count" >>
+                                           mapM_ (hPutStrLn outHandle . doubleToCSV) 
                                              (ngramCountProfile $ concatMap trigrams $ 
                                              map unwords $ concat r)
                            hClose inHandle
