@@ -43,9 +43,10 @@ High
 
 -- implement n-gram frequency counter [Testing]
 
-   -- I have done this for 1-grams with lexemeCountProfile. Once
-      the n-grams are put into a list, the same sort of filtering
-      mechanism to reduce the list size may work for n-grams
+   -- I have done this for words, bi- and trigrams with 
+      ngramCountProfile. There are backend functions like
+      getNGramsFromList that can help with a more flexible
+      function to get 4- and 5-grams.
 
 -- make sure all non-parser functions and such have type sigs
 
@@ -56,8 +57,6 @@ Med
 -- implement functionality to parse multiple paragraphs. The L.
    documents should be a good guide to determine what actually separates
    the paragraphs
-
--- Implement some sort of parser to count n-grams in files
 
 -- Implement normalising function to count words like "The" and "the" to
    be parsed as the same word
@@ -74,7 +73,7 @@ Low
    several different formats (e.g., list of strings, tuple)
 
    -- The API needs to be standardised so that the main functions
-      all take Strings, or somethign like that
+      all take Strings, or something like that
 
 -- implement quickCheck tests
    
