@@ -26,8 +26,11 @@ trigrams = getNGramsFromString 3
 
 {-| Extract n-grams from a string -}
 getNGramsFromString :: Int -> String -> [String]
-getNGramsFromString n wordString = map unwords $ getNGramsFromList n wordList
-    where wordList = getAlphasOnlyToList wordString
+getNGramsFromString n wordString 
+    | n < 0     = error "n must be a positive integer less than 7"
+    | n > 7     = error "n must be a positive integer less than 7"
+    | otherwise = map unwords $ getNGramsFromList n wordList
+                    where wordList = getAlphasOnlyToList wordString
 
 {-| Extract n-grams from a List. Internal function for n-gram
     string extraction function -}
