@@ -1,5 +1,19 @@
-The current command for "installing" is a very short ghc call:
+To install NGramCrackers, I suggest using a cabal sandbox.
 
-$ ghc -O2 -o GramCrackers Main.hs
+$ cabal sandbox init
+
+$ cabal install -j
+
+The binaries are in the .cabal-sandbox file and can be run with the usuali
+options.
+
+##########
+Deprecated
+###########
+The deprecated command for compiling is a very short ghc call:
+
+$ ghc -Wall -O2 -o GramCrackers Main.hs
 
 I use the -O2 flag, but -O will also work for optimising the compiled code.
+
+There is also a compile shell script that runs this.
