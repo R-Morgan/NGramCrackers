@@ -4,8 +4,6 @@ TODO
 High
 ######
 
--- write a bash-based execution script to compile, then run
-
 -- Add texts that actually work in the parser to the repository
 
 -- implement command line argument parsing and handling [Testing]
@@ -62,8 +60,6 @@ Med
 
 -- Implement normalising function to count words like "The" and "the" to
    be parsed as the same word
-
--- Add cabal file
 
 -- Clean up ParagraphParser module code [In progress]
 
