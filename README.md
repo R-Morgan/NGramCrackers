@@ -22,27 +22,32 @@ Project Purpose
 ---
 While studying Applied Linguistics and working on my MA, I got into the study
 of automated, corpus-based text analysis. Unfortunately, many of the most
-well-known programmes in my AppLing circles are non-Free. For instance, the
-language of implementation of MonoconcPro is not readily acertained, much less
+well-known programmes in my AppLing circles are non-Free. For instance, MonoconcPro's 
+language of implementation is not readily acertained, much less
 the source code. Similarly, AntConc, which is provided gratis and written in 
-Perl, does not ship with the source! If this has changed, I'd love to know. 
+Perl (as far as I know), does not ship with the source! If this has changed, I'd 
+love to know. 
 
 As a Free software user, programmer, and advocate, this was extremely 
 frustrating because the progs simply don't do all of what I wish, and there was
 no way to fix them to provide that functionality to other users. Moreover, 
 these programmes were designed with non-expert, non-CLIusers in mind, so they 
-feature GUIs that can get in the way of more advanced users. 
+feature GUIs that can get in the way of users who mostly use the CLI. 
+
+I also find it a bit disturbing when academics with tenure
+release proprietary software without source code. This prevents the further
+pursuit of knowledge that should be at the centre of academia. This also makes
+independent peer review more challenging or even impossible. If your code isn't
+easily peer-reviewable, why should anyone use, much less trust or trust or pay, 
+for it?
 
 Corpus linguists need high quality, Free software analytic tools that are
 capable of handling 5+ million word corpora spread over many documents.
 Corpus linguists should not be bound to proprietary OSes because the best
 tools available are not cross-platform. Similarly, there needs to be an
 intermediary step from consumer-GUI frontends to fully functional text
-processing APIs. I also find it a bit disturbing when academics with tenure
-release proprietary software without source code that prevents others from
-studying and learning how the programme works. If your code isn't easily
-peer-reviewable, why should anyone use, much less pay, for it?
- 
+processing APIs.  
+
 Thus, the idea of NGramCrackers was born: A GPLed, CLI for doing simple text
 analysis. 
 
@@ -58,7 +63,8 @@ HPSG grammar of Dutch in it. He told me about how because of Haskell's rich,
 strict typing system, it was possible to write verifiable code. I didn't understand the
 significance at the time, but it sounded sweet. Fast forward 9 years, I decided
 to give it a try as my first general-purpose language because of these reasons
-and the possibility for excellent performance from a high-level language. 
+and the possibility for excellent performance from a high-level language, with 
+excellent libraries for concurrent and parallel computing. 
 
 ### Won't a CLI make it in accessible to your target audience?
 
