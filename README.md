@@ -1,4 +1,4 @@
-NGramCrackers! A program for quantitative text analysis.
+NGramCrackers! CLI quantitative text analysis.
 ===
 
 LICENCING INFO
