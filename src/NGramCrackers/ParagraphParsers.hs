@@ -1,11 +1,9 @@
 module NGramCrackers.ParagraphParsers (
   parseParagraph
 , parseMultiPara
-, flattenEither
 ) where
 
 import Text.ParserCombinators.Parsec
-import Data.Either.Unwrap (mapRight)
 import Data.List (concat, unwords)
 
 {- Elementary parser combinataors. -}
@@ -41,7 +39,3 @@ parseParagraph = parse paragraph "unknown"
 
 parseMultiPara :: String ->  Either ParseError [[[String]]]
 parseMultiPara = parse document "unknown"
-
-{-| -}
-flattenEither :: Either a [[b]] -> Either a [b]
-flattenEither = mapRight concat
