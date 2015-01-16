@@ -13,5 +13,16 @@ quickCheck (\n s -> all (==n) (map length $ getNSeqFromString n s))
 
 | Test that getNSeqFromList 2 returns lists of length 2 -}
 
-getNSeqProp n s = n <= length s && n > 0 && n < 7 ==> all (== n) (map length $ getNSeqFromList n s)
-  where types = s::[String]
+genInts :: Gen Int
+genInts = choose (1, 7)
+
+getStringList :: Gen [String]
+getStringList = do lst <- listOf $ listOf $ elements ['a'..'z']
+                   return lst
+
+genIntsStrings :: Gen (Int, [String])
+genIntsStrings = do nSeq <- choose (1, 7)
+                    lst <- listOf $ listOf $ elements $ ['a'..'z'] ++ ['A'..'Z']
+                    return (nSeq, lst)
+
+getNSeqProp n s =  all (== n) (map length $ getNSeqFromList n s)
