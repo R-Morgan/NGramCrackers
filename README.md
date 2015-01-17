@@ -1,4 +1,4 @@
-NGramCrackers! CLI quantitative text analysis.
+NGramCrackers! CLI for quantitative text analysis.
 ===
 
 LICENCING INFO
@@ -20,36 +20,58 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 Project Purpose
 ---
-While studying Applied Linguistics and working on my MA, I got into the study
-of automated, corpus-based text analysis. Unfortunately, many of the most
-well-known programmes in my AppLing circles are non-Free. For instance, MonoconcPro's 
-language of implementation is not readily acertained, much less
-the source code. Similarly, AntConc, which is provided gratis and written in 
-Perl (as far as I know), does not ship with the source! If this has changed, I'd 
-love to know. 
+While studying Applied Linguistics and working on my MA, I found the study
+of automated, corpus-based text analysis. While the analyses were fascinating,
+the actually tools were frustrating for two reasons:
 
-As a Free software user, programmer, and advocate, this was extremely 
-frustrating because the progs simply don't do all of what I wish, and there was
-no way to fix them to provide that functionality to other users. Moreover, 
-these programmes were designed with non-expert, non-CLIusers in mind, so they 
-feature GUIs that can get in the way of users who mostly use the CLI. 
+- The software was non-Free, and thus not easily extendedable or patchable
+- The software interfaces were not satisfactory
 
-I also find it a bit disturbing when academics with tenure
-release proprietary software without source code. This prevents the further
-pursuit of knowledge that should be at the centre of academia. This also makes
-independent peer review more challenging or even impossible. If your code isn't
-easily peer-reviewable, why should anyone use, much less trust or trust or pay, 
-for it?
+### Free/Libre software and Applied Linguistics
+
+Unfortunately, many of the most well-known programmes in my AppLing circles are 
+[non-Free]( https://www.gnu.org/philosophy/free-sw.html), which is not the same
+as *gratis*. This is to say that the copyright holders have not published the
+source code with the binaries that they distribute. For instance, MonoconcPro's  
+language of implementation is not readily acertained, much less the source code. 
+Similarly, AntConc, which is provided gratis and written in Perl (as far as 
+I know), does not ship with the source! If this has changed, I'd love to know. 
+
+As a Free software user, programmer, and advocate, this frustrated me to no end
+because the programmes simply did not  do all of what I wished, and there was
+no way to fix them to provide that functionality to myself and others. 
+
+It is also bit disturbing when academics, especially those with tenure, release
+proprietary software without source code. Although there is nothing statutorily
+criminal in these, I do believe it violates the idea of education as a force of
+liberation from dependence. Failing to release the source code of programmes 
+impedes the further pursuit of knowledge that should be at the centre of 
+academia. This in action also makes independent peer review more challenging or 
+even impossible. If your code isn't easily peer-reviewable, why should anyone 
+use, much less trust or trust or pay, for it?
 
 Corpus linguists need high quality, Free software analytic tools that are
 capable of handling 5+ million word corpora spread over many documents.
 Corpus linguists should not be bound to proprietary OSes because the best
-tools available are not cross-platform. Similarly, there needs to be an
-intermediary step from consumer-GUI frontends to fully functional text
-processing APIs.  
+tools available are not cross-platform.
 
-Thus, the idea of NGramCrackers was born: A GPLed, CLI for doing simple text
-analysis. 
+### CLI-based solutions for quantitative text analysis
+My other gripe is the interface. Programmes like MonoconcPro or AntConc are 
+intended for Applied Linguists who are not also Computational Linguists -- most
+of whom are not CLI users. Thus, in order to promote accessibility, these
+programmes make heavy use of graphical user interfaces (GUIs). While many users
+expect this functionality, a GUI can reduce the productivity of users who mostly 
+use the CLI. 
+
+At the other end of the spectrum are full NLP programming libraries. When I was
+thesising, I was not a good enough programmer to pick up a new language super
+quickly, much less implement all the functions I needed. I was trapped in the
+odd limbo of hating GUIs but noto being a good enough programmer to do anything
+about it.
+
+These experiences inspired the idea of an intermediary step from consumer-GUI 
+frontends to fully functional text processing libraries and  APIs.  Thus, the 
+idea of NGramCrackers was born: A GPLed, CLI for doing simple text analysis. 
 
 ### But Python NLTK!
 
@@ -60,11 +82,11 @@ tools to Python.
 
 I was first introduced to Haskell in about 2005 by a friend who was writing an
 HPSG grammar of Dutch in it. He told me about how because of Haskell's rich,
-strict typing system, it was possible to write verifiable code. I didn't understand the
-significance at the time, but it sounded sweet. Fast forward 9 years, I decided
-to give it a try as my first general-purpose language because of these reasons
-and the possibility for excellent performance from a high-level language, with 
-excellent libraries for concurrent and parallel computing. 
+strict typing system, it was possible to write verifiable code. I didn't 
+understand the significance at the time, but it sounded sweet. Fast forward 9 
+years, I decided to give it a try as my first general-purpose language because 
+of these reasons and the possibility for excellent performance from a high-level 
+language, with excellent libraries for concurrent and parallel computing. 
 
 ### Won't a CLI make it in accessible to your target audience?
 
@@ -76,26 +98,26 @@ immediately useful.
 
 The gaps this project is intended to fill:
 
-  -- Simple commandline tool for text analysis, similar to Monoconc or Antconc
-     in functionality. NGramCrackers falls in between limited-platform 
-     proprietary binaries distributed to be consumed (MonoconcPro or Antconc) 
-     and fully developed NLP APIs (e.g., NLTK).
+  - Simple commandline tool for text analysis, similar to Monoconc or Antconc
+    in functionality. NGramCrackers falls in between limited-platform 
+    proprietary binaries distributed to be consumed (MonoconcPro or Antconc) 
+    and fully developed NLP APIs (e.g., NLTK).
 
-  -- Tools for intermediate to advanced users of GNU/Linux or other *nixen.
-     Windows functionality will depend on my ability to cross-compile to
-     such a binary.
+  - Tools for intermediate to advanced users of GNU/Linux or other 'nixen.
+    Windows functionality will depend on my ability to cross-compile to
+    such a binary.
     
-   I have met few programmers like me: non-professional, self-taught (with 
-   community support!), hobbiest programmers. During the writing of my thesis,
-   I was frustrated by what sort of tools were available: Consumer products 
-   intended for non-programmers or full libraries for much better programmers 
-   than I was at that time. NGramCrackers is both a CLI tool and Libre backend
-   API, written in Haskell, of the same name.
+  I have met few programmers like me: non-professional, self-taught (with 
+  community support!), hobbiest programmers. During the writing of my thesis,
+  I was frustrated by what sort of tools were available: Consumer products 
+  intended for non-programmers or full libraries for much better programmers 
+  than I was at that time. NGramCrackers is both a CLI tool and Libre backend
+  API, written in Haskell, of the same name.
 
-  -- NGramCrackers is intended to provide easy outputting of usefully formatted
-     (e.g., .csv, .tsv, etc.) data. No one should ever have to manually copy and
-     paste output from a GUI to a spreadsheet programme to get a CSV to use in 
-     an analysis conducted with external software.
+  - NGramCrackers is intended to provide easy outputting of usefully formatted
+    (e.g., .csv, .tsv, etc.) data. No one should ever have to manually copy and
+    paste output from a GUI to a spreadsheet programme to get a CSV to use in 
+    an analysis conducted with external software.
 
 Versioning Information
 ------------------------
