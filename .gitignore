@@ -16,3 +16,5 @@ cabal.config
 *.aux
 *.hp
 *.sw*
+src/GramCrackers
+
