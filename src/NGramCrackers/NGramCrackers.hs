@@ -33,7 +33,10 @@ getNGramsFromString n wordString
                     where wordList = getAlphasOnlyToList wordString
 
 {-| Extract n-grams from a List. Internal function for n-gram
-    string extraction function -}
+    string extraction function. Although this looks like a 
+    functional synonym for getNSeqFromList, the type signature on
+    this function requires that the input list be off StringS
+    not just any type -}
 getNGramsFromList :: Int -> [String] -> [[String]]
 getNGramsFromList = getNSeqFromList 
 
