@@ -1,6 +1,11 @@
 import Test.QuickCheck
 import NGramCrackers.ListManipulation
 
+{-| Custom Args that increase the maximum number of successful tests
+    from 100 to 1000 -}
+
+myArgs = Args { replay = Nothing, maxSuccess = 1000, maxDiscardRatio = 10,
+                chatty = True }
 
 {-| Generator for generating valid Ints and Strings to test with the
     geNSeqProp property -}
