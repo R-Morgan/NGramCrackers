@@ -4,8 +4,6 @@ TODO
 High
 ######
 
--- Add texts that actually work in the parser to the repository
-
 -- implement command line argument parsing and handling [Testing]
 
    -- Implement multiple modes [Testing]
@@ -56,7 +54,7 @@ Med
 
 -- implement functionality to parse multiple paragraphs. The L.
    documents should be a good guide to determine what actually separates
-   the paragraphs
+   the paragraphs [testing]
 
 -- Implement normalising function to count words like "The" and "the" to
    be parsed as the same word
@@ -73,7 +71,7 @@ Low
    -- The API needs to be standardised so that the main functions
       all take Strings, or something like that
 
--- implement quickCheck tests
+-- implement quickCheck tests [testing]
    
    -- test the text manipulation stuff -- i.e., the pure code
 
