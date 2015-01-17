@@ -11,7 +11,7 @@ module NGramCrackers.NGramCrackers (
 , ngramCountProfile 
 ) where
 
-import Data.Char (isAlpha, toLower)
+import Data.Char (isAlphaNum, toLower)
 import NGramCrackers.ListManipulation
 import NGramCrackers.ParagraphParsers 
 import Data.List (genericLength, nub, sort)
@@ -43,10 +43,10 @@ getNGramsFromList = getNSeqFromList
 getAlphasOnlyToString :: String -> String
 getAlphasOnlyToString = unwords . map (filter isAlpha) . words
 
-{-| Return only alphabetic characters from a string and return the
+{-| Return only alphanumeric characters from a string and return the
     result as a List.-}
 getAlphasOnlyToList :: String -> [String]
-getAlphasOnlyToList = map (filter isAlpha) . words . map toLower
+getAlphasOnlyToList = map (filter isAlphaNum) . words . map toLower
 
 {-| Get frequency of a single word's occurance in a string. Is eta-reduction
     the easiest reading way to do this function? The arguments are fairly
