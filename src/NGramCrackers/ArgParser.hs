@@ -15,6 +15,7 @@ import NGramCrackers.ParagraphParsers
 import NGramCrackers.NGramCrackers
 import NGramCrackers.TupleManipulation
 import NGramCrackers.ListManipulation
+import NGramCrackers.StringOps
 
 {-| Data declaration of record type for programme options -}
 data Args = Profile {  wordC  :: Bool
