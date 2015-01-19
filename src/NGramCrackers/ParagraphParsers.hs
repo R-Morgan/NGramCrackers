@@ -3,19 +3,26 @@ module NGramCrackers.ParagraphParsers (
 , parseMultiPara
 ) where
 
-import Text.ParserCombinators.Parsec
+
 import Data.List (concat, unwords)
+import Data.Text
+import Text.ParserCombinators.Parsec
 
 {- Elementary parser combinataors. -}
 
-document  = sepBy paragraph eop
+document :: Parser [[[String]]]
+document = endBy paragraph eop
 
-paragraph = sepBy sentence eos
+paragraph :: Parser [[String]]
+paragraph = endBy sentence eos
 
+sentence :: Parser [String]
 sentence  = sepBy word seppr -- (oneOf " \n") 
 
+word :: Parser String
 word      = many letter
 
+seppr :: Parser Char
 seppr     =    try space 
            <|> try (char ',')
            <|> try (char '\n')
@@ -29,13 +36,17 @@ eos       =    try (string ". ")
            <?> "end of sentence"
 -}
 
+eop :: Parser String
 eop = string "<para>"
 
-eos = oneOf ".?!" -- end of sentence
+eos :: Parser Char
+eos       = oneOf ".?!" -- end of sentence
 
 {-| -}
 parseParagraph :: String -> Either ParseError [[String]]
 parseParagraph = parse paragraph "unknown" 
 
 parseMultiPara :: String ->  Either ParseError [[[String]]]
-parseMultiPara = parse document "unknown"
+parseMultiPara = parse document "unknown" 
+
+ 
