@@ -31,11 +31,24 @@ the actually tools were frustrating for two reasons:
 
 Unfortunately, many of the most well-known programmes in my AppLing circles are 
 [non-Free]( https://www.gnu.org/philosophy/free-sw.html), which is not the same
-as *gratis*. This is to say that the copyright holders have not published the
-source code with the binaries that they distribute. For instance, MonoconcPro's  
-language of implementation is not readily acertained, much less the source code. 
-Similarly, AntConc, which is provided gratis and written in Perl (as far as 
-I know), does not ship with the source! If this has changed, I'd love to know. 
+as *gratis*. This is to say that the copyright holders have likely not published
+the source code -- or if they have, without the freedom to modify and distribute
+the source code.
+
+Publishing source code and permitting modification and redistribution has
+several advantages over the proprietary model. First, others can study the
+source to *understand* how the programme does what it does. Second, other users
+can implement new features or otherwise extend the programme. The developer(s)
+can then choose to accept or reject the proposed change or extension. The dev(s)
+then has been saved work! Finally, publishing the source code saves everyone 
+work. Another programmer can then build on previously done work. Thus, the
+species does not have to keep reinventing the wheel, as it were.
+
+In Applied Linguistics, though, there is much we can't be sure about in the
+common software for corpus-based analytics. For instance, MonoconcPro's language 
+of implementation is not readily  acertained, much less the source code. 
+Similarly, AntConc, which is provided gratis and written in Perl (as far as I 
+know), does not ship with the source! If this has changed, I'd love to know. 
 
 As a Free software user, programmer, and advocate, this frustrated me to no end
 because the programmes simply did not  do all of what I wished, and there was
@@ -43,10 +56,10 @@ no way to fix them to provide that functionality to myself and others.
 
 It is also bit disturbing when academics, especially those with tenure, release
 proprietary software without source code. Although there is nothing statutorily
-criminal in these, I do believe it violates the idea of education as a force of
-liberation from dependence. Failing to release the source code of programmes 
+criminal in this, I do believe it violates the idea of education as a force of
+intellectual liberation. Failing to release the source code of programmes 
 impedes the further pursuit of knowledge that should be at the centre of 
-academia. This in action also makes independent peer review more challenging or 
+academia. This (in)action also makes independent peer review more challenging or 
 even impossible. If your code isn't easily peer-reviewable, why should anyone 
 use, much less trust or trust or pay, for it?
 
