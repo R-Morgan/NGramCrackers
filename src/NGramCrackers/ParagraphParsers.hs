@@ -8,7 +8,7 @@ import Data.List (concat, unwords)
 
 {- Elementary parser combinataors. -}
 
-document = sepBy paragraph eop
+document  = sepBy paragraph eop
 
 paragraph = sepBy sentence eos
 
@@ -31,7 +31,7 @@ eos       =    try (string ". ")
 
 eop = string "<para>"
 
-eos       = oneOf ".?!" -- end of sentence
+eos = oneOf ".?!" -- end of sentence
 
 {-| -}
 parseParagraph :: String -> Either ParseError [[String]]
