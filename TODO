@@ -16,6 +16,9 @@ High
          -w        word count
          -l        line count
          -t        type token ratio
+         -f        full profile
+
+         -m        various means (words/sent sent/para)
 
       -- Extract:
 
@@ -28,7 +31,7 @@ High
          -w        words
          -b        bigrams
          -t        trigrams
-         -n        ngrams
+         -n [Int]  ngrams
    
 -- implement lexeme frequency counter [Testing]
 
@@ -46,7 +49,11 @@ High
       getNGramsFromList that can help with a more flexible
       function to get 4- and 5-grams.
 
--- make sure all non-parser functions and such have type sigs
+-- implement quickCheck tests [testing]
+   
+   -- test the text manipulation stuff -- i.e., the pure code
+
+   -- IO tests -- not sure how to do that
 
 ######
 Med
@@ -59,8 +66,6 @@ Med
 -- Implement normalising function to count words like "The" and "the" to
    be parsed as the same word
 
--- Clean up ParagraphParser module code [In progress]
-
 ######
 Low
 ######
@@ -71,13 +76,11 @@ Low
    -- The API needs to be standardised so that the main functions
       all take Strings, or something like that
 
--- implement quickCheck tests [testing]
-   
-   -- test the text manipulation stuff -- i.e., the pure code
-
-   -- IO tests -- not sure how to do that
-
 -- implement data types like Corpus, Document, Paragraph, Sentence, Word
+
+-- metadata parsing capabilities
+
+-- metadata analysis facilities over file sets
 
 ########
 On-Going
