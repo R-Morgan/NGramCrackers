@@ -25,7 +25,7 @@ executable NGramCrackers
                        && <3.2, either-unwrap >=1.1 && <1.2, text >= 1.2 && < 1.3
 =======
   build-depends:       base >=4.7 && <4.8, cmdargs >=0.10 && <0.11, 
-                       parsec >=3.1 && <3.2, either-unwrap >=1.1 && <1.2
+                       parsec >=3.1 && <3.2, either-unwrap >=1.1 && <1.2,
                        text >= 1.2 && 1.3
 >>>>>>> master
   hs-source-dirs:      src
