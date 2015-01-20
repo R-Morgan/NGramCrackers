@@ -45,21 +45,21 @@ work. Another programmer can then build on previously done work. Thus, the
 species does not have to keep reinventing the wheel, as it were.
 
 In Applied Linguistics, though, there is much we can't be sure about in the
-common software for corpus-based analytics. For instance, MonoconcPro's language 
-of implementation is not readily  acertained, much less the source code. 
+common software for corpus-based analytics. For instance, MonoconcPro's language
+of implementation is not readily acertained, much less the source code. 
 Similarly, AntConc, which is provided gratis and written in Perl (as far as I 
 know), does not ship with the source! If this has changed, I'd love to know. 
 
 As a Free software user, programmer, and advocate, this frustrated me to no end
-because the programmes simply did not  do all of what I wished, and there was
-no way to fix them to provide that functionality to myself and others. 
+because the programmes simply did not do all of what I wished, and there was no
+way to fix them to provide that functionality to myself and others. 
 
 It is also bit disturbing when academics, especially those with tenure, release
 proprietary software without source code. Although there is nothing statutorily
 criminal in this, I do believe it violates the idea of education as a force of
 intellectual liberation. Failing to release the source code of programmes 
 impedes the further pursuit of knowledge that should be at the centre of 
-academia. This (in)action also makes independent peer review more challenging or 
+academia. This (in)action also makes independent peer review more challenging or
 even impossible. If your code isn't easily peer-reviewable, why should anyone 
 use, much less trust or trust or pay, for it?
 
@@ -73,7 +73,7 @@ My other gripe is the interface. Programmes like MonoconcPro or AntConc are
 intended for Applied Linguists who are not also Computational Linguists -- most
 of whom are not CLI users. Thus, in order to promote accessibility, these
 programmes make heavy use of graphical user interfaces (GUIs). While many users
-expect this functionality, a GUI can reduce the productivity of users who mostly 
+expect this functionality, a GUI can reduce the productivity of users who mostly
 use the CLI. 
 
 At the other end of the spectrum are full NLP programming libraries. When I was
@@ -98,7 +98,7 @@ HPSG grammar of Dutch in it. He told me about how because of Haskell's rich,
 strict typing system, it was possible to write verifiable code. I didn't 
 understand the significance at the time, but it sounded sweet. Fast forward 9 
 years, I decided to give it a try as my first general-purpose language because 
-of these reasons and the possibility for excellent performance from a high-level 
+of these reasons and the possibility for excellent performance from a high-level
 language, with excellent libraries for concurrent and parallel computing. 
 
 ### Won't a CLI make it in accessible to your target audience?
@@ -140,61 +140,83 @@ next release and later versions constitutes the functionality goals for
 NGramCrackers. The programme is still quite unstable with major API changes
 planned.
 
+### Version 0.2.3
+New features:
+ - Cabal-based build system for installation in a cabal sandbox. 
+
+ - Skeleton testing facilities. Only one test is implemented, so
+   this is very barebones.
+
+ - More complete directory structure, along with specific example
+   texts that work with the binary.
+
+ - The commandline options have been exapanded to take bigram and
+   trigram extraction specifications
+
+ - NGramCrackers.StringOps module introduced to hold operations that
+   take Strings as the base processing unit. Since parsing involves
+   putting elements into lists, it seemed most effective to transition
+   towards a more list based set of operations. 
+
+   This module contains some string operations that need to be
+   used in the processing stage soo as not to entirely break
+   the build, but they will likely be phased out at some point.
+
 ### Version 0.2.2
-    -- Changes to backend profiling functions now reflect their general
-       nature: Such functions will also profile larger ngrams than just
-       words.
+ - Changes to backend profiling functions now reflect their general
+   nature: Such functions will also profile larger ngrams than just
+   words.
 
 ### Version 0.2.1
-    -- Limited multiparagraph parsing is now available in NGramCrackers!
+ - Limited multiparagraph parsing is now available in NGramCrackers!
 
 ### Version 0.2.0 
-  -- Rudimentary profiling and extraction capabilities.
+ - Rudimentary profiling and extraction capabilities.
      
-     NGramCrackers can now print a profile of a single paragraph input file
-     to a specified output file. The statistics provided are a word count
-     or a type-token-ratio report.
+  NGramCrackers can now print a profile of a single paragraph input file
+  to a specified output file. The statistics provided are a word count
+  or a type-token-ratio report.
 
-     These very basic capabilities provide a very useful skeleton for adding
-     more functionality, such as ngram extraction, and more statistics, such
-     as mean words per sentence, mean words per paragraph, mean sentences per
-     paragraph, etc.
+  These very basic capabilities provide a very useful skeleton for adding
+  more functionality, such as ngram extraction, and more statistics, such
+  as mean words per sentence, mean words per paragraph, mean sentences per
+  paragraph, etc.
 
 ### Version 0.1.1
-  -- Modualised argument handling system for ease of future development. 
-     Future modifications to argument handling can take place in a contained
-     environment and can be reused in other applications
+ - Modualised argument handling system for ease of future development. 
+   Future modifications to argument handling can take place in a contained
+   environment and can be reused in other applications
 
 ### Version 0.1.0 -- Release Date: 04.01.2015
 
 Primary features:
 
-  -- First public alpha release. The CL tool and the backend library will be
-     changing a great deal.
+ - First public alpha release. The CL tool and the backend library will be
+    changing a great deal.
 
-  -- Very basic commandline argument parsing that enables the 
-     specification of input and output files.
+ - Very basic commandline argument parsing that enables the 
+   specification of input and output files.
 
-  -- Basic word count properties and type-token ratio functionality
+ - Basic word count properties and type-token ratio functionality
 
-  -- Separation of version, help, summary, etc. from myArgs, the argument
-     record for the programme. getOpts is an abstraction to handle the use of
-     cmdArgs before being passed into the optionHandler
+ - Separation of version, help, summary, etc. from myArgs, the argument
+   record for the programme. getOpts is an abstraction to handle the use of
+   cmdArgs before being passed into the optionHandler
 
 Future Versions
 ---
 Planned releases. These are in a high degree of flux and will be tweaked as
 needed for the forseeable future.
 
-### Version 0.3.0
-  -- Integration of paragraph parsing function into commandline user interface
-  -- Multi-paragraph Parsing
+### Version 0.2.3
+ - Integration of paragraph parsing function into commandline user interface
+ - Multi-paragraph Parsing
 
-### Version 0.4.0 -- Definition
-  -- Specific Data Types:
-     -- NGrams (including 1-grams, i.e., words)
-     -- Sentences
-     -- Paragraph
+### Version 0.3.0 -- Definition
+Specific Data Types:
+ - NGrams (including 1-grams, i.e., words)
+ - Sentences
+ - Paragraph
 
 ### Version 1.0.0  -- Definition 4, Jan, 2015
 
