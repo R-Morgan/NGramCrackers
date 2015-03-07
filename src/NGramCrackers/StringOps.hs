@@ -47,4 +47,3 @@ getAlphasOnlyToList = map (filter isAlphaNum) . words . map toLower
 getWordFrequency:: String -> String -> Int
 getWordFrequency word text = (length . filter (== word) . words) text
 
-
