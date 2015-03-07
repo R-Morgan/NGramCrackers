@@ -1,6 +1,5 @@
-module NGramCrackers.ListManipulation
-(
-  getNSeqFromList
+module NGramCrackers.ListManipulation 
+( getNSeqFromList
 , intToList
 ) where
 
