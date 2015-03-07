@@ -5,10 +5,9 @@ module NGramCrackers.NGramCrackers (
 , ngramCountProfile 
 ) where
 
-import Data.Char (isAlphaNum, toLower)
 import NGramCrackers.ListManipulation
 import NGramCrackers.ParagraphParsers 
-import Data.List (genericLength, nub, sort)
+import Data.List (length, nub, sort)
 import qualified Data.Text as T
 
 
