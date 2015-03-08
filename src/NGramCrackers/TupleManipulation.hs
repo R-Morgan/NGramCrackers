@@ -9,6 +9,8 @@ module NGramCrackers.TupleManipulation
 , compareTriplesInList
 ) where
 
+import qualified Data.Text as T
+
 thrd :: (a , b , c) -> c
 thrd (_, _, x) = x
 
@@ -23,11 +25,11 @@ compareDoublesInList []     = error "Empty List"
 compareDoublesInList [x]    = x 
 compareDoublesInList (x:xs) = compareDoubles x (compareDoublesInList xs) 
 
-stringifyLexemeCount :: (String, Int) -> String
-stringifyLexemeCount x = "Word: " ++ fst x ++ " ----- Count: " ++ (show . snd) x 
+stringifyLexemeCount :: (T.Text, Int) -> T.Text
+stringifyLexemeCount x = T.pack "Word: " `T.append`  fst x `T.append` T.pack " ----- Count: " `T.append` (T.pack . show . snd) x 
 
-doubleToCSV :: (String, Int) -> String
-doubleToCSV x = fst x ++ "," ++ (show . snd) x
+doubleToCSV :: (T.Text, Int) -> T.Text
+doubleToCSV x = fst x `T.append` T.singleton ',' `T.append` (T.pack . show . snd) x
 
 compareTriples :: Ord c => (a, b, c) -> (a, b, c) -> (a, b, c)
 compareTriples xs ys
