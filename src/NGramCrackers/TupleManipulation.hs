@@ -26,10 +26,20 @@ compareDoublesInList [x]    = x
 compareDoublesInList (x:xs) = compareDoubles x (compareDoublesInList xs) 
 
 stringifyLexemeCount :: (T.Text, Int) -> T.Text
-stringifyLexemeCount x = T.pack "Word: " `T.append`  fst x `T.append` T.pack " ----- Count: " `T.append` (T.pack . show . snd) x 
+stringifyLexemeCount x = wordStr <#> lexeme <#> countStr <#> 
+                          (T.pack . show . snd) x
+                           where wordStr  = T.pack "Word: " 
+                                 lexeme   = fst x
+                                 countStr = T.pack " ----- Count: " 
+
+(<#>) :: T.Text -> T.Text -> T.Text
+(<#>) = T.append
+
 
 doubleToCSV :: (T.Text, Int) -> T.Text
-doubleToCSV x = fst x `T.append` T.singleton ',' `T.append` (T.pack . show . snd) x
+doubleToCSV x = lexeme <#> commaChar <#> (T.pack . show . snd) x
+                 where lexeme = fst x
+                       commaChar = T.singleton ','
 
 compareTriples :: Ord c => (a, b, c) -> (a, b, c) -> (a, b, c)
 compareTriples xs ys
