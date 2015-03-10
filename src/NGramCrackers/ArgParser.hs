@@ -1,4 +1,4 @@
-{-# LANGUAGE DeriveDataTypeable, RecordWildCards #-}
+{-# LANGUAGE DeriveDataTypeable, OverloadedStrings, RecordWildCards #-}
 
 module NGramCrackers.ArgParser (
    optionHandler
@@ -7,7 +7,9 @@ module NGramCrackers.ArgParser (
 ) where
 
 import System.Console.CmdArgs
-import System.IO
+import qualified System.IO    as SIO
+import qualified Data.Text.IO as TIO
+import qualified Data.Text    as T
 import System.Exit
 import Control.Monad (unless, when)
 import Data.List (genericLength, nub)
@@ -15,7 +17,7 @@ import NGramCrackers.ParagraphParsers
 import NGramCrackers.NGramCrackers
 import NGramCrackers.TupleManipulation
 import NGramCrackers.ListManipulation
-import NGramCrackers.StringOps
+import NGramCrackers.TextOps
 
 {-| Data declaration of record type for programme options -}
 data Args = Profile {  wordC  :: Bool
@@ -52,13 +54,13 @@ extract = Extract { input = def &= typFile &= help "Input file"
     does not fail, the exec function is called on opts -}
 optionHandler :: Args -> IO ()
 optionHandler opts@Profile{..} = do
-     when (null input) $ putStrLn "Supply input file" >> exitWith (ExitFailure 1)
-     when (null output) $ putStrLn "Supply output file" >> exitWith (ExitFailure 1)
+     when (null input) $ SIO.putStrLn "Supply input file" >> exitWith (ExitFailure 1)
+     when (null output) $ SIO.putStrLn "Supply output file" >> exitWith (ExitFailure 1)
      exec opts
 optionHandler opts@Extract{..} = do
-     when (null input)  $ putStrLn "Supply input file"  >> exitWith (ExitFailure 1)
-     when (null output) $ putStrLn "Supply output file" >> exitWith (ExitFailure 1)
-     unless (lexemes || bigram || trigram)  $ putStrLn "Supply a mode"  >> 
+     when (null input)  $ SIO.putStrLn "Supply input file"  >> exitWith (ExitFailure 1)
+     when (null output) $ SIO.putStrLn "Supply output file" >> exitWith (ExitFailure 1)
+     unless (lexemes || bigram || trigram)  $ SIO.putStrLn "Supply a mode"  >> 
        exitWith (ExitFailure 1)
      exec opts
 
@@ -88,63 +90,54 @@ _COPYRIGHT :: String
 _COPYRIGHT = "(C) Rianna Morgan 2015"
 
 {-| Takes an Args and returns IO actions. 'input' seems to be evaluated on opts
-    in ReadMode and is bound to a name. In a same way, the output file determined
+    in SIO.ReadMode and is bound to a name. In a same way, the output file determined
     before some when expressions to determine what to print to file. The file
     handles are then closed. -}
 exec :: Args -> IO ()
-exec opts@Profile{..} = do inHandle <- openFile input ReadMode 
-                           outHandle <- openFile output WriteMode
-                           contents <- hGetContents inHandle -- contents :: String
-                           when wordC $ hPutStrLn outHandle $ countWords contents
-                           when ttr   $ hPutStrLn outHandle $ typeTokenRatio contents
-                           hClose inHandle
-                           hClose outHandle
+exec opts@Profile{..} = do inHandle <- SIO.openFile input SIO.ReadMode 
+                           outHandle <- SIO.openFile output SIO.WriteMode
+                           contents <- TIO.hGetContents inHandle -- contents :: String
+                           when wordC $ TIO.hPutStrLn outHandle $ 
+                             (T.pack . show . countWords) contents
+                           when ttr   $ TIO.hPutStrLn outHandle $ typeTokenRatio contents
+                           SIO.hClose inHandle
+                           SIO.hClose outHandle
 
-exec opts@Extract{..} = do inHandle <- openFile input ReadMode 
-                           outHandle <- openFile output WriteMode
-                           contents <- hGetContents inHandle -- contents :: String
+exec opts@Extract{..} = do inHandle <- SIO.openFile input SIO.ReadMode 
+                           outHandle <- SIO.openFile output SIO.WriteMode
+                           contents <- TIO.hGetContents inHandle -- contents :: String
                            when lexemes $ 
-                             case parseMultiPara contents of
-                                Left e  -> do putStrLn "Error parsing input: "
+                             case parseParagraph contents of
+                                Left e  -> do SIO.putStrLn "Error parsing input: "
                                               print e
 
-                                Right r -> hPutStrLn outHandle "word,count" >> 
-                                           mapM_ (hPutStrLn outHandle . doubleToCSV) 
-                                             (ngramCountProfile $ concatMap concat r)
+                                Right r -> TIO.hPutStrLn outHandle "word,count" >> 
+                                           mapM_ (TIO.hPutStrLn outHandle . doubleToCSV) 
+                                             --(ngramCountProfile $ concatMap concat r)
+                                               (ngramCountProfile $ concat r)
                            when bigram $
-                             case parseMultiPara contents of
-                                Left e  -> do putStrLn "Error parsing input: "
+                             case parseParagraph contents of
+                                Left e  -> do SIO.putStrLn "Error parsing input: "
                                               print e
-                                Right r -> hPutStrLn outHandle "bigram,count" >>
-                                           mapM_ (hPutStrLn outHandle . doubleToCSV) 
+
+                                Right r -> TIO.hPutStrLn outHandle "bigram,count" >>
+                                           mapM_ (TIO.hPutStrLn outHandle . doubleToCSV) 
+                                    --         (ngramCountProfile $ concatMap bigrams $ 
+                                    --         map T.unwords $ concat r)
                                              (ngramCountProfile $ concatMap bigrams $ 
-                                             map unwords $ concat r)
+                                             map T.unwords r)
+                                           
                            when trigram $
-                             case parseMultiPara contents of
-                                Left e  -> do putStrLn "Error parsing input: "
+                             case parseParagraph contents of
+                                Left e  -> do SIO.putStrLn "Error parsing input: "
                                               print e
-                                Right r -> hPutStrLn outHandle "trigram,count" >>
-                                           mapM_ (hPutStrLn outHandle . doubleToCSV) 
+
+                                Right r -> TIO.hPutStrLn outHandle "trigram,count" >>
+                                           mapM_ (TIO.hPutStrLn outHandle . doubleToCSV) 
                                              (ngramCountProfile $ concatMap trigrams $ 
-                                             map unwords $ concat r)
-                           hClose inHandle
-                           hClose outHandle
+                                             map T.unwords $ r)
 
--- These functions are the backend of the basic functionalities of 0.1.0
-{-| These functions output the specified strings, so they can be kept and
- developed separately from the lists that get used in generating the
- the help, version, and about type displays -}
+                           SIO.hClose inHandle
+                           SIO.hClose outHandle
 
-countWords :: String -> String
-countWords = show . length . words
 
-typeTokenRatio ::  String -> String
-typeTokenRatio string = "Types: " ++ show types ++ ", Tokens: " ++ show tokens ++ ", TTR: "++ show ratio  
-                       where types = (genericLength . nub . words) string
-                             tokens = (genericLength . words) string
-                             ratio = types / tokens
-
-fullMonty :: String -> String
-fullMonty tokens = "Count: " ++ count ++ ", " ++ ttr where
-                    count = (show . length . words) tokens
-                    ttr   = typeTokenRatio tokens

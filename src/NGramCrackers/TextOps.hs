@@ -6,13 +6,19 @@ module NGramCrackers.TextOps (
 , getAlphasOnlyToText
 , normToList
 , getWordFrequency
+, countWords
+, typeTokenRatio
 ) where
 
 import qualified Data.Text as T
 import Data.Char (isAlpha, isAlphaNum, isSpace, toLower)
 import NGramCrackers.ListManipulation
 import NGramCrackers.NGramCrackers
-import Data.List (map)
+import Data.List (map, nub)
+
+{-| Infix synonym for T.append. Handy for gluing bits of Text together -}
+(<#>) :: T.Text -> T.Text -> T.Text
+(<#>) = T.append
 
 {-| Extract bigrams from a string -}
 bigrams :: T.Text -> [T.Text]
@@ -52,4 +58,23 @@ normToList = T.words . getAlphasOnlyToText .  T.toLower
 
 getWordFrequency:: T.Text -> T.Text -> Int
 getWordFrequency word text = (length . filter (== word) . T.words) text
+
+-- These functions are the backend of the basic functionalities of 0.1.0
+{-| These functions output the specified strings, so they can be kept and
+ developed separately from the lists that get used in generating the
+ the help, version, and about type displays -}
+
+countWords :: T.Text -> Int
+countWords =  length . T.words
+
+typeTokenRatio ::  T.Text -> T.Text 
+typeTokenRatio string = typeStr <#> ps types <#> tokStr <#> ps tokens <#> ttrStr 
+                                <#> ratio  
+                       where types = (fromIntegral . length . nub . T.words) string
+                             tokens = (fromIntegral . length . T.words) string
+                             ratio = (T.pack . show) $ types / tokens
+                             typeStr = T.pack "Types: "  
+                             tokStr  = T.pack ", Tokens: "  
+                             ttrStr  = T.pack ", TTR: "
+                             ps      = T.pack . show
 
