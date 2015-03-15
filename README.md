@@ -94,20 +94,19 @@ start coding to learn it. That said, I see no reason to limit development of NLP
 tools to Python.
 
 I was first introduced to Haskell in about 2005 by a friend who was writing an
-HPSG grammar of Dutch in it. He told me about how because of Haskell's rich,
+HPSG grammar of Dutch in it. He told me that because of Haskell's rich,
 strict typing system, it was possible to write verifiable code. I didn't 
 understand the significance at the time, but it sounded sweet. Fast forward 9 
 years, I decided to give it a try as my first general-purpose language because 
-of these reasons and the possibility for excellent performance from a high-level
-language, with excellent libraries for concurrent and parallel computing. 
+of these reasons, the possibility for excellent performance from a high-level
+language, with developed libraries for concurrent and parallel computing. 
 
 ### Won't a CLI make it in accessible to your target audience?
 
 Initially, perhaps, but by waiting to develop a GUI, the text processing can
 exist independently of the GUI. My own interest is in primarily in developing
-the CLI because that is most useful to me personally. I interact with my system
-almost exclusively through the terminal, so this interface will be the most
-immediately useful.
+the CLI because I interact with my system almost exclusively through the 
+terminal, so this interface will be the most immediately useful.
 
 The gaps this project is intended to fill:
 
@@ -119,6 +118,9 @@ The gaps this project is intended to fill:
   - Tools for intermediate to advanced users of GNU/Linux or other 'nixen.
     Windows functionality will depend on my ability to cross-compile to
     such a binary.
+  
+  - A concordancer that is capable of handling huge corpora and making use of
+    parallel, scientific computing resources.
     
   I have met few programmers like me: non-professional, self-taught (with 
   community support!), hobbiest programmers. During the writing of my thesis,
@@ -139,6 +141,22 @@ Below are the definitions of versions for this project. The definition for the
 next release and later versions constitutes the functionality goals for 
 NGramCrackers. The programme is still quite unstable with major API changes
 planned.
+
+### Version 0.2.4
+
+Major, breaking API changes have been implemented!
+
+ - All code has been refactored to use Data.Text as the basic
+   type of text representation. This includes processing functions,
+   parsers, and IO. However, older versions of String processing
+   functions are still included in the source but are not actually
+   called.
+
+ - The CLI is currently only processing single paragraphs at a time
+   because of the difficulties associated with multiple possible
+   paragraph separators. Addressing this likely requires someway to
+   try parsers without consuming input. 
+
 
 ### Version 0.2.3
 New features:
