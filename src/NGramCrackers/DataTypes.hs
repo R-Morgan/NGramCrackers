@@ -5,12 +5,16 @@ module NGramCrackers.DataTypes
 , MetaTag
 , Tag
 , Date
+, SDate
 , Month
 , Day
 , toMT
 , toMonth
 , toDay
 , toYear
+, toDate
+, toSDate
+--, dateFromSDate
 ) where
 
 import qualified Data.Text as T
@@ -36,6 +40,9 @@ mkTag txt int = case txt of
 data Date = Date Month Day Year
               deriving (Show, Read, Eq)
 
+data SDate = SDate Month Day 
+              deriving (Show, Read, Eq)
+
 data Month = Jan | Feb | March | April | May | June | July | Aug | Sept | Oct |
              Nov | Dec deriving (Show, Read, Eq, Enum)
 
@@ -50,23 +57,33 @@ toMT :: T.Text -> T.Text -> MetaTag
 toMT tag' val = MetaTag { tag = tag', contents = val}
                        
 toMonth :: Int -> Month
-toMonth | 1 = Jan
-        | 2 = Feb
-        | 3 = March
-        | 4 = April
-        | 5 = May
-        | 6 = June
-        | 7 = July
-        | 8 = Aug
-        | 9 = Sept
-        | 10 = Oct
-        | 11 = Nov
-        | 12 = Dec
+toMonth n | n == 1 = Jan
+          | n == 2 = Feb
+          | n == 3 = March
+          | n == 4 = April
+          | n == 5 = May
+          | n == 6 = June
+          | n == 7 = July
+          | n == 8 = Aug
+          | n == 9 = Sept
+          | n == 10 = Oct
+          | n == 11 = Nov
+          | n == 12 = Dec
+          | otherwise = error "Not a month"
 
 toYear :: Int -> Year
 toYear = Year 
 
 toDay :: Int -> Day
-toDay = Day
+toDay n | n < 1  = error "Not a day!"
+        | n > 31 = error "Not a day!"
+        | otherwise = Day n
 
+toDate :: Month -> Day -> Year -> Date
+toDate m d y = Date m d y
 
+--dateFromSDate :: SDate -> Year -> Date
+--dateFromSDate (SDate sd) y  = Date sd y
+
+toSDate :: Month -> Day -> SDate
+toSDate = SDate 
