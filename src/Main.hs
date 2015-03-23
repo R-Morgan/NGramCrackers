@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveDataTypeable, RecordWildCards #-}
+{-# OPTIONS_GHC -Wall #-}
 
 import System.IO
 import System.Environment (getArgs, withArgs)
