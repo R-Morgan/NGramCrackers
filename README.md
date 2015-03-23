@@ -28,6 +28,10 @@ the actually tools were frustrating for two reasons:
 - The software interfaces were not satisfactory
 
 ### Free/Libre software and Applied Linguistics
+Corpus linguists need high quality, Free software analytic tools that are
+capable of handling 5+ million word corpora spread over many documents.
+Corpus linguists should not be bound to proprietary OSes because the best
+tools available are not cross-platform. 
 
 Unfortunately, many of the most well-known programmes in my AppLing circles are 
 [non-Free]( https://www.gnu.org/philosophy/free-sw.html), which is not the same
@@ -63,10 +67,6 @@ academia. This (in)action also makes independent peer review more challenging or
 even impossible. If your code isn't easily peer-reviewable, why should anyone 
 use, much less trust or trust or pay, for it?
 
-Corpus linguists need high quality, Free software analytic tools that are
-capable of handling 5+ million word corpora spread over many documents.
-Corpus linguists should not be bound to proprietary OSes because the best
-tools available are not cross-platform.
 
 ### CLI-based solutions for quantitative text analysis
 My other gripe is the interface. Programmes like MonoconcPro or AntConc are 
@@ -79,8 +79,8 @@ use the CLI.
 At the other end of the spectrum are full NLP programming libraries. When I was
 thesising, I was not a good enough programmer to pick up a new language super
 quickly, much less implement all the functions I needed. I was trapped in the
-odd limbo of hating GUIs but noto being a good enough programmer to do anything
-about it.
+odd limbo of hating GUIs but not being a skilled enough programmer to figure
+a solution.
 
 These experiences inspired the idea of an intermediary step from consumer-GUI 
 frontends to fully functional text processing libraries and  APIs.  Thus, the 
@@ -157,6 +157,9 @@ Major, breaking API changes have been implemented!
    paragraph separators. Addressing this likely requires someway to
    try parsers without consuming input. 
 
+ - Rudimentary metadata parsing funcitonality
+
+ - Expanded type system for metadata descriptions
 
 ### Version 0.2.3
 New features:
@@ -226,6 +229,7 @@ Future Versions
 Planned releases. These are in a high degree of flux and will be tweaked as
 needed for the forseeable future.
 
+
 ### Version 0.2.3
  - Integration of paragraph parsing function into commandline user interface
  - Multi-paragraph Parsing
@@ -235,6 +239,10 @@ Specific Data Types:
  - NGrams (including 1-grams, i.e., words)
  - Sentences
  - Paragraph
+
+Metadata analytics
+
+Profiling
 
 ### Version 1.0.0  -- Definition 4, Jan, 2015
 
