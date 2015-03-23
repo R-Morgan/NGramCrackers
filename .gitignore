@@ -17,4 +17,4 @@ cabal.config
 *.hp
 *.sw*
 src/GramCrackers
-
+src/*.WP
