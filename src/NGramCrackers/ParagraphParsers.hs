@@ -67,43 +67,6 @@ eop = void $
     where space' = char ' '
           newLn  = (many1 (char '\n'))
 
-{- Metadata parsing function -}
-
-tagParser :: PT.Parser T.Text
-tagParser = (between left right $ parser) <* many space'
-              where left   = (char '<')
-                    right  = (char '>') 
-                    parser = pack <$> (many1 letter)
-                    space' = char ' '
-
-contentsParser :: PT.Parser T.Text
-contentsParser = pack <$> ((letts  <|> nums) <* (many space'))
-                   where letts  = (many1 letter)
-                         nums   = (many1 digit)
-                         space' = char ' '
-
-mtParser :: PT.Parser MetaTag
-mtParser = toMT <$> tagParser <*> contentsParser
-
-metadataParser :: PT.Parser [MetaTag]
-metadataParser = sepBy mtParser newLn 
-                   where newLn = (char '\n')
-
-dateParser :: PT.Parser Date
-dateParser = liftA3 toDate month day year
-               where month = dP toMonth <$> (many1 digit) <* seppr
-                     day   = dP toDay   <$> (many1 digit) <* seppr
-                     year  = dP toYear  <$> (many1 digit)
-                     seppr = (char '/')
-                     dP f  = f . read
-
-sDateParser :: PT.Parser SDate
-sDateParser = toSDate <$> month <*> day
-                where month = dP toMonth <$> (many1 digit) <* seppr 
-                      day   = dP toDay   <$> (many1 digit)
-                      seppr = (char '/')
-                      dP f  = f . read
-
 {- Elementary parser combinataors. -}
 
 
