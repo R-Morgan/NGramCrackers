@@ -244,6 +244,8 @@ Metadata analytics
 
 Profiling
 
+Hierarchical module system
+
 ### Version 1.0.0  -- Definition 4, Jan, 2015
 
 My vision for 1.0.0 is a fully functional text analysis programme. This project
