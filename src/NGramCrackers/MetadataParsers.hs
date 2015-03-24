@@ -16,6 +16,7 @@ module NGramCrackers.MetadataParsers
 import Control.Applicative ((<$>), (<*), (*>), (<*>), (<|>), liftA3)
 import Data.Functor (void)
 import qualified Data.Text as T                    
+import qualified Data.Either.Unwrap as EU (fromRight)
 import qualified Text.Parsec.Text as PT 
 import Text.ParserCombinators.Parsec hiding ((<|>))
 
@@ -84,9 +85,18 @@ handler MetaTag{..} = case tag of
                         "SDF" -> SDF int
                         "REF" -> FileName contents
                         "TIT" -> Title contents
+                        "ENT" -> Entry date                         
+                        "TIM" -> Time year
+                        "EXL" -> Length int
+                        "SUP" -> SuperField int
+                        "LEV" -> Level contents
                         _     -> error "Invalid tag"
-                        where int = ((read . T.unpack) contents) :: Int
-
+                        where int  = ((read . T.unpack) contents) :: Int
+                                --   T.Text ->  String -> Int
+                              date = EU.fromRight $ (parse dateParser "unknown" contents)
+                              year = (Year int)
+                                -- this fromRight bit seems a bit...amateurish
+ 
 --entryParser :: PT.Parser Tag
 --entryParser = toEntry <$> tagParser <*> dateParser contentsParser
 
@@ -144,16 +154,6 @@ toDate m d y = Date m d y
 
 toSDate :: Month -> Day -> SDate
 toSDate = SDate 
-
-{-handler :: T.Text -> Tag
-handler = case parse tagParser "unknown" tag of
-                Left e  -> printLn e
-                Right "ENT" -> parse dateParser "unknown"
-handler = tagParser <*> contentsParser >>= 
-         \tag content -> case tag of
-                           Left e -> print e
-                           Right "SDF" -> SDF content >>= print
--}
 
 toEntry :: Date -> Tag
 toEntry = Entry
