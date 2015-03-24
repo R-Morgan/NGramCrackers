@@ -31,13 +31,19 @@ paragraph :: PT.Parser [[T.Text]]
 paragraph = endBy sentence eos
 
 sentence :: PT.Parser [T.Text]
-sentence = sepBy word seppr
+sentence = sepBy sentParts seppr
+
+sentParts :: PT.Parser T.Text
+sentParts = word <|> number
 
 word :: PT.Parser T.Text
 -- The use of T.pack <$> is necessary because of the type many1 letter returns.
 -- fmapping T.pack into the Parser makes it possible to return a parser of the
 -- appropriate type.
-word = T.pack <$> ((many1 letter) <|> (many1 digit))
+word = T.pack <$> (many1 letter) 
+
+number :: PT.Parser T.Text
+number = T.pack <$> (many1 digit)
                                                      
 seppr :: PT.Parser ()
 -- Since the results of this parser are just thrown away, we need the `void`
