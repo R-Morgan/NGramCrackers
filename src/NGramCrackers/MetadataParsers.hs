@@ -47,13 +47,6 @@ data Tag = SDF Int | FileName T.Text | Entry Date | Pages PageRange |
 
 {- Date related data declarations -}
 
--- Page Range
-data PageRange =  PageRange PageBound PageBound  deriving (Show, Read, Eq)
-data PageBound = Start Int | End Int deriving (Show, Read, Eq)
-
--- Difficult y Level
-data Level = LitFic | PopFic | Tech | Lay | PopNonFic
-
 data TargetAudience = Adult | Children
 data TargetGender = Female | Male | Trans | NonBinary | Genderfluid | GenderQ
 
