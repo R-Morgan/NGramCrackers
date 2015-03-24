@@ -89,7 +89,9 @@ handler MetaTag{..} = case tag of
                         "TIM" -> Time year
                         "EXL" -> Length int
                         "SUP" -> SuperField int
+                        "SUB" -> Subject contents
                         "LEV" -> Level contents
+
                         _     -> error "Invalid tag"
                         where int  = ((read . T.unpack) contents) :: Int
                                 --   T.Text ->  String -> Int
