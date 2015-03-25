@@ -14,6 +14,8 @@ module NGramCrackers.DataTypes
 , PageRange (..)
 , PageBound (..)
 , Level     (..)
+, Medium (..)
+, toMedium
 ) where
 
 import qualified Data.Text as T
@@ -43,10 +45,10 @@ data Tag = SDF Int | FileName T.Text | Entry Date | Pages PageRange |
            Title T.Text | Publication T.Text Year | FstEdition T.Text Year |
            Notes T.Text | Authors [T.Text] | Gender [T.Text] |
            Race [T.Text] | SuperField Int | Subject T.Text |
-           IndividualSub T.Text | Medium | Time Year | Region T.Text | Length Int
+           IndividualSub T.Text | Med Medium | Time Year | Region T.Text | Length Int
            deriving (Show, Read)
 
-data Medium = Book | Journal | Newspaper | OtherMed T.Text
+data Medium = Book | Journal | Newspaper | OtherMed T.Text deriving (Read, Show)
 {- Date related data declarations -}
 
 toMedium :: T.Text -> Medium

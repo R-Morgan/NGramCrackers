@@ -53,7 +53,7 @@ handler MetaTag{..} = case tag of
                         "EXL" -> Length int
                         "SUP" -> SuperField int
                         "SUB" -> Subject contents
-                        "MED" -> toMedium contents
+                        "MED" -> Med $ toMedium contents
 --                        "LEV" -> Level contents
                         _     -> error "Invalid tag"
                         where int  = ((read . T.unpack) contents) :: Int
