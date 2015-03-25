@@ -19,6 +19,8 @@ import qualified Data.Text as T
 import qualified Data.Either.Unwrap as EU (fromRight)
 import qualified Text.Parsec.Text as PT 
 import Text.ParserCombinators.Parsec hiding ((<|>))
+import NGramCrackers.DataTypes
+import NGramCrackers.ParagraphParsers (wordString)
 
 data MetaTag = MetaTag { tag      :: T.Text
                        , contents :: T.Text
@@ -83,7 +85,7 @@ handler MetaTag{..} = case tag of
                         "EXL" -> Length int
                         "SUP" -> SuperField int
                         "SUB" -> Subject contents
-                        "LEV" -> Level contents
+--                        "LEV" -> Level contents
 
                         _     -> error "Invalid tag"
                         where int  = ((read . T.unpack) contents) :: Int
@@ -91,6 +93,7 @@ handler MetaTag{..} = case tag of
                               date = EU.fromRight $ (parse dateParser "unknown" contents)
                               year = (Year int)
                                 -- this fromRight bit seems a bit...amateurish
+                              string = EU.fromRight $ (parse wordString "unknown" contents)
  
 --entryParser :: PT.Parser Tag
 --entryParser = toEntry <$> tagParser <*> dateParser contentsParser
