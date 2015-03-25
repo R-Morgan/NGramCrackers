@@ -3,7 +3,7 @@
 module NGramCrackers.ParagraphParsers (
   parseSent
 , parseParagraph
---, parseMultiPara
+, parseMultiPara
 , wordString
 ) where
 
@@ -64,14 +64,14 @@ seppr =  void sepprs <|> void newLn
 
 eos :: PT.Parser ()
 eos = void sepprs -- <|> void sngls
-        where sepprs =    (char '.' *> space')
-                      <|> (char '!' *> space')
-                      <|> (char '?' *> space')
+        where sepprs =    (char '.' <* space')
+                      <|> (char '!' <* space')
+                      <|> (char '?' <* space')
 {-              sngls  =    (char '.')
                       <|> (char '!')
                       <|> (char '?')
 -}
-              space' =    char ' '
+              space' = many (char ' ')
 
 eop :: PT.Parser ()
 eop = void $ 
