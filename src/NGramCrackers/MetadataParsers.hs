@@ -22,37 +22,6 @@ import Text.ParserCombinators.Parsec hiding ((<|>))
 import NGramCrackers.DataTypes
 import NGramCrackers.ParagraphParsers (wordString)
 
-data MetaTag = MetaTag { tag      :: T.Text
-                       , contents :: T.Text
-                       } deriving (Show, Read)
-
-data Date = Date Month Day Year
-              deriving (Show, Read, Eq)
-
-data SDate = SDate Month Day 
-              deriving (Show, Read, Eq)
-
-data Month = Jan | Feb | March | April | May | June | July | Aug |
-             Sept | Oct | Nov | Dec deriving (Show, Read, Eq, Enum)
-
-data Day = Day Int deriving (Show, Read, Eq)
-
-data Year = Year Int deriving (Show, Read, Eq)
-
-
-data Tag = SDF Int | FileName T.Text | Entry Date | Pages PageRange |
-           Title T.Text | Publication T.Text Year | FstEdition T.Text Year |
-           Notes T.Text | Authors [T.Text] | Gender [T.Text] |
-           Race [T.Text] | SuperField Int | Subject T.Text |
-           IndividualSub T.Text | Time Year | Region T.Text | Length Int
-           deriving (Show, Read)
-
-{- Date related data declarations -}
-
-data TargetAudience = Adult | Children
-data TargetGender = Female | Male | Trans | NonBinary | Genderfluid | GenderQ
-
-data Biography = Yes | No | Autobiography
 {- Metadata parsing function -}
 
 tagParser :: PT.Parser T.Text
