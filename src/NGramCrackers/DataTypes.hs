@@ -60,8 +60,6 @@ data TargetGender = Female | Male | Trans | NonBinary | Genderfluid | GenderQ
 
 data Biography = Yes | No | Autobiography
 
-
-
 -- Page Range
 data PageRange =  PageRange PageBound PageBound  deriving (Show, Read, Eq)
 data PageBound = Start Int | End Int deriving (Show, Read, Eq)

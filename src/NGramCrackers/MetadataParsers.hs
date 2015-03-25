@@ -1,5 +1,4 @@
 {-# LANGUAGE DeriveDataTypeable, OverloadedStrings, RecordWildCards #-}
-
 module NGramCrackers.MetadataParsers 
 ( toMT
 , tagParser
@@ -54,8 +53,8 @@ handler MetaTag{..} = case tag of
                         "EXL" -> Length int
                         "SUP" -> SuperField int
                         "SUB" -> Subject contents
+                        "MED" -> toMedium contents
 --                        "LEV" -> Level contents
-
                         _     -> error "Invalid tag"
                         where int  = ((read . T.unpack) contents) :: Int
                                 --   T.Text ->  String -> Int
@@ -66,7 +65,6 @@ handler MetaTag{..} = case tag of
  
 --entryParser :: PT.Parser Tag
 --entryParser = toEntry <$> tagParser <*> dateParser contentsParser
-
 
 metadataParser :: PT.Parser [MetaTag]
 metadataParser = sepBy mtParser newLn 
