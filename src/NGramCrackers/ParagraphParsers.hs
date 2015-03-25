@@ -4,6 +4,7 @@ module NGramCrackers.ParagraphParsers (
   parseSent
 , parseParagraph
 --, parseMultiPara
+, wordString
 ) where
 
 
@@ -35,6 +36,11 @@ sentence = sepBy sentParts seppr
 
 sentParts :: PT.Parser T.Text
 sentParts = word <|> number
+
+wordString :: PT.Parser T.Text
+-- Useful for non-sentence word strings where no numbers need to be parsed.
+-- Probably useful for parsing MetaTags
+wordString = T.unwords <$> sepBy word seppr
 
 word :: PT.Parser T.Text
 -- The use of T.pack <$> is necessary because of the type many1 letter returns.
