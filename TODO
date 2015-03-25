@@ -73,12 +73,9 @@ Low
 -- Make a variety of n-gram processing functions to output in
    several different formats (e.g., list of strings, tuple)
 
-   -- The API needs to be standardised so that the main functions
-      all take Strings, or something like that
-
 -- implement data types like Corpus, Document, Paragraph, Sentence, Word
 
--- metadata parsing capabilities
+-- metadata parsing capabilities [Testing]
 
 -- metadata analysis facilities over file sets
 
