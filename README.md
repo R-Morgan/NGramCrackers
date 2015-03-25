@@ -227,12 +227,12 @@ Primary features:
 Future Versions
 ---
 Planned releases. These are in a high degree of flux and will be tweaked as
-needed for the forseeable future.
+needed for the forseeable future. Versioon 0.2.4 is..unmarked in the commit tree
+because of poor planning on the part of yours truly. Version 0.2.5 will be
+properly tagged in the tree. Sorry about that if you find this! <3 rm
 
-
-### Version 0.2.3
- - Integration of paragraph parsing function into commandline user interface
- - Multi-paragraph Parsing
+### Version 0.2.5
+ - Return of multi-paragraph Parsing
 
 ### Version 0.3.0 -- Definition
 Specific Data Types:
