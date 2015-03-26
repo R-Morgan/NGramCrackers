@@ -1,9 +1,9 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 module NGramCrackers.DataTypes
-( Paragraph
-, Sentence
-, Word
+( Paragraph (..)
+, Sentence (..)
+, Word (..)
 , MetaTag (..)
 , Date (..)
 , SDate (..)
