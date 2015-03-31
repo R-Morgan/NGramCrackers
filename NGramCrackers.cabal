@@ -2,7 +2,7 @@
 -- documentation, see http://haskell.org/cabal/users-guide/
 
 name:                NGramCrackers
-version:             0.2.3
+version:             0.2.4
 synopsis:            A CLI tool for quantitative text analysis with backend library
 -- description:         
 homepage:            https://github.com/R-Morgan/NGramCrackers
