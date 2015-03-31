@@ -130,7 +130,7 @@ exec opts@Extract{..} = do inHandle <- SIO.openFile input SIO.ReadMode
 
                                 Right r -> TIO.hPutStrLn outHandle "bigram,count" >>
                                              mapM_ (TIO.hPutStrLn outHandle . doubleToCSV)
-                                             (bigramPrinter r)
+                                             (ngramPrinter r bigrams)
                                           
                            when trigram $
                              case parseMultiPara contents of
@@ -139,8 +139,7 @@ exec opts@Extract{..} = do inHandle <- SIO.openFile input SIO.ReadMode
 
                                 Right r -> TIO.hPutStrLn outHandle "trigram,count" >>
                                            mapM_ (TIO.hPutStrLn outHandle . doubleToCSV) 
-                                             (ngramCountProfile $ concatMap trigrams $ 
-                                             map T.unwords $ DL.concat r)
+                                             (ngramPrinter r trigrams)
 
                            when debug $
                              case parseMultiPara contents of
@@ -151,6 +150,7 @@ exec opts@Extract{..} = do inHandle <- SIO.openFile input SIO.ReadMode
                            SIO.hClose inHandle
                            SIO.hClose outHandle
 
-bigramPrinter :: [[[T.Text]]] -> [(T.Text, Int)] 
-bigramPrinter r = (ngramCountProfile $ transformBigrams r) 
-                    where transformBigrams = (DL.concat . DL.map bigrams . DL.map T.unwords . DL.concat) 
+ngramPrinter :: [[[T.Text]]] -> (T.Text -> [T.Text]) -> [(T.Text, Int)] 
+ngramPrinter r extractor = (ngramCountProfile $ transformer r)
+                    where transformer = (DL.concat . DL.map extractor . 
+                                              DL.map T.unwords . DL.concat) 
