@@ -7,12 +7,14 @@ module NGramCrackers.ArgParser (
 ) where
 
 import System.Console.CmdArgs
+import System.Exit
+import Control.Monad (unless, when)
+
 import qualified System.IO    as SIO
 import qualified Data.Text.IO as TIO
 import qualified Data.Text    as T
-import System.Exit
-import Control.Monad (unless, when)
-import Data.List (genericLength, nub)
+import qualified Data.List    as DL (genericLength, nub, map, concat)
+
 import NGramCrackers.ParagraphParsers
 import NGramCrackers.NGramCrackers
 import NGramCrackers.TupleManipulation
@@ -30,7 +32,8 @@ data Args = Profile {  wordC  :: Bool
                      , output  :: FilePath
                      , lexemes :: Bool       -- word mode
                      , bigram  :: Bool
-                     , trigram  :: Bool
+                     , trigram :: Bool
+                     , debug   :: Bool 
                     } deriving (Show, Data, Typeable)
 
 {-| Record of programme's actual flag descriptions-}
@@ -47,6 +50,7 @@ extract = Extract { input = def &= typFile &= help "Input file"
                   , lexemes = def &= name "words" &= help "Word mode"
                   , bigram = def &= help "Bigram mode"
                   , trigram = def &= help "Trigram mode"
+                  , debug = def &= help "Debugging mode"
                   }
 
 {-| Takes a set of Args (e.g., myArgs) and causes the program to exit 
@@ -60,7 +64,7 @@ optionHandler opts@Profile{..} = do
 optionHandler opts@Extract{..} = do
      when (null input)  $ SIO.putStrLn "Supply input file"  >> exitWith (ExitFailure 1)
      when (null output) $ SIO.putStrLn "Supply output file" >> exitWith (ExitFailure 1)
-     unless (lexemes || bigram || trigram)  $ SIO.putStrLn "Supply a mode"  >> 
+     unless (lexemes || bigram || trigram || debug)  $ SIO.putStrLn "Supply a mode"  >> 
        exitWith (ExitFailure 1)
      exec opts
 
@@ -78,7 +82,7 @@ _PROGRAM_NAME :: String
 _PROGRAM_NAME = "NGramCrackers CLI"
 
 _PROGRAM_VERSION :: String
-_PROGRAM_VERSION = "0.2.2"
+_PROGRAM_VERSION = "0.2.4"
 
 _PROGRAM_INFO :: String
 _PROGRAM_INFO = _PROGRAM_NAME ++ " version " ++ _PROGRAM_VERSION
@@ -96,48 +100,57 @@ _COPYRIGHT = "(C) Rianna Morgan 2015"
 exec :: Args -> IO ()
 exec opts@Profile{..} = do inHandle <- SIO.openFile input SIO.ReadMode 
                            outHandle <- SIO.openFile output SIO.WriteMode
-                           contents <- TIO.hGetContents inHandle -- contents :: String
+                           contents <- TIO.hGetContents inHandle -- contents :: T.Text
+
                            when wordC $ TIO.hPutStrLn outHandle $ 
                              (T.pack . show . countWords) contents
+
                            when ttr   $ TIO.hPutStrLn outHandle $ typeTokenRatio contents
+
                            SIO.hClose inHandle
                            SIO.hClose outHandle
 
 exec opts@Extract{..} = do inHandle <- SIO.openFile input SIO.ReadMode 
                            outHandle <- SIO.openFile output SIO.WriteMode
-                           contents <- TIO.hGetContents inHandle -- contents :: String
+                           contents <- TIO.hGetContents inHandle -- contents :: T.Text 
+
                            when lexemes $ 
-                             case parseParagraph contents of
+                             case parseMultiPara contents of
                                 Left e  -> do SIO.putStrLn "Error parsing input: "
                                               print e
 
                                 Right r -> TIO.hPutStrLn outHandle "word,count" >> 
                                            mapM_ (TIO.hPutStrLn outHandle . doubleToCSV) 
-                                             --(ngramCountProfile $ concatMap concat r)
-                                               (ngramCountProfile $ concat r)
+                                             (ngramCountProfile $ concatMap DL.concat r)
+                                             --  (ngramCountProfile $ concat r)
                            when bigram $
-                             case parseParagraph contents of
-                                Left e  -> do SIO.putStrLn "Error parsing input: "
+                             case parseMultiPara contents of
+                                Left e  -> do SIO.putStrLn "Error parsing inputg: "
                                               print e
 
                                 Right r -> TIO.hPutStrLn outHandle "bigram,count" >>
-                                           mapM_ (TIO.hPutStrLn outHandle . doubleToCSV) 
-                                    --         (ngramCountProfile $ concatMap bigrams $ 
-                                    --         map T.unwords $ concat r)
-                                             (ngramCountProfile $ concatMap bigrams $ 
-                                             map T.unwords r)
-                                           
+                                             mapM_ (TIO.hPutStrLn outHandle . doubleToCSV)
+                                             (bigramPrinter r)
+                                          
                            when trigram $
-                             case parseParagraph contents of
+                             case parseMultiPara contents of
                                 Left e  -> do SIO.putStrLn "Error parsing input: "
                                               print e
 
                                 Right r -> TIO.hPutStrLn outHandle "trigram,count" >>
                                            mapM_ (TIO.hPutStrLn outHandle . doubleToCSV) 
                                              (ngramCountProfile $ concatMap trigrams $ 
-                                             map T.unwords $ r)
+                                             map T.unwords $ DL.concat r)
+
+                           when debug $
+                             case parseMultiPara contents of
+                                Left e  -> do SIO.putStrLn "Error parsing input: "
+                                              print e
+                                Right r -> SIO.putStrLn "Multiparagraph parsing result: " >> print r
 
                            SIO.hClose inHandle
                            SIO.hClose outHandle
 
-
+bigramPrinter :: [[[T.Text]]] -> [(T.Text, Int)] 
+bigramPrinter r = (ngramCountProfile $ transformBigrams r) 
+                    where transformBigrams = (DL.concat . DL.map bigrams . DL.map T.unwords . DL.concat) 
