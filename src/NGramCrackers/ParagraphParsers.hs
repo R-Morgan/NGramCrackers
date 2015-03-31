@@ -23,10 +23,13 @@ parseParagraph :: T.Text -> Either ParseError [[T.Text]]
 parseParagraph = parse paragraph "unknown"
 
 parseMultiPara :: T.Text ->  Either ParseError [[[T.Text]]]
-parseMultiPara = parse document "unknown"
+parseMultiPara = parse docBody "unknown"
 
-document :: PT.Parser [[[T.Text]]]
-document = endBy paragraph eop
+docMetadata :: [MetaTag]
+docMetadata = undefined
+
+docBody :: PT.Parser [[[T.Text]]]
+docBody = endBy paragraph eop
 
 paragraph :: PT.Parser [[T.Text]]
 paragraph = endBy sentence eos
@@ -75,31 +78,6 @@ eos = void sepprs -- <|> void sngls
 
 eop :: PT.Parser ()
 eop = void $ 
-  char '<' >> many1 letter >> char '>' *> (void space' <|> void newLn)
+  char '<' >> many1 letter >> char '>' <* (void space' <|> void newLn)
     where space' = char ' '
           newLn  = (many1 (char '\n'))
-
-{- Elementary parser combinataors. -}
-
-
-{-  It might be useful to get this rolling for a more flexible eos
-eos       =    try (string ". ")
-           <|> try (string "! ") 
-           <|> try (string "? ")
-           <?> "end of sentence"
-
-eop :: Parser String
-eop = string "<para>"
-
-eos :: Parser Char
-eos       = oneOf ".?!" -- end of sentence
-
-{-| -}
-parseParagraph :: String -> Either ParseError [[String]]
-parseParagraph = parse paragraph "unknown" 
-
-parseMultiPara :: String ->  Either ParseError [[[String]]]
-parseMultiPara = parse document "unknown" 
-
--}
- 
