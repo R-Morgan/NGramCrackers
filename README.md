@@ -67,12 +67,15 @@ intellectual liberation. Failing to release the source code of programmes
 impedes the further pursuit of knowledge that should be at the centre of 
 academia. This (in)action also makes independent peer review more challenging or
 even impossible. If your code isn't easily peer-reviewable, why should anyone 
-use, much less trust or trust or pay, for it?
+use, much less trust or trust or pay, for it? To this end, this code has been
+licenced under the GNU GPL v3 to ensure that all derivative works are also Free.
+As an educator, this is critical and why a modified BSD or MIT type licence is
+not satisfactory for me.
 
 ### CLI-based solutions for quantitative text analysis
 My other gripe is the interface. Programmes like MonoconcPro or AntConc are 
-intended for Applied Linguists who are not also Computational Linguists -- most
-of whom are not CLI users. Thus, in order to promote accessibility, these
+intended for Applied Linguists who are less like to be Computational Linguists
+who do not use the CLI. Thus, in order to promote accessibility, these
 programmes make heavy use of graphical user interfaces (GUIs). While many users
 expect this functionality, a GUI can reduce the productivity of users who mostly
 use the CLI. 
@@ -81,7 +84,7 @@ At the other end of the spectrum are full NLP programming libraries. When I was
 thesising, I was not a good enough programmer to pick up a new language super
 quickly, much less implement all the functions I needed. I was trapped in the
 odd limbo of hating GUIs but not being a skilled enough programmer to figure
-a solution.
+a solution with a programming library.
 
 These experiences inspired the idea of an intermediary step from consumer-GUI 
 frontends to fully functional text processing libraries and  APIs.  Thus, the 
@@ -99,15 +102,17 @@ HPSG grammar of Dutch in it. He told me that because of Haskell's rich,
 strict typing system, it was possible to write verifiable code. I didn't 
 understand the significance at the time, but it sounded sweet. Fast forward 9 
 years, I decided to give it a try as my first general-purpose language because 
-of these reasons, the possibility for excellent performance from a high-level
-language, with developed libraries for concurrent and parallel computing. 
+of these reasons, plus the possibility for excellent performance from a 
+high-level language, with developed libraries for concurrent and parallel 
+computing. 
 
 ### Won't a CLI make it in accessible to your target audience?
 
 Initially, perhaps, but by waiting to develop a GUI, the text processing can
-exist independently of the GUI. My own interest is in primarily in developing
-the CLI because I interact with my system almost exclusively through the 
-terminal, so this interface will be the most immediately useful.
+exist independently of the GUI and other interfaces could be developed. My own 
+interest is in primarily in developing the CLI because I interact with my system 
+almost exclusively through the terminal, so this interface will be the most 
+immediately useful. 
 
 The gaps this project is intended to fill:
 
@@ -142,6 +147,15 @@ Below are the definitions of versions for this project. The definition for the
 next release and later versions constitutes the functionality goals for 
 NGramCrackers. The programme is still quite unstable with major API changes
 planned.
+
+### Version 0.2.6 
+More major breaking API changes have been made:
+
+ - Hierarchical module system more inline with the usual Haskell module style
+
+ - Scripts to allow compilation and execution of a binary with profiling
+   capabilities enabled. The scripts must be sourced for the functions to
+   available. ngc-pure executes the binary without profiling.
 
 ### Version 0.2.5
  - Return of multi-paragraph Parsing
@@ -235,9 +249,6 @@ needed for the forseeable future. Version 0.2.4 is untagged in the commit tree
 because of poor planning on the part of yours truly. Version 0.2.5 has been
 properly tagged in the tree. Sorry about that if you find this! <3 rm
 
-### Version 0.2.6 -- Definition
- - Hierarchical module system
- - Profiling script
 
 ### Version 0.2.7 -- Definition
  - ngram extraction from CLI
