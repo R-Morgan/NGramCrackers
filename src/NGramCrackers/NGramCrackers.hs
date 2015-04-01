@@ -68,3 +68,6 @@ sdSentLength   :: [[T.Text]] -> Double
 sdSentLength paragraph = standardDev lengths where
                          lengths = (map fromIntegral . map length) paragraph
                           
+varSentLength :: [[T.Text]] -> Double
+varSentLength paragraph = variance lengths where
+                          lengths = (map fromIntegral . map length) paragraph
