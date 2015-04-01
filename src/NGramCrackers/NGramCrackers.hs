@@ -3,6 +3,8 @@ module NGramCrackers.NGramCrackers
 , countNGram
 , getNGramFreqs
 , ngramCountProfile 
+, meanSentLength
+, sdSentLength
 ) where
 
 import Data.List (length, nub, sort)
@@ -10,6 +12,7 @@ import qualified Data.Text as T
 
 import NGramCrackers.Utilities.List
 import NGramCrackers.Parsers.Paragraph
+import NGramCrackers.Quant.Dispersion
 
 
 {-| Extract n-grams from a List. Internal function for n-gram
@@ -52,11 +55,16 @@ typeTokenRatio tokens = (typesTotal, tokenTotal, ratio)
                                 tokenTotal = (fromIntegral . length) tokens
                                 ratio      = typesTotal / tokenTotal 
 
-{-| -}
-mapUnwords :: [[String]] -> [String]
-mapUnwords  = map unwords
+{-| Takes a parsed paragraph and gets the mean length of the
+    sentences in it. -}
 
-{-| What is this function for again? it seems like a synonym for map -}
-mapNGrams :: (String -> [String]) -> [String] -> [[String]]
-mapNGrams nGramFunc sents = map nGramFunc sents
 
+meanSentLength :: [[T.Text]] -> Double
+meanSentLength paragraph = lengths / sents where
+                           lengths = (fromIntegral . sum . map length) paragraph
+                           sents   = (fromIntegral . length) paragraph
+
+sdSentLength   :: [[T.Text]] -> Double
+sdSentLength paragraph = standardDev lengths where
+                         lengths = (map fromIntegral . map length) paragraph
+                          
