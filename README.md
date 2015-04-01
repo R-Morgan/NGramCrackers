@@ -34,10 +34,12 @@ Corpus linguists should not be bound to proprietary OSes because the best
 tools available are not cross-platform. 
 
 Unfortunately, many of the most well-known programmes in my AppLing circles are 
-[non-Free]( https://www.gnu.org/philosophy/free-sw.html), which is not the same
-as *gratis*. This is to say that the copyright holders have likely not published
+proprietary. This is to say that the copyright holders have likely not published 
 the source code -- or if they have, without the freedom to modify and distribute
-the source code.
+the source code. However, I prefer to use Free( https://www.gnu.org/philosophy/free-sw.html), 
+software.  Free, though, is not the same as *gratis*. Free software is that for
+which the source code is available and modifiable. While Free software is often
+gratis, it need not be.
 
 Publishing source code and permitting modification and redistribution has
 several advantages over the proprietary model. First, others can study the
@@ -66,7 +68,6 @@ impedes the further pursuit of knowledge that should be at the centre of
 academia. This (in)action also makes independent peer review more challenging or
 even impossible. If your code isn't easily peer-reviewable, why should anyone 
 use, much less trust or trust or pay, for it?
-
 
 ### CLI-based solutions for quantitative text analysis
 My other gripe is the interface. Programmes like MonoconcPro or AntConc are 
@@ -120,7 +121,7 @@ The gaps this project is intended to fill:
     such a binary.
   
   - A concordancer that is capable of handling huge corpora and making use of
-    parallel, scientific computing resources.
+    parallel computing resources.
     
   I have met few programmers like me: non-professional, self-taught (with 
   community support!), hobbiest programmers. During the writing of my thesis,
@@ -142,6 +143,9 @@ next release and later versions constitutes the functionality goals for
 NGramCrackers. The programme is still quite unstable with major API changes
 planned.
 
+### Version 0.2.5
+ - Return of multi-paragraph Parsing
+
 ### Version 0.2.4
 
 Major, breaking API changes have been implemented!
@@ -154,7 +158,7 @@ Major, breaking API changes have been implemented!
 
  - The CLI is currently only processing single paragraphs at a time
    because of the difficulties associated with multiple possible
-   paragraph separators. Addressing this likely requires someway to
+   paragraph separators. Addressing this likely requires some way to
    try parsers without consuming input. 
 
  - Rudimentary metadata parsing funcitonality
@@ -180,7 +184,7 @@ New features:
    towards a more list based set of operations. 
 
    This module contains some string operations that need to be
-   used in the processing stage soo as not to entirely break
+   used in the processing stage so as not to entirely break
    the build, but they will likely be phased out at some point.
 
 ### Version 0.2.2
@@ -227,12 +231,20 @@ Primary features:
 Future Versions
 ---
 Planned releases. These are in a high degree of flux and will be tweaked as
-needed for the forseeable future. Versioon 0.2.4 is..unmarked in the commit tree
-because of poor planning on the part of yours truly. Version 0.2.5 will be
+needed for the forseeable future. Version 0.2.4 is untagged in the commit tree
+because of poor planning on the part of yours truly. Version 0.2.5 has been
 properly tagged in the tree. Sorry about that if you find this! <3 rm
 
-### Version 0.2.5
- - Return of multi-paragraph Parsing
+### Version 0.2.6 -- Definition
+ - Hierarchical module system
+ - Profiling script
+
+### Version 0.2.7 -- Definition
+ - ngram extraction from CLI
+ - words/sent statistics
+
+### Version 0.2.8 -- Definition
+ - Metadata analytics
 
 ### Version 0.3.0 -- Definition
 Specific Data Types:
@@ -241,10 +253,6 @@ Specific Data Types:
  - Paragraph
 
 Metadata analytics
-
-Profiling
-
-Hierarchical module system
 
 ### Version 1.0.0  -- Definition 4, Jan, 2015
 
@@ -295,4 +303,3 @@ coming months. Version 1.0.0 should include:
   -- Testing Suite implemented in quickCheck
 
   -- Cabal-based installation of library!
-
