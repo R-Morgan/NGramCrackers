@@ -1,5 +1,5 @@
-module NGramCrackers.StringOps (
-  bigrams
+module NGramCrackers.Ops.String
+( bigrams
 , trigrams
 , getNGramsFromString
 , getNGramsFromList
@@ -8,8 +8,9 @@ module NGramCrackers.StringOps (
 ) where
 
 import Data.Char (isAlphaNum, toLower)
-import NGramCrackers.ListManipulation
+
 import NGramCrackers.NGramCrackers
+import NGramCrackers.Utilities.List
 
 {-| Extract bigrams from a string -}
 bigrams :: String -> [String]

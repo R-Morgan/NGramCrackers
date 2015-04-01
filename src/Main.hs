@@ -4,10 +4,11 @@
 import System.IO
 import System.Environment (getArgs, withArgs)
 import System.Console.CmdArgs (cmdArgsRun)
+
 import NGramCrackers.NGramCrackers
-import NGramCrackers.ArgParser
-import NGramCrackers.TupleManipulation
-import NGramCrackers.ParagraphParsers
+import NGramCrackers.Parsers.Args
+import NGramCrackers.Parsers.Paragraph
+import NGramCrackers.Utilities.Tuple
 
 main :: IO ()
 main = getArgs >>= \args ->  

@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module NGramCrackers.ParagraphParsers (
-  parseSent
+module NGramCrackers.Parsers.Paragraph
+( parseSent
 , parseParagraph
 , parseMultiPara
 , wordString

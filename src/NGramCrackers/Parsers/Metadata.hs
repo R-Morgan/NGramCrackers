@@ -1,5 +1,5 @@
 {-# LANGUAGE DeriveDataTypeable, OverloadedStrings, RecordWildCards #-}
-module NGramCrackers.MetadataParsers 
+module NGramCrackers.Parsers.Metadata
 ( toMT
 , tagParser
 , mtParser
@@ -19,7 +19,7 @@ import qualified Data.Either.Unwrap as EU (fromRight)
 import qualified Text.Parsec.Text as PT 
 import Text.ParserCombinators.Parsec hiding ((<|>))
 import NGramCrackers.DataTypes
-import NGramCrackers.ParagraphParsers (wordString)
+import NGramCrackers.Parsers.Paragraph (wordString)
 
 {- Metadata parsing function -}
 

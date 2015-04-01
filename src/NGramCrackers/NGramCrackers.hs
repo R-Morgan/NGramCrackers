@@ -1,14 +1,15 @@
-module NGramCrackers.NGramCrackers (
-  getNGramsFromList
+module NGramCrackers.NGramCrackers 
+( getNGramsFromList
 , countNGram
 , getNGramFreqs
 , ngramCountProfile 
 ) where
 
-import NGramCrackers.ListManipulation
-import NGramCrackers.ParagraphParsers 
 import Data.List (length, nub, sort)
 import qualified Data.Text as T
+
+import NGramCrackers.Utilities.List
+import NGramCrackers.Parsers.Paragraph
 
 
 {-| Extract n-grams from a List. Internal function for n-gram

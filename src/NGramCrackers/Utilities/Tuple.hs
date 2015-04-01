@@ -1,6 +1,5 @@
-module NGramCrackers.TupleManipulation
-(
-  thrd
+module NGramCrackers.Utilities.Tuple
+( thrd
 , compareDoubles
 , compareDoublesInList
 , stringifyLexemeCount
@@ -35,7 +34,6 @@ stringifyLexemeCount x = wordStr <#> lexeme <#> countStr <#>
 (<#>) :: T.Text -> T.Text -> T.Text
 (<#>) = T.append
 
-
 doubleToCSV :: (T.Text, Int) -> T.Text
 doubleToCSV x = lexeme <#> commaChar <#> (T.pack . show . snd) x
                  where lexeme = fst x
@@ -52,6 +50,3 @@ compareTriplesInList :: Ord c => [(a, b, c)] -> (a, b, c)
 compareTriplesInList []     = error "Empty List"
 compareTriplesInList [x]    = x 
 compareTriplesInList (x:xs) = compareTriples x (compareTriplesInList xs) 
-
---orderLexemeProfile :: Ord a => [(a, b)] -> [(a, b)]
-

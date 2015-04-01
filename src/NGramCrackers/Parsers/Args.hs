@@ -1,9 +1,9 @@
 {-# LANGUAGE DeriveDataTypeable, OverloadedStrings, RecordWildCards #-}
 
-module NGramCrackers.ArgParser (
-   optionHandler
- , myModes
- , exec
+module NGramCrackers.Parsers.Args
+( optionHandler
+, myModes
+, exec
 ) where
 
 import System.Console.CmdArgs
@@ -15,11 +15,11 @@ import qualified Data.Text.IO as TIO
 import qualified Data.Text    as T
 import qualified Data.List    as DL (genericLength, nub, map, concat)
 
-import NGramCrackers.ParagraphParsers
 import NGramCrackers.NGramCrackers
-import NGramCrackers.TupleManipulation
-import NGramCrackers.ListManipulation
-import NGramCrackers.TextOps
+import NGramCrackers.Parsers.Paragraph
+import NGramCrackers.Utilities.Tuple
+import NGramCrackers.Utilities.List
+import NGramCrackers.Ops.Text
 
 {-| Data declaration of record type for programme options -}
 data Args = Profile {  wordC  :: Bool

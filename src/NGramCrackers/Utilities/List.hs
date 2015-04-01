@@ -1,4 +1,4 @@
-module NGramCrackers.ListManipulation 
+module NGramCrackers.Utilities.List
 ( getNSeqFromList
 , intToList
 ) where
