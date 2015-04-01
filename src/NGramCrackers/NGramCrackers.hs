@@ -5,6 +5,7 @@ module NGramCrackers.NGramCrackers
 , ngramCountProfile 
 , meanSentLength
 , sdSentLength
+, varSentLength
 ) where
 
 import Data.List (length, nub, sort)
@@ -58,15 +59,18 @@ typeTokenRatio tokens = (typesTotal, tokenTotal, ratio)
 {-| Takes a parsed paragraph and gets the mean length of the
     sentences in it. -}
 
-
 meanSentLength :: [[T.Text]] -> Double
 meanSentLength paragraph = lengths / sents where
                            lengths = (fromIntegral . sum . map length) paragraph
                            sents   = (fromIntegral . length) paragraph
 
+{-| Takes a parsed paragraph and gets the standard deviation of sentence length
+    in it -}
+
 sdSentLength   :: [[T.Text]] -> Double
 sdSentLength paragraph = standardDev lengths where
                          lengths = (map fromIntegral . map length) paragraph
+{-| Takes a parsed paragraph and gets the variance of sentence length in it. -}
                           
 varSentLength :: [[T.Text]] -> Double
 varSentLength paragraph = variance lengths where
