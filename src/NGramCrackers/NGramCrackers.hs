@@ -58,7 +58,6 @@ typeTokenRatio tokens = (typesTotal, tokenTotal, ratio)
 
 {-| Takes a parsed paragraph and gets the mean length of the
     sentences in it. -}
-
 meanSentLength :: [[T.Text]] -> Double
 meanSentLength paragraph = lengths / sents where
                            lengths = (fromIntegral . sum . map length) paragraph
@@ -66,12 +65,29 @@ meanSentLength paragraph = lengths / sents where
 
 {-| Takes a parsed paragraph and gets the standard deviation of sentence length
     in it -}
-
 sdSentLength   :: [[T.Text]] -> Double
 sdSentLength paragraph = standardDev lengths where
                          lengths = (map fromIntegral . map length) paragraph
+
 {-| Takes a parsed paragraph and gets the variance of sentence length in it. -}
-                          
 varSentLength :: [[T.Text]] -> Double
 varSentLength paragraph = variance lengths where
                           lengths = (map fromIntegral . map length) paragraph
+
+{-| Takes a paragraph and gets the number of sentence in it. -}
+sentsPerParagraph :: [[T.Text]] -> Double
+sentsPerParagraph = fromIntegral . length
+
+{-| Takes a list of paragraphs and gets the mean number of sentences per 
+    paragrpah. -}
+meanSentsPerParagraph :: [[[T.Text]]] -> Double
+meanSentsPerParagraph = mean . map sentsPerParagraph
+
+{-| Takes a paragraph and gets the number of sentence in it. -}
+sdSentsPerParagraph :: [[[T.Text]]] -> Double
+sdSentsPerParagraph = standardDev . map sentsPerParagraph
+
+{-| Takes a paragraph and gets the number of sentence in it. -}
+varSentsPerParagraph :: [[[T.Text]]] -> Double
+varSentsPerParagraph = variance . map sentsPerParagraph
+
