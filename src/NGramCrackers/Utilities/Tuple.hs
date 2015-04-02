@@ -15,8 +15,8 @@ thrd (_, _, x) = x
 
 compareDoubles:: Ord b => (a, b) -> (a, b) -> (a, b)
 compareDoubles xs  ys
-    | max (snd xs) (snd ys) == (snd xs) = xs
-    | max (snd xs) (snd ys) == (snd ys) = ys
+    | max (snd xs) (snd ys) == snd xs = xs
+    | max (snd xs) (snd ys) == snd ys = ys
     | otherwise = error "Fail"
 
 compareDoublesInList :: Ord b => [(a, b)] -> (a, b)
@@ -41,8 +41,8 @@ doubleToCSV x = lexeme <#> commaChar <#> (T.pack . show . snd) x
 
 compareTriples :: Ord c => (a, b, c) -> (a, b, c) -> (a, b, c)
 compareTriples xs ys
-    | max (thrd xs) (thrd ys) == (thrd xs) = xs
-    | max (thrd xs) (thrd ys) == (thrd ys) = ys
+    | max (thrd xs) (thrd ys) == thrd xs = xs
+    | max (thrd xs) (thrd ys) == thrd ys = ys
     | otherwise = error "Fail"
 
 

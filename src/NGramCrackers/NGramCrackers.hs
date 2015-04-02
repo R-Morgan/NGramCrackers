@@ -67,12 +67,12 @@ meanSentLength paragraph = lengths / sents where
     in it -}
 sdSentLength   :: [[T.Text]] -> Double
 sdSentLength paragraph = standardDev lengths where
-                         lengths = (map fromIntegral . map length) paragraph
+                         lengths = map (fromIntegral . length) paragraph
 
 {-| Takes a parsed paragraph and gets the variance of sentence length in it. -}
 varSentLength :: [[T.Text]] -> Double
 varSentLength paragraph = variance lengths where
-                          lengths = (map fromIntegral . map length) paragraph
+                          lengths = map (fromIntegral . length) paragraph
 
 {-| Takes a paragraph and gets the number of sentence in it. -}
 sentsPerParagraph :: [[T.Text]] -> Double
@@ -87,7 +87,7 @@ meanSentsPerParagraph = mean . map sentsPerParagraph
 sdSentsPerParagraph :: [[[T.Text]]] -> Double
 sdSentsPerParagraph = standardDev . map sentsPerParagraph
 
-{-| Takes a paragraph and gets the number of sentence in it. -}
+{-| Takes a paragraph and gets the variance of sentences in it. -}
 varSentsPerParagraph :: [[[T.Text]]] -> Double
 varSentsPerParagraph = variance . map sentsPerParagraph
 

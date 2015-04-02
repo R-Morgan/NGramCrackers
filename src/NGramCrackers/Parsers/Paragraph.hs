@@ -49,10 +49,10 @@ word :: PT.Parser T.Text
 -- The use of T.pack <$> is necessary because of the type many1 letter returns.
 -- fmapping T.pack into the Parser makes it possible to return a parser of the
 -- appropriate type.
-word = T.pack <$> (many1 letter) 
+word = T.pack <$> many1 letter 
 
 number :: PT.Parser T.Text
-number = T.pack <$> (many1 digit)
+number = T.pack <$> many1 digit
                                                      
 seppr :: PT.Parser ()
 -- Since the results of this parser are just thrown away, we need the `void`
@@ -62,7 +62,7 @@ seppr =  void sepprs <|> void newLn
                          <|> (char ',' *> space')
                          <|> (char ';' *> space')
                          <|> (char ':' *> space')
-                 newLn  =    ((many1 (char '\n')))
+                 newLn  =    many1 (char '\n')
                  space' = char ' '
 
 eos :: PT.Parser ()
@@ -80,4 +80,4 @@ eop :: PT.Parser ()
 eop = void $ 
   char '<' >> many1 letter >> char '>' <* (void space' <|> void newLn)
     where space' = char ' '
-          newLn  = (many1 (char '\n'))
+          newLn  = many1 (char '\n')

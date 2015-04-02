@@ -151,6 +151,5 @@ exec opts@Extract{..} = do inHandle <- SIO.openFile input SIO.ReadMode
                            SIO.hClose outHandle
 
 ngramPrinter :: [[[T.Text]]] -> (T.Text -> [T.Text]) -> [(T.Text, Int)] 
-ngramPrinter r extractor = (ngramCountProfile $ transformer r)
-                    where transformer = (DL.concat . DL.map extractor . 
-                                              DL.map T.unwords . DL.concat) 
+ngramPrinter r extractor = ngramCountProfile $ transformer r
+                    where transformer = DL.concatMap (extractor . T.unwords) . DL.concat
