@@ -6,6 +6,10 @@ module NGramCrackers.NGramCrackers
 , meanSentLength
 , sdSentLength
 , varSentLength
+, sentsPerParagraph
+, meanSentsPerParagraph
+, sdSentsPerParagraph
+, varSentsPerParagraph
 ) where
 
 import Data.List (length, nub, sort)

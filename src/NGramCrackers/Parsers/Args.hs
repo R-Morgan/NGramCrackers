@@ -22,10 +22,12 @@ import NGramCrackers.Utilities.List
 import NGramCrackers.Ops.Text
 
 {-| Data declaration of record type for programme options -}
-data Args = Profile {  wordC  :: Bool
-                     , ttr    :: Bool
-                     , input  :: FilePath
-                     , output :: FilePath
+data Args = Profile {  wordC     :: Bool
+                     , ttr       :: Bool
+                     , sentC     :: Bool
+                     , sentStats :: Bool
+                     , input     :: FilePath
+                     , output    :: FilePath
                     } 
             |
             Extract {  input   :: FilePath
@@ -41,6 +43,8 @@ data Args = Profile {  wordC  :: Bool
 profile :: Args
 profile =  Profile { wordC = def &= name "wc" &= help "Print word count"
                , ttr   = def &= help "Print type token ration (ttr)"
+               , sentC = def &= help "Mean sentences per paragraph"
+               , sentStats = def &= help "Stats about sentences"
                , input = def &= typFile &= help "Input file"
                , output = def &= typFile &= help "Output file"
                }
@@ -108,6 +112,24 @@ exec opts@Profile{..} = do inHandle <- SIO.openFile input SIO.ReadMode
 
                            when ttr   $ TIO.hPutStrLn outHandle $ typeTokenRatio contents
 
+                           when sentC $ TIO.hPutStrLn outHandle $ 
+                             case parseMultiPara contents of
+                                  Left e  -> do  "Error parsing input." 
+                                  
+                                  Right r ->  ps ms where
+                                                ms = meanSentsPerParagraph r
+                                                ps = T.pack . show
+
+                           when sentStats $ TIO.hPutStrLn outHandle $ 
+                             case parseMultiPara contents of
+                                  Left e  -> do  "Error parsing input." 
+                                  
+                                  Right r ->  "Sentence per paragraph statics\n" <#> mean <#> sd <#> var where
+                                                mean = "Mean: " <#> (ps . meanSentsPerParagraph) r    <#> " "
+                                                sd   = "SD: "  <#> (ps . sdSentsPerParagraph)   r     <#> " "
+                                                var  = "Variance: " <#> (ps . varSentsPerParagraph) r <#> " "
+                                                ps   = T.pack . show
+
                            SIO.hClose inHandle
                            SIO.hClose outHandle
 
@@ -123,7 +145,7 @@ exec opts@Extract{..} = do inHandle <- SIO.openFile input SIO.ReadMode
                                 Right r -> TIO.hPutStrLn outHandle "word,count" >> 
                                            mapM_ (TIO.hPutStrLn outHandle . doubleToCSV) 
                                              (ngramCountProfile $ concatMap DL.concat r)
-                                             --  (ngramCountProfile $ concat r)
+
                            when bigram $
                              case parseMultiPara contents of
                                 Left e  -> do SIO.putStrLn "Error parsing inputg: "

@@ -258,10 +258,13 @@ properly tagged in the tree. Sorry about that if you find this! <3 rm
  - Metadata analytics
 
 ### Version 0.3.0 -- Definition
+
 Specific Data Types:
  - NGrams (including 1-grams, i.e., words)
  - Sentences
  - Paragraph
+
+Pretty printing capabilities
 
 Metadata analytics
 
