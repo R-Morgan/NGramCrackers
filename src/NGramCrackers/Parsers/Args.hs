@@ -13,7 +13,7 @@ import Control.Monad (unless, when)
 import qualified System.IO    as SIO
 import qualified Data.Text.IO as TIO
 import qualified Data.Text    as T
-import qualified Data.List    as DL (genericLength, nub, map, concat)
+import qualified Data.List    as DL (map, concat, concatMap)
 
 import NGramCrackers.NGramCrackers
 import NGramCrackers.Parsers.Paragraph
@@ -33,6 +33,7 @@ data Args = Profile {  wordC  :: Bool
                      , lexemes :: Bool       -- word mode
                      , bigram  :: Bool
                      , trigram :: Bool
+                     , ngram   :: Int
                      , debug   :: Bool 
                     } deriving (Show, Data, Typeable)
 
@@ -50,6 +51,7 @@ extract = Extract { input = def &= typFile &= help "Input file"
                   , lexemes = def &= name "words" &= help "Word mode"
                   , bigram = def &= help "Bigram mode"
                   , trigram = def &= help "Trigram mode"
+                  , ngram   = def &= help "N-gram mode"
                   , debug = def &= help "Debugging mode"
                   }
 
@@ -64,8 +66,7 @@ optionHandler opts@Profile{..} = do
 optionHandler opts@Extract{..} = do
      when (null input)  $ SIO.putStrLn "Supply input file"  >> exitWith (ExitFailure 1)
      when (null output) $ SIO.putStrLn "Supply output file" >> exitWith (ExitFailure 1)
-     unless (lexemes || bigram || trigram || debug)  $ SIO.putStrLn "Supply a mode"  >> 
-       exitWith (ExitFailure 1)
+     unless (lexemes || bigram || trigram || (ngram > 3 && ngram < 8) || debug) $ SIO.putStrLn "Supply a mode"  >> exitWith (ExitFailure 1)
      exec opts
 
 {-| Makes IO args out of myArgs -}
@@ -140,6 +141,16 @@ exec opts@Extract{..} = do inHandle <- SIO.openFile input SIO.ReadMode
                                 Right r -> TIO.hPutStrLn outHandle "trigram,count" >>
                                            mapM_ (TIO.hPutStrLn outHandle . doubleToCSV) 
                                              (ngramPrinter r trigrams)
+
+                           when (ngram > 3 && ngram < 8) $
+                             case parseMultiPara contents of
+                                Left e  -> do SIO.putStrLn "Error parsing input: "
+                                              print e
+
+                                Right r -> TIO.hPutStrLn outHandle "trigram,count" >>
+                                           mapM_ (TIO.hPutStrLn outHandle . doubleToCSV) 
+                                             (ngramPrinter r $ getNGramsFromText ngram)
+
 
                            when debug $
                              case parseMultiPara contents of

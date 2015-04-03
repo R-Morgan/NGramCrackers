@@ -45,7 +45,7 @@ getNGramsFromTextList = getNSeqFromList
     result as a string. Output of this function may need processing
     into a list, tuple, etc. -}
 getAlphasOnlyToText :: T.Text -> T.Text
-getAlphasOnlyToText = T.filter \char -> (isAlpha char || isSpace char)  
+getAlphasOnlyToText = T.filter (\char -> (isAlpha char || isSpace char))
 
 {-| Return only alphanumeric characters from a string and return the
     result as a List.-}
