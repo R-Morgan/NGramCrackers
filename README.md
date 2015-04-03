@@ -252,7 +252,7 @@ properly tagged in the tree. Sorry about that if you find this! <3 rm
 
 ### Version 0.2.7 -- Definition
  - ngram extraction from CLI
- - words/sent statistics
+ - words/sent statistics and access to them from CLI
 
 ### Version 0.2.8 -- Definition
  - Metadata analytics
