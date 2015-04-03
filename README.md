@@ -256,6 +256,7 @@ properly tagged in the tree. Sorry about that if you find this! <3 rm
 
 ### Version 0.2.8 -- Definition
  - Metadata analytics
+ - Hashtable based look up for word/phrasal stats
 
 ### Version 0.3.0 -- Definition
 
@@ -267,6 +268,8 @@ Specific Data Types:
 Pretty printing capabilities
 
 Metadata analytics
+
+Vector-based sequences?
 
 ### Version 1.0.0  -- Definition 4, Jan, 2015
 
