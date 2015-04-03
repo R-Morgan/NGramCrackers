@@ -112,19 +112,22 @@ exec opts@Profile{..} = do inHandle <- SIO.openFile input SIO.ReadMode
 
                            when ttr   $ TIO.hPutStrLn outHandle $ typeTokenRatio contents
 
-                           when sentC $ TIO.hPutStrLn outHandle $ 
+                           when sentC $
                              case parseMultiPara contents of
-                                  Left e  -> do  "Error parsing input." 
+                                  Left e  -> do SIO.putStrLn "Error parsing input." 
+                                                print e
                                   
-                                  Right r ->  ps ms where
+                                  Right r -> TIO.hPutStrLn outHandle $ ps ms where
                                                 ms = meanSentsPerParagraph r
                                                 ps = T.pack . show
 
-                           when sentStats $ TIO.hPutStrLn outHandle $ 
+                           when sentStats $  
                              case parseMultiPara contents of
-                                  Left e  -> do  "Error parsing input." 
+                                  Left e  -> do SIO.putStrLn "Error parsing input." 
+                                                print e
                                   
-                                  Right r ->  "Sentence per paragraph statics\n" <#> mean <#> sd <#> var where
+                                  Right r ->  TIO.hPutStrLn outHandle "Sentence per paragraph statics" >>
+                                              TIO.hPutStrLn outHandle (mean <#> sd <#> var) where
                                                 mean = "Mean: " <#> (ps . meanSentsPerParagraph) r    <#> " "
                                                 sd   = "SD: "  <#> (ps . sdSentsPerParagraph)   r     <#> " "
                                                 var  = "Variance: " <#> (ps . varSentsPerParagraph) r <#> " "
