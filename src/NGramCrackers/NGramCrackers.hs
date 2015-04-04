@@ -13,6 +13,8 @@ module NGramCrackers.NGramCrackers
 ) where
 
 import Data.List (length, nub, sort)
+import Data.Set
+
 import qualified Data.Text as T
 
 import NGramCrackers.Utilities.List
