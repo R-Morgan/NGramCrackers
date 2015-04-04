@@ -127,11 +127,7 @@ exec opts@Profile{..} = do inHandle <- SIO.openFile input SIO.ReadMode
                                                 print e
                                   
                                   Right r ->  TIO.hPutStrLn outHandle "Sentence per paragraph statics" >>
-                                              TIO.hPutStrLn outHandle (mean <#> sd <#> var) where
-                                                mean = "Mean: " <#> (ps . meanSentsPerParagraph) r    <#> " "
-                                                sd   = "SD: "  <#> (ps . sdSentsPerParagraph)   r     <#> " "
-                                                var  = "Variance: " <#> (ps . varSentsPerParagraph) r <#> " "
-                                                ps   = T.pack . show
+                                              TIO.hPutStrLn outHandle (statsFormatter r)
 
                            SIO.hClose inHandle
                            SIO.hClose outHandle
@@ -185,6 +181,14 @@ exec opts@Extract{..} = do inHandle <- SIO.openFile input SIO.ReadMode
 
                            SIO.hClose inHandle
                            SIO.hClose outHandle
+
+
+statsFormatter :: [[[T.Text]]] -> T.Text
+statsFormatter stream = (mean <#> sd <#> var) where
+                           mean = "Mean: " <#> (ps . meanSentsPerParagraph) stream    <#> " "
+                           sd   = "SD: "  <#> (ps . sdSentsPerParagraph)   stream     <#> " "
+                           var  = "Variance: " <#> (ps . varSentsPerParagraph) stream <#> " "
+                           ps   = T.pack . show
 
 ngramPrinter :: [[[T.Text]]] -> (T.Text -> [T.Text]) -> [(T.Text, Int)] 
 ngramPrinter r extractor = ngramCountProfile $ transformer r
