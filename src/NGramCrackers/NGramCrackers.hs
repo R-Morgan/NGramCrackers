@@ -10,6 +10,7 @@ module NGramCrackers.NGramCrackers
 , meanSentsPerParagraph
 , sdSentsPerParagraph
 , varSentsPerParagraph
+, ttrSet
 ) where
 
 import Data.List (length, nub, sort, concat, concatMap)
