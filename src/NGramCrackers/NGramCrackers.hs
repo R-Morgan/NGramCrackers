@@ -17,12 +17,12 @@ import Data.List (length, nub, sort, concat, concatMap)
 
 import qualified Data.Text as T
 import qualified Data.Set as S
+import qualified Data.List as L
 import qualified Data.Vector as V
 
 import NGramCrackers.Utilities.List
 import NGramCrackers.Parsers.Paragraph
 import NGramCrackers.Quant.Dispersion
-
 
 {-| Extract n-grams from a List. Internal function for n-gram
     string extraction function. Although this looks like a 
@@ -65,23 +65,38 @@ typeTokenRatio tokens = (typesTotal, tokenTotal, ratio)
                                 ratio      = typesTotal / tokenTotal 
 
 {- Makes a set from a list of words-}
-setTypes :: [T.Text] -> S.Set T.Text
-setTypes = S.fromList
+wordSet :: [T.Text] -> S.Set T.Text
+wordSet = S.fromList
 
-setTypesDoc :: [[[T.Text]]] -> S.Set T.Text
-setTypesDoc = S.fromList . concatMap concat
+{- Makes a set from a docBody -}
+wordSetDoc :: [[[T.Text]]] -> S.Set T.Text
+wordSetDoc = S.fromList . concatMap concat
+
+countWordSetElem :: S.Set T.Text -> [[[T.Text]]] -> [(T.Text, Int)]
+countWordSetElem lexSet doc = countWordSetElem' lexSet concattedDoc where
+                                concattedDoc = concatMap concat doc
+                            
+countWordSetElem' :: S.Set T.Text -> [T.Text] -> [(T.Text, Int)]
+countWordSetElem' lexSet concattedDoc | S.null lexSet       = []
+                                      | L.null concattedDoc = []
+                                      | otherwise = (word, count) : 
+                                          countWordSetElem' newSet newDoc where 
+                                          word = S.elemAt 0 lexSet
+                                          count = length $ filter (== word) concattedDoc
+                                          newSet = S.deleteAt 0 lexSet
+                                          newDoc = filter (/= word) concattedDoc
 
 {-Takes a list of words and calculates a type-token ratio, using Set type to
   to get the length of the unique types. -}
 ttrSet :: [T.Text] -> (Double, Double, Double)
 ttrSet tokens = (typesTot, tokenTot, ratio)
-                   where typesTot = (fromIntegral . S.size . setTypes) tokens
+                   where typesTot = (fromIntegral . S.size . wordSet) tokens
                          tokenTot = (fromIntegral . length) tokens
                          ratio    = typesTot / tokenTot
 
 ttrSet' :: [T.Text] -> (Double, Double, Double)
 ttrSet' tokens = (typesTot, tokenTot, ratio)
-                   where typesTot = (fromIntegral . S.size . setTypes) tokens
+                   where typesTot = (fromIntegral . S.size . wordSet) tokens
                          tokenTot = (fromIntegral . length) tokens
                          -- Could this be done more efficiently w/Vector?
                          ratio    = typesTot / tokenTot
