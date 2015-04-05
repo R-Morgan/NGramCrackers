@@ -12,10 +12,11 @@ module NGramCrackers.NGramCrackers
 , varSentsPerParagraph
 ) where
 
-import Data.List (length, nub, sort)
-import Data.Set
+import Data.List (length, nub, sort, concat, concatMap)
 
 import qualified Data.Text as T
+import qualified Data.Set as S
+import qualified Data.Vector as V
 
 import NGramCrackers.Utilities.List
 import NGramCrackers.Parsers.Paragraph
@@ -61,6 +62,28 @@ typeTokenRatio tokens = (typesTotal, tokenTotal, ratio)
                           where typesTotal = (fromIntegral . length . nub) tokens
                                 tokenTotal = (fromIntegral . length) tokens
                                 ratio      = typesTotal / tokenTotal 
+
+{- Makes a set from a list of words-}
+setTypes :: [T.Text] -> S.Set T.Text
+setTypes = S.fromList
+
+setTypesDoc :: [[[T.Text]]] -> S.Set T.Text
+setTypesDoc = S.fromList . concatMap concat
+
+{-Takes a list of words and calculates a type-token ratio, using Set type to
+  to get the length of the unique types. -}
+ttrSet :: [T.Text] -> (Double, Double, Double)
+ttrSet tokens = (typesTot, tokenTot, ratio)
+                   where typesTot = (fromIntegral . S.size . setTypes) tokens
+                         tokenTot = (fromIntegral . length) tokens
+                         ratio    = typesTot / tokenTot
+
+ttrSet' :: [T.Text] -> (Double, Double, Double)
+ttrSet' tokens = (typesTot, tokenTot, ratio)
+                   where typesTot = (fromIntegral . S.size . setTypes) tokens
+                         tokenTot = (fromIntegral . length) tokens
+                         -- Could this be done more efficiently w/Vector?
+                         ratio    = typesTot / tokenTot
 
 {-| Takes a parsed paragraph and gets the mean length of the
     sentences in it. -}
