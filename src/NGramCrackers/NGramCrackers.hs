@@ -15,9 +15,10 @@ module NGramCrackers.NGramCrackers
 
 import Data.List (length, nub, sort, concat, concatMap)
 
+import qualified Data.List as L
+import qualified Data.Map  as M
 import qualified Data.Text as T
 import qualified Data.Set as S
-import qualified Data.List as L
 import qualified Data.Vector as V
 
 import NGramCrackers.Utilities.List
@@ -100,6 +101,18 @@ ttrSet' tokens = (typesTot, tokenTot, ratio)
                          tokenTot = (fromIntegral . length) tokens
                          -- Could this be done more efficiently w/Vector?
                          ratio    = typesTot / tokenTot
+
+{-| Borrowed from: http://nlpwp.org/book/chap-words.xhtml. -}
+wcMap :: [[[T.Text]]] -> M.Map T.Text Int
+wcMap doc = wcMap' stream where
+              wcMap' = foldl countElem M.empty
+              stream = concatMap concat doc
+
+{-| Borrowed from: http://nlpwp.org/book/chap-words.xhtml. -}
+countElem :: (Ord k) => M.Map k Int -> k -> M.Map k Int
+countElem m e = case (M.lookup e m) of
+                  Just v  -> M.insert e (v + 1) m
+                  Nothing -> M.insert e 1 m
 
 {-| Takes a parsed paragraph and gets the mean length of the
     sentences in it. -}
