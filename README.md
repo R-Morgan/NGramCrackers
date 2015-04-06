@@ -249,14 +249,18 @@ needed for the forseeable future. Version 0.2.4 is untagged in the commit tree
 because of poor planning on the part of yours truly. Version 0.2.5 has been
 properly tagged in the tree. Sorry about that if you find this! <3 rm
 
-
 ### Version 0.2.7 -- Definition
  - ngram extraction from CLI
  - words/sent statistics and access to them from CLI
 
+
 ### Version 0.2.8 -- Definition
- - Metadata analytics
  - Hashtable based look up for word/phrasal stats
+ - Bigram Mutual Information calculation and CLI integration
+ - More concide argument handling case statement
+
+### Version 0.2.9 -- Definition
+ - Metadata analytics
 
 ### Version 0.3.0 -- Definition
 
