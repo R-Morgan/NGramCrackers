@@ -275,6 +275,9 @@ Metadata analytics
 
 Vector-based sequences?
 
+### Version 0.4.0 -- Definition
+--Twitter API parsing capabilities
+
 ### Version 1.0.0  -- Definition 4, Jan, 2015
 
 My vision for 1.0.0 is a fully functional text analysis programme. This project
@@ -324,3 +327,12 @@ coming months. Version 1.0.0 should include:
   -- Testing Suite implemented in quickCheck
 
   -- Cabal-based installation of library!
+
+  -- Plugable format parsing and analysis.
+
+  -- Support for popular text formats and API formats:
+     -- Twitter/GNUSocial
+     -- HTML
+     -- Markdown
+
+
