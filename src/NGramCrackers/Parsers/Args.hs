@@ -83,6 +83,7 @@ myModes = cmdArgsMode $ modes [profile, extract]
     &= helpArg [explicit, name "help", name "h"]
     &= program _PROGRAM_NAME
 
+-- Something sorta like constants.
 _PROGRAM_NAME :: String
 _PROGRAM_NAME = "NGramCrackers CLI"
 
@@ -172,7 +173,6 @@ exec opts@Extract{..} = do inHandle <- SIO.openFile input SIO.ReadMode
                                            mapM_ (TIO.hPutStrLn outHandle . doubleToCSV) 
                                              (ngramPrinter r $ getNGramsFromText ngram)
 
-
                            when debug $
                              case parseMultiPara contents of
                                 Left e  -> do SIO.putStrLn "Error parsing input: "
@@ -181,7 +181,6 @@ exec opts@Extract{..} = do inHandle <- SIO.openFile input SIO.ReadMode
 
                            SIO.hClose inHandle
                            SIO.hClose outHandle
-
 
 statsFormatter :: [[[T.Text]]] -> T.Text
 statsFormatter stream = (mean <#> sd <#> var) where
