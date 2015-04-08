@@ -16,7 +16,6 @@ import qualified Data.Text as T
 import Data.Char (isAlpha, isAlphaNum, isSpace, toLower)
 import Data.List (map, nub)
 
-import NGramCrackers.NGramCrackers
 import NGramCrackers.Utilities.List
 
 {-| Infix synonym for T.append. Handy for gluing bits of Text together -}
