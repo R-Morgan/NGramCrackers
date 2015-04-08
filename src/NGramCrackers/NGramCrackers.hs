@@ -1,6 +1,5 @@
 module NGramCrackers.NGramCrackers 
-( getNGramsFromList
-, countNGram
+( countNGram
 , getNGramFreqs
 , ngramCountProfile 
 , meanSentLength
@@ -65,6 +64,9 @@ wordSet = S.fromList
 wordSetDoc :: [[[T.Text]]] -> S.Set T.Text
 wordSetDoc = S.fromList . concatMap concat
 
+ngramSetDoc :: [[[T.Text]]] -> S.Set T.Text
+ngramSetDoc = S.fromList . concatMap bigrams . map T.unwords . concat
+
 countWordSetElem :: S.Set T.Text -> [[[T.Text]]] -> [(T.Text, Int)]
 countWordSetElem lexSet doc = countWordSetElem' lexSet concattedDoc where
                                 concattedDoc = concatMap concat doc
@@ -94,15 +96,30 @@ ttrSet' tokens = (typesTot, tokenTot, ratio)
                          -- Could this be done more efficiently w/Vector?
                          ratio    = typesTot / tokenTot
 
---bigramMI :: T.Text -> Map T.Text Double 
---bigramMI doc = log $ bgFreq / pW1 * pW2 * total where
---                  bgFreq
---                  bgMap = bigramMap doc
+{- bigramMIProfile :: [[[T.Text]]] -> M.Map T.Text Double
+bigramMIProfile doc = pMI bgFreq pW1 pW2 total where
+                        bgFreq =
+                        bmap   = bigramMap doc
+                        wmap   = wcMap doc
+                        wset   = (map wordSet . concatMap concat) doc
+                        bigram = elemAt 0 wset
+-}
 
+{-| Pointwise mutual information score calculation based on Church and Hanks -}
+pMI :: Int -> Double -> Double -> Int -> Double
+pMI bgFreq pW1 pW2 total = log $ (fromIntegral bgFreq) / (pW1 * pW2 * (fromIntegral total))
+
+{-| Produces Map of bigrams in a document-}
 bigramMap :: [[[T.Text]]] -> M.Map T.Text Int
-bigramMap doc = wcMap' stream where
-                  wcMap' = foldl countElem M.empty
+bigramMap doc = bigramMap' stream where
+                  bigramMap' = foldl countElem M.empty
                   stream = (concatMap bigrams . map T.unwords . concat) doc
+
+{-| Generalised version of bigramMap -}
+ngramMap :: (T.Text -> [T.Text]) -> [[[T.Text]]] -> M.Map T.Text Int
+ngramMap f doc = wcMap' stream where
+                  wcMap' = foldl countElem M.empty
+                  stream = (concatMap f . map T.unwords . concat) doc
 
 {-| Borrowed from: http://nlpwp.org/book/chap-words.xhtml. -}
 wcMap :: [[[T.Text]]] -> M.Map T.Text Int
