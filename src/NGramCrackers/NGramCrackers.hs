@@ -21,18 +21,10 @@ import qualified Data.Text as T
 import qualified Data.Set as S
 import qualified Data.Vector as V
 
+import NGramCrackers.Ops.Text
 import NGramCrackers.Utilities.List
 import NGramCrackers.Parsers.Paragraph
 import NGramCrackers.Quant.Dispersion
-
-{-| Extract n-grams from a List. Internal function for n-gram
-    string extraction function. Although this looks like a 
-    functional synonym for getNSeqFromList, the type signature on
-    this function requires that the input list be off StringS
-    not just any type -}
-getNGramsFromList :: Int -> [String] -> [[String]]
-getNGramsFromList = getNSeqFromList 
-
 
 {-| Counts the number of times a word occurs in a list of words. Useful
     for counting words in sentences, paragraphs, etc. -}
@@ -101,6 +93,16 @@ ttrSet' tokens = (typesTot, tokenTot, ratio)
                          tokenTot = (fromIntegral . length) tokens
                          -- Could this be done more efficiently w/Vector?
                          ratio    = typesTot / tokenTot
+
+--bigramMI :: T.Text -> Map T.Text Double 
+--bigramMI doc = log $ bgFreq / pW1 * pW2 * total where
+--                  bgFreq
+--                  bgMap = bigramMap doc
+
+bigramMap :: [[[T.Text]]] -> M.Map T.Text Int
+bigramMap doc = wcMap' stream where
+                  wcMap' = foldl countElem M.empty
+                  stream = (concatMap bigrams . map T.unwords . concat) doc
 
 {-| Borrowed from: http://nlpwp.org/book/chap-words.xhtml. -}
 wcMap :: [[[T.Text]]] -> M.Map T.Text Int
