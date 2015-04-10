@@ -116,29 +116,29 @@ immediately useful.
 
 The gaps this project is intended to fill:
 
-  - Simple commandline tool for text analysis, similar to Monoconc or Antconc
-    in functionality. NGramCrackers falls in between limited-platform 
-    proprietary binaries distributed to be consumed (MonoconcPro or Antconc) 
-    and fully developed NLP APIs (e.g., NLTK).
+ - Simple commandline tool for text analysis, similar to Monoconc or Antconc
+   in functionality. NGramCrackers falls in between limited-platform 
+   proprietary binaries distributed to be consumed (MonoconcPro or Antconc) 
+   and fully developed NLP APIs (e.g., NLTK).
 
-  - Tools for intermediate to advanced users of GNU/Linux or other 'nixen.
-    Windows functionality will depend on my ability to cross-compile to
-    such a binary.
+ - Tools for intermediate to advanced users of GNU/Linux or other 'nixen.
+   Windows functionality will depend on my ability to cross-compile to
+   such a binary.
+ 
+ - A concordancer that is capable of handling huge corpora and making use of
+   parallel computing resources.
   
-  - A concordancer that is capable of handling huge corpora and making use of
-    parallel computing resources.
-    
-  I have met few programmers like me: non-professional, self-taught (with 
-  community support!), hobbiest programmers. During the writing of my thesis,
-  I was frustrated by what sort of tools were available: Consumer products 
-  intended for non-programmers or full libraries for much better programmers 
-  than I was at that time. NGramCrackers is both a CLI tool and Libre backend
-  API, written in Haskell, of the same name.
+I have met few programmers like me: non-professional, self-taught (with 
+community support!), hobbiest programmers. During the writing of my thesis,
+I was frustrated by what sort of tools were available: Consumer products 
+intended for non-programmers or full libraries for much better programmers 
+than I was at that time. NGramCrackers is both a CLI tool and Libre backend
+API, written in Haskell, of the same name.
 
-  - NGramCrackers is intended to provide easy outputting of usefully formatted
-    (e.g., .csv, .tsv, etc.) data. No one should ever have to manually copy and
-    paste output from a GUI to a spreadsheet programme to get a CSV to use in 
-    an analysis conducted with external software.
+ - NGramCrackers is intended to provide easy outputting of usefully formatted
+   (e.g., .csv, .tsv, etc.) data. No one should ever have to manually copy and
+   paste output from a GUI to a spreadsheet programme to get a CSV to use in 
+   an analysis conducted with external software.
 
 Versioning Information
 ------------------------
@@ -253,7 +253,6 @@ properly tagged in the tree. Sorry about that if you find this! <3 rm
  - ngram extraction from CLI
  - words/sent statistics and access to them from CLI
 
-
 ### Version 0.2.8 -- Definition
  - Hashtable based look up for word/phrasal stats
  - Bigram Mutual Information calculation and CLI integration
@@ -330,9 +329,10 @@ coming months. Version 1.0.0 should include:
 
   -- Plugable format parsing and analysis.
 
-  -- Support for popular text formats and API formats:
-     -- Twitter/GNUSocial
+  -- Support for popular text formats and API output formats:
      -- HTML
      -- Markdown
+     -- SGML
+     -- Twitter/GNUSocial
 
 
