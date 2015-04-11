@@ -22,7 +22,7 @@ import qualified Data.Text as T
 
 data Paragraph = Paragraph [Sentence] deriving (Show, Read, Eq)
 data Sentence = Sentence [Word] deriving (Show, Read, Eq)
-type Word = T.Text
+type Word' = T.Text
 
 data MetaTag = MetaTag { tag      :: T.Text
                        , contents :: T.Text

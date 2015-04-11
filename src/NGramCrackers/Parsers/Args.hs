@@ -20,6 +20,8 @@ import NGramCrackers.Parsers.Paragraph
 import NGramCrackers.Utilities.Tuple
 import NGramCrackers.Utilities.List
 import NGramCrackers.Ops.Text
+import NGramCrackers.Quant.Stats
+
 
 {-| Data declaration of record type for programme options -}
 data Args = Profile {  wordC     :: Bool
