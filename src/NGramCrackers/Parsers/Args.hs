@@ -106,9 +106,8 @@ _COPYRIGHT = "(C) Rianna Morgan 2015"
     before some when expressions to determine what to print to file. The file
     handles are then closed. -}
 exec :: Args -> IO ()
-exec opts@Profile{..} = do inHandle <- SIO.openFile input SIO.ReadMode 
-                           outHandle <- SIO.openFile output SIO.WriteMode
-                           contents <- TIO.hGetContents inHandle -- contents :: T.Text
+exec opts@Profile{..} = do outHandle <- SIO.openFile output SIO.WriteMode
+                           contents <- TIO.hGetContents =<< SIO.openFile input SIO.ReadMode -- contents :: T.Text 
 
                            when wordC $ TIO.hPutStrLn outHandle $ 
                              (T.pack . show . countWords) contents
@@ -132,12 +131,11 @@ exec opts@Profile{..} = do inHandle <- SIO.openFile input SIO.ReadMode
                                   Right r ->  TIO.hPutStrLn outHandle "Sentence per paragraph statics" >>
                                               TIO.hPutStrLn outHandle (statsFormatter r)
 
-                           SIO.hClose inHandle
+                           --SIO.hClose inHandle
                            SIO.hClose outHandle
 
-exec opts@Extract{..} = do inHandle <- SIO.openFile input SIO.ReadMode 
-                           outHandle <- SIO.openFile output SIO.WriteMode
-                           contents <- TIO.hGetContents inHandle -- contents :: T.Text 
+exec opts@Extract{..} = do outHandle <- SIO.openFile output SIO.WriteMode
+                           contents <- TIO.hGetContents =<< SIO.openFile input SIO.ReadMode -- contents :: T.Text 
 
                            when lexemes $ 
                              case parseMultiPara contents of
@@ -181,7 +179,7 @@ exec opts@Extract{..} = do inHandle <- SIO.openFile input SIO.ReadMode
                                               print e
                                 Right r -> SIO.putStrLn "Multiparagraph parsing result: " >> print r
 
-                           SIO.hClose inHandle
+                           --SIO.hClose inHandle
                            SIO.hClose outHandle
 
 statsFormatter :: [[[T.Text]]] -> T.Text
