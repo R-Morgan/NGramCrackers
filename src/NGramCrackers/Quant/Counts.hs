@@ -27,6 +27,24 @@ bigramMap doc = bigramMap' stream where
                   bigramMap' = foldl countElem M.empty
                   stream = (concatMap bigrams . map T.unwords . concat) doc
 
+{-| Looks up counts of a bigrams constituent words in a Map. Useful for the
+    calculation of pMI -}
+bigramWordsLookup :: T.Text -> M.Map T.Text Int -> (T.Text, Maybe Int, Maybe Int)
+-- TODO: Possibly awkward to use tuple format. Possibly not. Evaluate.
+-- TODO: Generalise this function to ngrams
+bigramWordsLookup bg m = (bg, aC, bC) where
+                    wrds = T.words bg
+                    aC = M.lookup a m
+                    bC = M.lookup b m
+                    a    = head wrds
+                    b    = last wrds
+
+{-| Looks up bigram's count in a Map. Useful for the calculation of pMI -}
+bigramLookup :: T.Text -> M.Map T.Text Int -> (T.Text, Maybe Int)
+bigramLookup bg m = (bg, count) where
+-- m should be a Map of bigrams and their counts, not just words
+                      count = M.lookup bg m
+
 {-| Generalised version of bigramMap -}
 ngramMap :: (T.Text -> [T.Text]) -> [[[T.Text]]] -> M.Map T.Text Int
 ngramMap f doc = ngramMap' stream where
@@ -69,14 +87,6 @@ countWordSetElem' lexSet concattedDoc | S.null lexSet       = []
                                           count = length $ filter (== word) concattedDoc
                                           newSet = S.deleteAt 0 lexSet
                                           newDoc = filter (/= word) concattedDoc
-
-bigramLookup :: T.Text -> M.Map T.Text Int -> (T.Text, Maybe Int, Maybe Int)
-bigramLookup bg m = (bg, aC, bC) where
-                    wrds = T.words bg
-                    aC = M.lookup a m
-                    bC = M.lookup b m
-                    a    = head wrds
-                    b    = last wrds
 
 test :: [[[T.Text]]]
 test = [sents, sents', sents''] where
