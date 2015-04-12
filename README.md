@@ -262,6 +262,7 @@ properly tagged in the tree. Sorry about that if you find this! <3 rm
  - Metadata analytics
 
 ### Version 0.3.0 -- Definition
+- Literate Haskell Documentation
 
 Specific Data Types:
  - NGrams (including 1-grams, i.e., words)
@@ -275,64 +276,67 @@ Metadata analytics
 Vector-based sequences?
 
 ### Version 0.4.0 -- Definition
---Twitter API parsing capabilities
+- Twitter API parsing capabilities
 
 ### Version 1.0.0  -- Definition 4, Jan, 2015
 
 My vision for 1.0.0 is a fully functional text analysis programme. This project
 is in the early stages, so I may revise this standard substantially over the
-coming months. Version 1.0.0 should include:
+coming months. 
 
-  -- Output options:
-     
-     -- CSV
-     -- TSV
-     -- Tabular output for human readability
+Version 1.0.0 should include:
 
-  -- Concordancing capabilities
+- Output options:
+    
+ - CSV
+ - TSV
+ - Tabular output for human readability
 
-  -- N-gram extraction
+- Concordancing capabilities
 
-     -- Frequencies
-     -- MI and LL computations
-     -- T-scores
-     -- Other text stats
-     -- Number of differents files that the ngram occurs
-        -- Possible across genres
+  - N-gram extraction
+
+  - Frequencies
+  - MI and LL computations
+  - T-scores
+  - Other text stats
+  - Number of differents files that the ngram occurs
+   - Possible across genres
   
-  -- Explicit corpus metadata parsing and analysis capabilities
+- Explicit corpus metadata parsing and analysis capabilities
 
-  -- Fully specified data types for:
+- Fully specified data types for:
      
-      -- Words
-      -- Sentences
-      -- Paragraphs
-      -- Documents
-      -- Metadata
-      -- Corpora
+  - Words
+  - Sentences
+  - Paragraphs
+  - Documents
+  - Metadata
+  - Corpora
 
-  -- Descriptive test statistics:
+- Descriptive test statistics:
      
-     -- Corpora
-     -- Documents
-     -- Paragraphs
-     -- Words
+  - Corpora
+  - Documents
+  - Paragraphs
+  - Words
 
-     -- Very useful to consider things like, mean/variance words per sent, 
-        paragraph in a Document or Corpus. 
+   - Very useful to consider things like, mean/variance words per sent, 
+     paragraph in a Document or Corpus. 
 
-  -- CLI Argument Handling
+- CLI Argument Handling
 
-  -- Testing Suite implemented in quickCheck
+- Testing Suite implemented in quickCheck
 
-  -- Cabal-based installation of library!
+- Cabal-based installation of library!
 
-  -- Plugable format parsing and analysis.
+- Plugable format parsing and analysis.
 
-  -- Support for popular text formats and API output formats:
-     -- HTML
-     -- Markdown
-     -- SGML
-     -- Twitter/GNUSocial
-
-
+- Support for popular text formats and API output formats:
+ - HTML
+ - SGML
+ - JSON-based API output
+ - Markdown
+ - Twitter/GNUSocial
+  
+- Literate Haskell documentation
