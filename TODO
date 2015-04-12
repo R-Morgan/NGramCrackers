@@ -4,11 +4,11 @@ TODO
 High
 ######
 
--- implement command line argument parsing and handling [Testing]
+- implement command line argument parsing and handling [Testing]
 
-   -- Implement multiple modes [Testing]
+   - Implement multiple modes [Testing]
       
-      -- Profile:
+      - Profile:
          
          This will provide a way to obtain general stats about a
          document. Some options will be:
@@ -20,7 +20,7 @@ High
 
          -m        various means (words/sent sent/para)
 
-      -- Extract:
+      - Extract:
 
          The will provide ways to obtain a profile with counts of all words
          and output it to a file. Ideally this will include functionality for
@@ -32,57 +32,44 @@ High
          -b        bigrams
          -t        trigrams
          -n [Int]  ngrams
+
+- implement quickCheck tests [testing]
    
--- implement lexeme frequency counter [Testing]
+   - test the text manipulation stuff -- i.e., the pure code
 
-   -- The problem with this function is that it may count "".
-      This will need to be corrected in the construction of
-      lists
-   
-   -- countWord, getWordsFreqs, lexemeCountProfile are all
-      related to this goal
-
--- implement n-gram frequency counter [Testing]
-
-   -- I have done this for words, bi- and trigrams with 
-      ngramCountProfile. There are backend functions like
-      getNGramsFromList that can help with a more flexible
-      function to get 4- and 5-grams.
-
--- implement quickCheck tests [testing]
-   
-   -- test the text manipulation stuff -- i.e., the pure code
-
-   -- IO tests -- not sure how to do that
+   - IO tests -- not sure how to do that
 
 ######
 Med
 ######
 
--- implement functionality to parse multiple paragraphs. The L.
-   documents should be a good guide to determine what actually separates
-   the paragraphs [testing]
+- Implement the parsing of punctuation in Text literals, like ''' which can
+  distinguish words (it's vs. its)
 
--- Implement normalising function to count words like "The" and "the" to
-   be parsed as the same word
+- Find out what are the edge cases in paragraph separation
+
+  - Implement parsers to handle them. functionality to parse multiple
+    paragraphs. The L. documents should be a good guide to determine what
+    actually separates the paragraphs [testing]
+
+- Implement normalising function to count words like "The" and "the" to
+  be parsed as the same word
+
+  - Likely possibly with `map T.lower`
 
 ######
 Low
 ######
 
--- Make a variety of n-gram processing functions to output in
-   several different formats (e.g., list of strings, tuple)
+- Implement data types like Corpus, Document, Paragraph, Sentence, Word
 
--- implement data types like Corpus, Document, Paragraph, Sentence, Word
+- Metadata parsing capabilities [Testing]
 
--- metadata parsing capabilities [Testing]
-
--- metadata analysis facilities over file sets
+- Metadata analysis facilities over file sets
 
 ########
 On-Going
 ########
 
--- Write more README.md 
-   -- Add Version 1.0.0 definition
-
+- Write more README.md 
+- Version definition revisions
