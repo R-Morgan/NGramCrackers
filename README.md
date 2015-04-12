@@ -256,24 +256,24 @@ properly tagged in the tree. Sorry about that if you find this! <3 rm
 ### Version 0.2.8 -- Definition
  - Hashtable based look up for word/phrasal stats
  - Bigram Mutual Information calculation and CLI integration
- - More concide argument handling case statement
+ - More concide argument handling case statement. This involves moving the
+   behaviour of each case into their own functions.
 
 ### Version 0.2.9 -- Definition
  - Metadata analytics
+ - Trigram Mutual Information calculation and CLI integration
 
-### Version 0.3.0 -- Definition
+### Version 0.3.0 -- Definition (Break up into other releases)
 - Literate Haskell Documentation
 
-Specific Data Types:
- - NGrams (including 1-grams, i.e., words)
- - Sentences
- - Paragraph
+- Specific Data Types:
+  - NGrams (including 1-grams, i.e., words)
+  - Sentences
+  - Paragraph
 
-Pretty printing capabilities
-
-Metadata analytics
-
-Vector-based sequences?
+- Pretty printing capabilities
+- Metadata analytics
+- Vector-based sequences?
 
 ### Version 0.4.0 -- Definition
 - Twitter API parsing capabilities
