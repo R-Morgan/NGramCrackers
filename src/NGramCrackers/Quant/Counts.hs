@@ -1,3 +1,4 @@
+{-# LANGUAGE OverloadedStrings #-}
 module NGramCrackers.Quant.Counts
 ( bigramMap
 , ngramMap
@@ -9,15 +10,16 @@ module NGramCrackers.Quant.Counts
 , countWordSetElem
 ) where
 
-import qualified Data.List as L
-import qualified Data.Map  as M
-import qualified Data.Text as T
-import qualified Data.Set as S
+import qualified Data.List  as L
+import qualified Data.Map   as M
+import qualified Data.Maybe as M
+import qualified Data.Set   as S
+import qualified Data.Text  as T
 
 import NGramCrackers.Ops.Text
-import NGramCrackers.Utilities.List
 import NGramCrackers.Parsers.Paragraph
 import NGramCrackers.Quant.Dispersion
+import NGramCrackers.Utilities.List
 
 {-| Produces Map of bigrams in a document-}
 bigramMap :: [[[T.Text]]] -> M.Map T.Text Int
@@ -68,4 +70,32 @@ countWordSetElem' lexSet concattedDoc | S.null lexSet       = []
                                           newSet = S.deleteAt 0 lexSet
                                           newDoc = filter (/= word) concattedDoc
 
+bigramLookup :: T.Text -> M.Map T.Text Int -> (T.Text, Maybe Int, Maybe Int)
+bigramLookup bg m = (bg, aC, bC) where
+                    wrds = T.words bg
+                    aC = M.lookup a m
+                    bC = M.lookup b m
+                    a    = head wrds
+                    b    = last wrds
 
+test :: [[[T.Text]]]
+test = [sents, sents', sents''] where
+         sents = map T.words  [ "The quick brown fox jumped over the lazy dog"
+                              , "Colourless green ideas sleep furiously"
+                              , "Strange watching a VCA film not on purpose"
+                              , "Heather Graham is bossy in this movie"
+                              , "Each person has ridiculous boundary issues"
+                              ]
+         sents' = map T.words [ "The quick brown fox jumped over the lazy dog"
+                              , "They had very bad behavioural examples as children"
+                              , "I can't stand commercials that are too loud"
+                              , "There should be laws against that sort of thing"
+                              ]
+
+         sents'' = map T.words [ "The quick brown fox jumped over the lazy dog"
+                                , "This film is very unrealistic"
+                                , "Everyone radiates foolishness"
+                                , "Corinne is horrifyingly mean to her children for no apparent reason"
+                                , "It probably has to do with outragerously bad parental examples"
+                                , "This film in one word sordid"
+                                ]
