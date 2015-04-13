@@ -18,6 +18,14 @@
                {|}{{$\mid$}}1               
     }
 
+The very first element is a LANGUAGE pragma that allows the user to treat string
+literals as Text or Bytestrings, without having to pack the String into an
+array.
+
+The module declaration shows what the module's name is and what functions it
+exports. The import statements show what modules and functions are available for
+use in this module.
+
 \begin{code}
 {-# LANGUAGE OverloadedStrings #-}
 
@@ -29,9 +37,6 @@ module NGramCrackers.Parsers.Paragraph
 , wordString
 ) where
 
-\end{code}
-
-\begin{code}
 import Control.Applicative ((<$>), (<*), (*>), (<*>), (<|>), liftA3)
 import Data.Functor (void)
 import Data.List (concat, unwords)
@@ -59,6 +64,10 @@ parseMultiPara :: T.Text ->  Either ParseError [[[T.Text]]]
 parseMultiPara = parse docBody "unknown"
 
 \end{code} 
+
+Below are the basic parser combinators that are parsed in the functions above.
+They corresponde to the different parts of my example documents: Metadata and
+docBody, as well as the subparts thereof.
 
 \begin{code}
 docMetadata :: [MetaTag]
@@ -110,6 +119,10 @@ number :: PT.Parser T.Text
 number = T.pack <$> many1 digit
 \end{code} 
                                                      
+These are some possible word separation sequences, with the subsequent ones
+being theoretically less rare (i.e., space most commonly separates words, while)
+':' is more rare.
+
 \begin{code}
 seppr :: PT.Parser ()
 -- Since the results of this parser are just thrown away, we need the `void`
