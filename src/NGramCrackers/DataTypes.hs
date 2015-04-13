@@ -3,7 +3,7 @@
 module NGramCrackers.DataTypes
 ( Paragraph (..)
 , Sentence (..)
-, Word (..)
+, Word' (..)
 , MetaTag (..)
 , Date (..)
 , SDate (..)
