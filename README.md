@@ -86,33 +86,33 @@ quickly, much less implement all the functions I needed. I was trapped in the
 odd limbo of hating GUIs but not being a skilled enough programmer to figure
 a solution with a programming library.
 
-These experiences inspired the idea of an intermediary step from consumer-GUI 
-frontends to fully functional text processing libraries and  APIs.  Thus, the 
-idea of NGramCrackers was born: A GPLed, CLI for doing simple text analysis. 
+These experiences inspired the idea of an intermediary step from consumer-GUI
+frontends to fully functional text processing libraries and  APIs.  Thus, the
+idea of NGramCrackers was born: A GPLed, CLI for doing simple text analysis.
 
 ### But Python NLTK!
 
 While I have played with the wonderful Python Natural Language Toolkit, I am not
-a Pythonista. Python is a great language, and I encourage friends who want to 
+a Pythonista. Python is a great language, and I encourage friends who want to
 start coding to learn it. That said, I see no reason to limit development of NLP
 tools to Python.
 
 I was first introduced to Haskell in about 2005 by a friend who was writing an
 HPSG grammar of Dutch in it. He told me that because of Haskell's rich,
-strict typing system, it was possible to write verifiable code. I didn't 
-understand the significance at the time, but it sounded sweet. Fast forward 9 
-years, I decided to give it a try as my first general-purpose language because 
-of these reasons, plus the possibility for excellent performance from a 
-high-level language, with developed libraries for concurrent and parallel 
-computing. 
+strict typing system, it was possible to write verifiable code. I didn't
+understand the significance at the time, but it sounded sweet. Fast forward 9
+years, I decided to give it a try as my first general-purpose language because
+of these reasons, plus the possibility for excellent performance from a
+high-level language, with developed libraries for concurrent and parallel
+computing.
 
 ### Won't a CLI make it in accessible to your target audience?
 
 Initially, perhaps, but by waiting to develop a GUI, the text processing can
-exist independently of the GUI and other interfaces could be developed. My own 
-interest is in primarily in developing the CLI because I interact with my system 
-almost exclusively through the terminal, so this interface will be the most 
-immediately useful. 
+exist independently of the GUI and other interfaces could be developed. My own
+interest is in primarily in developing the CLI because I interact with my system
+almost exclusively through the terminal, so this interface will be the most
+immediately useful.
 
 The gaps this project is intended to fill:
 
@@ -295,7 +295,6 @@ Version 1.0.0 should include:
 - Concordancing capabilities
 
   - N-gram extraction
-
   - Frequencies
   - MI and LL computations
   - T-scores
