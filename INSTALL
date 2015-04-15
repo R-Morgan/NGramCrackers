@@ -7,6 +7,22 @@ $ cabal install -j
 The binaries are in the .cabal-sandbox file and can be run with the usuali
 options.
 
+#############
+Shell Scripts
+#############
+There are now shell scripts to compile ngc, with or without profiling options
+enabled on the binary. Another script, parseCrackers.sh, is for running my
+current common test commands. These scripts must be sourced to use the functions
+within them.
+
+The sourcing could be done automatically during the compilation. I don't think
+this is the best default behaviour, though, to be sourcing random shell scripts.
+
+#############
+Current
+#############
+$ ghc -Wall -O2 -o Main.hs -prof -v
+
 ##########
 Deprecated
 ###########
@@ -15,5 +31,3 @@ The deprecated command for compiling is a very short ghc call:
 $ ghc -Wall -O2 -o GramCrackers Main.hs
 
 I use the -O2 flag, but -O will also work for optimising the compiled code.
-
-There is also a compile shell script that runs this.
