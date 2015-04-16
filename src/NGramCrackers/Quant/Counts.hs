@@ -8,6 +8,8 @@ module NGramCrackers.Quant.Counts
 , wordSetDoc
 , ngramSetDoc
 , countWordSetElem
+, bigramWordsLookup
+, ngramMap
 ) where
 
 import qualified Data.List  as L
@@ -20,6 +22,7 @@ import NGramCrackers.Ops.Text
 import NGramCrackers.Parsers.Paragraph
 import NGramCrackers.Quant.Dispersion
 import NGramCrackers.Utilities.List
+
 
 {-| Produces Map of bigrams in a document-}
 bigramMap :: [[[T.Text]]] -> M.Map T.Text Int
@@ -71,8 +74,8 @@ wordSet = S.fromList
 wordSetDoc :: [[[T.Text]]] -> S.Set T.Text
 wordSetDoc = S.fromList . concatMap concat
 
-ngramSetDoc :: [[[T.Text]]] -> S.Set T.Text
-ngramSetDoc = S.fromList . concatMap bigrams . map T.unwords . concat
+bigramSetDoc :: [[[T.Text]]] -> S.Set T.Text
+bigramSetDoc = S.fromList . concatMap bigrams . map T.unwords . concat
 
 countWordSetElem :: S.Set T.Text -> [[[T.Text]]] -> [(T.Text, Int)]
 countWordSetElem lexSet doc = countWordSetElem' lexSet concattedDoc where
