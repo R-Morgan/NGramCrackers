@@ -39,6 +39,10 @@ High
 
    - IO tests -- not sure how to do that
 
+- Fix Bigram MI Profile function
+- Write function to get MI of one bigram, given the bigram and a frequency
+  map of the bigrams and the word counts
+
 ######
 Med
 ######
