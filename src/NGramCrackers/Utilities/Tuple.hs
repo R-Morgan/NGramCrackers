@@ -1,5 +1,6 @@
 module NGramCrackers.Utilities.Tuple
-( thrd
+( snd' 
+, thrd
 , compareDoubles
 , compareDoublesInList
 , stringifyLexemeCount
@@ -9,6 +10,9 @@ module NGramCrackers.Utilities.Tuple
 ) where
 
 import qualified Data.Text as T
+
+snd' :: (a, b, c) -> b
+snd' (_, x, _) = x
 
 thrd :: (a , b , c) -> c
 thrd (_, _, x) = x
