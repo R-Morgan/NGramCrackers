@@ -6,9 +6,10 @@ module NGramCrackers.Quant.Counts
 , countElem
 , wordSet
 , wordSetDoc
-, ngramSetDoc
+--, ngramSetDoc
 , countWordSetElem
 , bigramWordsLookup
+, bigramSetDoc
 , ngramMap
 ) where
 
@@ -62,7 +63,7 @@ wcMap doc = wcMap' stream where
 
 {-| Borrowed from: http://nlpwp.org/book/chap-words.xhtml. -}
 countElem :: (Ord k) => M.Map k Int -> k -> M.Map k Int
-countElem m e = case (M.lookup e m) of
+countElem m e = case M.lookup e m of
                   Just v  -> M.insert e (v + 1) m
                   Nothing -> M.insert e 1 m
 

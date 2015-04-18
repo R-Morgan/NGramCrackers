@@ -45,7 +45,7 @@ getNGramsFromTextList = getNSeqFromList
     result as a string. Output of this function may need processing
     into a list, tuple, etc. -}
 getAlphasOnlyToText :: T.Text -> T.Text
-getAlphasOnlyToText = T.filter (\char -> (isAlpha char || isSpace char))
+getAlphasOnlyToText = T.filter (\char -> isAlpha char || isSpace char)
 
 {-| Return only alphanumeric characters from a string and return the
     result as a List.-}
@@ -59,6 +59,7 @@ normToList = T.words . getAlphasOnlyToText .  T.toLower
     the declaration would be more informative-}
 
 getWordFrequency:: T.Text -> T.Text -> Int
+-- No eta-reduction for readability
 getWordFrequency word text = (length . filter (== word) . T.words) text
 
 {-| These functions output the specified strings, so they can be kept and
