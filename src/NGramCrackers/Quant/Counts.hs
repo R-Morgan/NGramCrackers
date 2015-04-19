@@ -11,6 +11,7 @@ module NGramCrackers.Quant.Counts
 , bigramWordsLookup
 , bigramSetDoc
 , ngramMap
+, test
 ) where
 
 import qualified Data.List  as L
