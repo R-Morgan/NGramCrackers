@@ -37,14 +37,9 @@ ttrSet' tokens = (typesTot, tokenTot, ratio)
                          -- Could this be done more efficiently w/Vector?
                          ratio    = typesTot / tokenTot
 
--- Here I need:
---    - a Set of Words
---    - a Set of Bigrams
---    - a Map of bigram frequencies
---    - a Map of word frequencies
 bigramMI:: T.Text -> [[[T.Text]]] -> (T.Text, Maybe Double)
 bigramMI bg doc = (bg, mutInf) where
-                           concattedDoc = (concatMap concat) doc
+                           concattedDoc = concatMap concat doc
                            mutInf = pMI bgFreq pW1 pW2 total
                            wset   = wordSet concattedDoc
                            bset   = bigramSetDoc doc
@@ -52,8 +47,8 @@ bigramMI bg doc = (bg, mutInf) where
                            bmap   = bigramMap doc
                            total  = (fromIntegral . length) concattedDoc
                            bgWC   = bigramWordsLookup bg wmap
-                           pW1    = (/total) <$> ((fromIntegral) <$> snd' bgWC)
-                           pW2    = (/total) <$> ((fromIntegral) <$> thrd bgWC)
+                           pW1    = (/total) <$> (fromIntegral <$> snd' bgWC)
+                           pW2    = (/total) <$> (fromIntegral <$> thrd bgWC)
                            bgFreq = M.lookup bg bmap
                            --fmDiv  = fmap (( /total) . fromIntegral)
 
