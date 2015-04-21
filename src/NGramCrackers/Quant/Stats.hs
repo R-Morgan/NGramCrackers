@@ -37,7 +37,25 @@ ttrSet' tokens = (typesTot, tokenTot, ratio)
                          -- Could this be done more efficiently w/Vector?
                          ratio    = typesTot / tokenTot
 
-bigramMI:: T.Text -> [[[T.Text]]] -> (T.Text, Maybe Double)
+{- bigramMIRec :: S.Set T.Text -> [[[T.Text]]] -> M.Map T.Text Maybe Double
+bigramMIRec s m doc = case M.lookup bg m of
+                        Nothing -> insert m bg mi
+                        Just -> Nothing where 
+                          mi = (snd . bigramMI) bg doc
+                          bg = findMin s
+-}
+
+bigramMIRecurs :: S.Set T.Text -> [[[T.Text]]] -> [(T.Text, Maybe Double)]
+bigramMIRecurs bgSet doc | S.null bgSet       = []
+                         | L.null doc         = []
+                         | otherwise = (bg, mi) : 
+                           bigramMIRecurs newSet doc where 
+                           bg = S.findMin bgSet
+                           mi = snd $ bigramMI bg doc
+                           newSet = S.deleteMin bgSet
+
+
+bigramMI :: T.Text -> [[[T.Text]]] -> (T.Text, Maybe Double)
 bigramMI bg doc = (bg, mutInf) where
                            concattedDoc = concatMap concat doc
                            mutInf = pMI bgFreq pW1 pW2 total
