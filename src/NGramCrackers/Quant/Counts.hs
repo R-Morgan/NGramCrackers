@@ -10,7 +10,6 @@ module NGramCrackers.Quant.Counts
 , countWordSetElem
 , bigramWordsLookup
 , bigramSetDoc
-, ngramMap
 , test
 ) where
 
@@ -88,9 +87,9 @@ countWordSetElem' lexSet concattedDoc | S.null lexSet       = []
                                       | L.null concattedDoc = []
                                       | otherwise = (word, count) : 
                                           countWordSetElem' newSet newDoc where 
-                                          word = S.elemAt 0 lexSet
+                                          word = S.findMin lexSet
                                           count = length $ filter (== word) concattedDoc
-                                          newSet = S.deleteAt 0 lexSet
+                                          newSet = S.deleteMin lexSet
                                           newDoc = filter (/= word) concattedDoc
 
 test :: [[[T.Text]]]
