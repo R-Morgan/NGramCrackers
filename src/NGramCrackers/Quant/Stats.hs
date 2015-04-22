@@ -44,6 +44,9 @@ bigramMIRec s m doc = case M.lookup bg m of
                           mi = (snd . bigramMI) bg doc
                           bg = findMin s
 -}
+bigramMIMap :: [[[T.Text]]] -> M.Map T.Text (Maybe Double)
+bigramMIMap doc = M.fromList $ bigramMIRecurs bgSet doc where
+                    bgSet = bigramSetDoc doc
 
 bigramMIRecurs :: S.Set T.Text -> [[[T.Text]]] -> [(T.Text, Maybe Double)]
 bigramMIRecurs bgSet doc | S.null bgSet       = []
