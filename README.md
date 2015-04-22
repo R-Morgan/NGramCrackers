@@ -252,10 +252,11 @@ properly tagged in the tree. Sorry about that if you find this! <3 rm
 ### Version 0.2.7 -- Definition
  - ngram extraction from CLI
  - words/sent statistics and access to them from CLI
+ - Map- and Set-based look up for word/phrasal stats
+ - Bigram Mutual Information calculation for all bigrams in a parsed document 
 
 ### Version 0.2.8 -- Definition
- - Hashtable based look up for word/phrasal stats
- - Bigram Mutual Information calculation and CLI integration
+ - Bigram Mutual Information calculation CLI integration
  - More concide argument handling case statement. This involves moving the
    behaviour of each case into their own functions.
 
@@ -264,8 +265,6 @@ properly tagged in the tree. Sorry about that if you find this! <3 rm
  - Trigram Mutual Information calculation and CLI integration
 
 ### Version 0.3.0 -- Definition (Break up into other releases)
-- Literate Haskell Documentation
-
 - Specific Data Types:
   - NGrams (including 1-grams, i.e., words)
   - Sentences
@@ -276,7 +275,7 @@ properly tagged in the tree. Sorry about that if you find this! <3 rm
 - Vector-based sequences?
 
 ### Version 0.4.0 -- Definition
-- Twitter API parsing capabilities
+- Literate Haskell Documentation
 
 ### Version 1.0.0  -- Definition 4, Jan, 2015
 
