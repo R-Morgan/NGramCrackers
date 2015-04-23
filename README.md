@@ -259,6 +259,8 @@ properly tagged in the tree. Sorry about that if you find this! <3 rm
  - Bigram Mutual Information calculation CLI integration
  - More concide argument handling case statement. This involves moving the
    behaviour of each case into their own functions.
+ - Test module with various types of text that are known to work with the
+   current version of NGC
 
 ### Version 0.2.9 -- Definition
  - Metadata analytics
