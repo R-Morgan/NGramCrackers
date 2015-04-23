@@ -1,6 +1,7 @@
 module NGramCrackers.Quant.Stats
 ( ttrSet
 , pMI
+, bigramMIMap
 , meanSentLength 
 , sdSentLength
 , varSentLength
@@ -28,22 +29,23 @@ ttrSet :: [T.Text] -> (Double, Double, Double)
 ttrSet tokens = (typesTot, tokenTot, ratio)
                    where typesTot = (fromIntegral . S.size . wordSet) tokens
                          tokenTot = (fromIntegral . length) tokens
-                         ratio    = typesTot / tokenTot
-
-ttrSet' :: [T.Text] -> (Double, Double, Double)
-ttrSet' tokens = (typesTot, tokenTot, ratio)
-                   where typesTot = (fromIntegral . S.size . wordSet) tokens
-                         tokenTot = (fromIntegral . length) tokens
                          -- Could this be done more efficiently w/Vector?
                          ratio    = typesTot / tokenTot
 
-{- bigramMIRec :: S.Set T.Text -> [[[T.Text]]] -> M.Map T.Text Maybe Double
-bigramMIRec s m doc = case M.lookup bg m of
+{- 
+ - Proto-code for making a Map out of a S.Set of bigrams and a parsed document.
+   Takes from the code that counts the elements of a list and collects the
+   results in a Map. This may be the skeleton for a more efficient
+   implementation.
+
+bigramMIRec :: S.Set T.Text -> [[[T.Text]]] -> M.Map T.Text Maybe Double -> M.Map T.Text Maybe Double
+bigramMIRec s doc m = case M.lookup bg m of
                         Nothing -> insert m bg mi
                         Just -> Nothing where 
                           mi = (snd . bigramMI) bg doc
                           bg = findMin s
 -}
+
 bigramMIMap :: [[[T.Text]]] -> M.Map T.Text (Maybe Double)
 bigramMIMap doc = M.fromList $ bigramMIRecurs bgSet doc where
                     bgSet = bigramSetDoc doc
@@ -56,24 +58,12 @@ bigramMIRecurs bgSet doc | S.null bgSet       = []
                            bg = S.findMin bgSet
                            mi = snd $ bigramMI bg doc
                            newSet = S.deleteMin bgSet
-
-
-bigramMI :: T.Text -> [[[T.Text]]] -> (T.Text, Maybe Double)
-bigramMI bg doc = (bg, mutInf) where
-                           concattedDoc = concatMap concat doc
-                           mutInf = pMI bgFreq pW1 pW2 total
-                           wset   = wordSet concattedDoc
-                           bset   = bigramSetDoc doc
-                           wmap   = wcMap doc
-                           bmap   = bigramMap doc
-                           total  = (fromIntegral . length) concattedDoc
-                           bgWC   = bigramWordsLookup bg wmap
-                           pW1    = (/total) <$> (fromIntegral <$> snd' bgWC)
-                           pW2    = (/total) <$> (fromIntegral <$> thrd bgWC)
-                           bgFreq = M.lookup bg bmap
-                           --fmDiv  = fmap (( /total) . fromIntegral)
-
 {-
+ - Early version of bigramMIMap. The idea was some how to avoid using the
+   fromList function to get the Map as the result. I was thinking that some sort
+   of fold might work, but I'm not really sure. This may be deleted or
+   refactored at a later time.
+
 bigramMIProfile :: [[[T.Text]]] -> M.Map T.Text Double
 bigramMIProfile doc = pMI bgFreq pW1 pW2 total where
                         wset   = (wordSet . concatMap concat) doc
@@ -89,6 +79,20 @@ bigramMIProfile doc = pMI bgFreq pW1 pW2 total where
                         bigram = S.elemAt 0 bset
                         bigramList = DL.concatMap (extractor . T.unwords) . DL.concat doc
 -}
+
+bigramMI :: T.Text -> [[[T.Text]]] -> (T.Text, Maybe Double)
+bigramMI bg doc = (bg, mutInf) where
+                           concattedDoc = concatMap concat doc
+                           mutInf = pMI bgFreq pW1 pW2 total
+                           wset   = wordSet concattedDoc
+                           bset   = bigramSetDoc doc
+                           wmap   = wcMap doc
+                           bmap   = bigramMap doc
+                           total  = (fromIntegral . length) concattedDoc
+                           bgWC   = bigramWordsLookup bg wmap
+                           pW1    = (/total) <$> (fromIntegral <$> snd' bgWC)
+                           pW2    = (/total) <$> (fromIntegral <$> thrd bgWC)
+                           bgFreq = M.lookup bg bmap
 
 pMI :: Maybe Int -> Maybe Double -> Maybe Double -> Double -> Maybe Double
 pMI Nothing _ _ _ = Nothing
