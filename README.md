@@ -148,6 +148,19 @@ next release and later versions constitutes the functionality goals for
 NGramCrackers. The programme is still quite unstable with major API changes
 planned.
 
+### Version 0.2.7
+New features added in this latest version of NGramCrackers! Now included are:
+
+ - ngram extraction from CLI
+
+ - words/sent statistics and access to them from CLI
+
+ - Map- and Set-based look up for word/phrasal stats
+
+ - Bigram Mutual Information calculation for all bigrams in a parsed document
+
+This version has become rather expanded than originally intended. 
+
 ### Version 0.2.6 
 More major breaking API changes have been made:
 
@@ -248,12 +261,6 @@ Planned releases. These are in a high degree of flux and will be tweaked as
 needed for the forseeable future. Version 0.2.4 is untagged in the commit tree
 because of poor planning on the part of yours truly. Version 0.2.5 has been
 properly tagged in the tree. Sorry about that if you find this! <3 rm
-
-### Version 0.2.7 -- Definition
- - ngram extraction from CLI
- - words/sent statistics and access to them from CLI
- - Map- and Set-based look up for word/phrasal stats
- - Bigram Mutual Information calculation for all bigrams in a parsed document 
 
 ### Version 0.2.8 -- Definition
  - Bigram Mutual Information calculation CLI integration
