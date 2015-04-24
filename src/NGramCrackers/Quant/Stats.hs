@@ -103,6 +103,9 @@ pMI (Just count) (Just pW1) (Just pW2) total = Just $ pMI' count pW1 pW2 total
 {-| Pointwise mutual information score calculation for bigrams
     based on Church and Hanks -}
 pMI' :: Int -> Double -> Double -> Double -> Double
+pMI' _ 0 _ _              = error "Divide by zero"
+pMI' _ _ 0 _              = error "Divide by zero"
+pMI' _ _ _ 0              = error "Divide by zero"
 pMI' bgFreq pW1 pW2 total = log $ count / (pW1 * pW2 * total)
                               where count    = fromIntegral bgFreq
 
