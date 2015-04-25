@@ -43,6 +43,21 @@ doubleToCSV x = lexeme <#> commaChar <#> (T.pack . show . snd) x
                  where lexeme = fst x
                        commaChar = T.singleton ','
 
+{- tripleToCSV :: (T.Text, Int, Maybe Double) -> T.Text
+tripleToCSV trpl = ngram <#> commaChar <#> count <#> commaChar <#> pmi where
+                     ngram     = fst trpl
+                     count     = (T.pack . show . snd) trpl
+                     pmi       = T.pack <$> show <$> (thrd) trpl
+                     commaChar = T.singleton ','
+-}
+combineCountMI :: (T.Text, Int) -> (T.Text, Maybe Double) -> (T.Text, Int, Maybe Double)
+combineCountMI cntTup miTup = (txt, count, pmi) where
+                 txt = fst cntTup
+                 count = snd cntTup
+                 pmi   = snd miTup
+
+
+
 compareTriples :: Ord c => (a, b, c) -> (a, b, c) -> (a, b, c)
 compareTriples xs ys
     | max (thrd xs) (thrd ys) == thrd xs = xs
