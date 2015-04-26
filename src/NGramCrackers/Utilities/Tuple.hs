@@ -1,5 +1,6 @@
 module NGramCrackers.Utilities.Tuple
-( snd' 
+( fst'
+, snd' 
 , thrd
 , compareDoubles
 , compareDoublesInList
@@ -11,6 +12,9 @@ module NGramCrackers.Utilities.Tuple
 
 import qualified Data.Maybe as M (fromJust)
 import qualified Data.Text  as T
+
+(<#>) :: T.Text -> T.Text -> T.Text
+(<#>) = T.append
 
 fst' :: (a, b, c) -> a
 fst' (x, _, _) = x
@@ -38,9 +42,6 @@ stringifyLexemeCount x = wordStr <#> lexeme <#> countStr <#>
                            where wordStr  = T.pack "Word: " 
                                  lexeme   = fst x
                                  countStr = T.pack " ----- Count: " 
-
-(<#>) :: T.Text -> T.Text -> T.Text
-(<#>) = T.append
 
 doubleToCSV :: (T.Text, Int) -> T.Text
 doubleToCSV x = lexeme <#> commaChar <#> (T.pack . show . snd) x
