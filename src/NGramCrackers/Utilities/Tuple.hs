@@ -1,11 +1,13 @@
 module NGramCrackers.Utilities.Tuple
 ( fst'
-, snd' 
+, snd'
 , thrd
 , compareDoubles
 , compareDoublesInList
 , stringifyLexemeCount
 , doubleToCSV
+, tripleToCSV
+, combineCountMI
 , compareTriples
 , compareTriplesInList
 ) where
@@ -44,8 +46,8 @@ stringifyLexemeCount x = wordStr <#> lexeme <#> countStr <#>
                                  countStr = T.pack " ----- Count: " 
 
 doubleToCSV :: (T.Text, Int) -> T.Text
-doubleToCSV x = lexeme <#> commaChar <#> (T.pack . show . snd) x
-                 where lexeme = fst x
+doubleToCSV x = ngram <#> commaChar <#> (T.pack . show . snd) x
+                 where ngram = fst x
                        commaChar = T.singleton ','
 
 tripleToCSV :: (T.Text, Int, Maybe Double) -> T.Text
