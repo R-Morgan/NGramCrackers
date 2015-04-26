@@ -9,7 +9,11 @@ module NGramCrackers.Utilities.Tuple
 , compareTriplesInList
 ) where
 
-import qualified Data.Text as T
+import qualified Data.Maybe as M (fromJust)
+import qualified Data.Text  as T
+
+fst' :: (a, b, c) -> a
+fst' (x, _, _) = x
 
 snd' :: (a, b, c) -> b
 snd' (_, x, _) = x
@@ -43,27 +47,26 @@ doubleToCSV x = lexeme <#> commaChar <#> (T.pack . show . snd) x
                  where lexeme = fst x
                        commaChar = T.singleton ','
 
-{- tripleToCSV :: (T.Text, Int, Maybe Double) -> T.Text
+tripleToCSV :: (T.Text, Int, Maybe Double) -> T.Text
 tripleToCSV trpl = ngram <#> commaChar <#> count <#> commaChar <#> pmi where
-                     ngram     = fst trpl
-                     count     = (T.pack . show . snd) trpl
-                     pmi       = T.pack <$> show <$> (thrd) trpl
+                     ngram     = fst' trpl
+                     count     = (T.pack . show . snd') trpl
+                     pmi       = M.fromJust $ T.pack <$> show <$> thrd trpl
+                     -- fromJust unwrapps the Maybe T.Text value. This doesn't
+                     -- seem like the best way to do this.
                      commaChar = T.singleton ','
--}
+
 combineCountMI :: (T.Text, Int) -> (T.Text, Maybe Double) -> (T.Text, Int, Maybe Double)
 combineCountMI cntTup miTup = (txt, count, pmi) where
                  txt = fst cntTup
                  count = snd cntTup
                  pmi   = snd miTup
 
-
-
 compareTriples :: Ord c => (a, b, c) -> (a, b, c) -> (a, b, c)
 compareTriples xs ys
     | max (thrd xs) (thrd ys) == thrd xs = xs
     | max (thrd xs) (thrd ys) == thrd ys = ys
     | otherwise = error "Fail"
-
 
 compareTriplesInList :: Ord c => [(a, b, c)] -> (a, b, c)
 compareTriplesInList []     = error "Empty List"
