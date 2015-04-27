@@ -7,7 +7,8 @@ module NGramCrackers.Utilities.Tuple
 , stringifyLexemeCount
 , doubleToCSV
 , tripleToCSV
-, combineCountMI
+, combineCountsMIs
+, combineCountMITup
 , compareTriples
 , compareTriplesInList
 ) where
@@ -59,11 +60,15 @@ tripleToCSV trpl = ngram <#> commaChar <#> count <#> commaChar <#> pmi where
                      -- seem like the best way to do this.
                      commaChar = T.singleton ','
 
-combineCountMI :: (T.Text, Int) -> (T.Text, Maybe Double) -> (T.Text, Int, Maybe Double)
-combineCountMI cntTup miTup = (txt, count, pmi) where
-                 txt = fst cntTup
-                 count = snd cntTup
-                 pmi   = snd miTup
+combineCountsMIs :: [(T.Text, Int)] -> [(T.Text, Maybe Double)] -> [(T.Text, Int, Maybe Double)]
+combineCountsMIs cntTups miTups  = zipWith combineCountMITup cntTups miTups
+
+combineCountMITup :: (T.Text, Int) -> (T.Text, Maybe Double) -> (T.Text, Int, Maybe Double)
+combineCountMITup cntTup miTup | fst cntTup /= fst miTup = error "Mismatched tuples" 
+                               | otherwise = (txt, count, pmi) where
+                                   txt   = fst cntTup
+                                   count = snd cntTup
+                                   pmi   = snd miTup
 
 compareTriples :: Ord c => (a, b, c) -> (a, b, c) -> (a, b, c)
 compareTriples xs ys
