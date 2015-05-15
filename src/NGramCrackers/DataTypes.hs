@@ -3,7 +3,7 @@
 module NGramCrackers.DataTypes
 ( Paragraph (..)
 , Sentence (..)
-, Word' (..)
+, NGram (..)
 , MetaTag (..)
 , Date (..)
 , SDate (..)
@@ -20,9 +20,33 @@ module NGramCrackers.DataTypes
 
 import qualified Data.Text as T
 
-data Paragraph = Paragraph [Sentence] deriving (Show, Read, Eq)
-data Sentence = Sentence [Word] deriving (Show, Read, Eq)
-type Word' = T.Text
+
+-------------------------------------------------------------------------------
+-- Collection of ngrams in a paragraph
+--
+data Paragraph a = Paragraph [Sentence a] deriving (Show, Read, Eq)
+
+-------------------------------------------------------------------------------
+-- Collection of ngrams in a sentence
+data SentColl a = SentColl [NGram a] deriving (Show, Read, Eq)
+
+-------------------------------------------------------------------------------
+--NGram Type
+data NGram a = Wrd a | Bigram a | Trigram a | NGram Int a deriving (Show, Read, Eq)
+  -- Int represents the length of the ngram in words 
+
+---- Instance declarations
+instance Functor (NGram) where
+    fmap f (NGram n txt) = NGram n (f txt)
+
+ngramInject :: T.Text -> NGram T.Text
+ngramInject txt | phraseLen < 1 = error "Not an n-gram"
+                | phraseLen == 1 = Wrd txt
+                | phraseLen == 2 = Bigram txt 
+                | phraseLen == 3 = Trigram txt
+                | phraseLen  < 8 = NGram phraseLen txt
+                | otherwise = error "Phrase too large" where
+                       phraseLen = (length . T.words) txt
 
 data MetaTag = MetaTag { tag      :: T.Text
                        , contents :: T.Text
