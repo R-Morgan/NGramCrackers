@@ -1,8 +1,8 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 module NGramCrackers.DataTypes
-( Paragraph (..)
-, Sentence (..)
+( ParaColl (..)
+, SentColl (..)
 , NGram (..)
 , MetaTag (..)
 , Date (..)
@@ -24,7 +24,7 @@ import qualified Data.Text as T
 -------------------------------------------------------------------------------
 -- Collection of ngrams in a paragraph
 --
-data Paragraph a = Paragraph [Sentence a] deriving (Show, Read, Eq)
+data ParaColl a = ParaColl [SentColl a] deriving (Show, Read, Eq)
 
 -------------------------------------------------------------------------------
 -- Collection of ngrams in a sentence
@@ -33,16 +33,20 @@ data SentColl a = SentColl [NGram a] deriving (Show, Read, Eq)
 -------------------------------------------------------------------------------
 --NGram Type
 data NGram a = Wrd a | Bigram a | Trigram a | NGram Int a deriving (Show, Read, Eq)
-  -- Int represents the length of the ngram in words 
+  -- Int represents the length of the ngram in words
 
 ---- Instance declarations
 instance Functor (NGram) where
+    --fmap :: (a -> b) -> f a -> f b
+    fmap f (Wrd txt) = Wrd (f txt)
+    fmap f (Bigram txt) = Bigram (f txt)
+    fmap f (Trigram txt) = Trigram (f txt)
     fmap f (NGram n txt) = NGram n (f txt)
 
 ngramInject :: T.Text -> NGram T.Text
 ngramInject txt | phraseLen < 1 = error "Not an n-gram"
                 | phraseLen == 1 = Wrd txt
-                | phraseLen == 2 = Bigram txt 
+                | phraseLen == 2 = Bigram txt
                 | phraseLen == 3 = Trigram txt
                 | phraseLen  < 8 = NGram phraseLen txt
                 | otherwise = error "Phrase too large" where
