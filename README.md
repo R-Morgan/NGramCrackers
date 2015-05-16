@@ -67,10 +67,15 @@ intellectual liberation. Failing to release the source code of programmes
 impedes the further pursuit of knowledge that should be at the centre of 
 academia. This (in)action also makes independent peer review more challenging or
 even impossible. If your code isn't easily peer-reviewable, why should anyone 
-use, much less trust or trust or pay, for it? To this end, this code has been
-licenced under the GNU GPL v3 to ensure that all derivative works are also Free.
-As an educator, this is critical and why a modified BSD or MIT type licence is
-not satisfactory for me.
+use, much less trust or trust or pay, for it? As a side note, *patenting*
+software is a foul grotesquery.
+
+To this end, this code has been licenced under the GNU GPL v3 to ensure that
+all derivative works are also Free. As an educator, this is critical and why a
+modified BSD( https://www.gnu.org/licenses/license-list.html#ModifiedBSD), Expat
+(MIT)( https://www.gnu.org/licenses/license-list.html#Expat),
+Apache 2.0( https://www.gnu.org/licenses/license-list.html#apache2), or other
+Free, permisive, non-copyleft licence is not satisfactory for me.
 
 ### CLI-based solutions for quantitative text analysis
 My other gripe is the interface. Programmes like MonoconcPro or AntConc are 
@@ -270,14 +275,21 @@ properly tagged in the tree. Sorry about that if you find this! <3 rm
    current version of NGC
 
 ### Version 0.2.9 -- Definition
+ - NGram a, SentColl a, ParaColl a implementations with Functor instatiation.
+   - NGram fmap implementation exists
+   - SentColl fmap is in development
+   - ParaColl fmap is totally hypothetical
+
+### Version 0.2.10 -- Definition
  - Metadata analytics
  - Trigram Mutual Information calculation and CLI integration
 
 ### Version 0.3.0 -- Definition (Break up into other releases)
 - Specific Data Types:
   - NGrams (including 1-grams, i.e., words)
-  - Sentences
-  - Paragraph
+    - NGram a is now implemented to embody the length of the NGram
+  - SentColl -- collection of n-grams in a sentence
+  - ParaColl -- collection of n-grams in a paragraph
 
 - Pretty printing capabilities
 - Metadata analytics
