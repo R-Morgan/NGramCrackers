@@ -299,7 +299,6 @@ properly tagged in the tree. Sorry about that if you find this! <3 rm
 - Literate Haskell Documentation
 
 ### Version 1.0.0  -- Definition 4, Jan, 2015
-
 My vision for 1.0.0 is a fully functional text analysis programme. This project
 is in the early stages, so I may revise this standard substantially over the
 coming months. 
