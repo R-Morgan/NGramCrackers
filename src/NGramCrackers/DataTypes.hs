@@ -4,6 +4,7 @@ module NGramCrackers.DataTypes
 ( ParaColl (..)
 , SentColl (..)
 , NGram (..)
+, NGSeq (..)
 , MetaTag (..)
 , Date (..)
 , SDate (..)
@@ -20,28 +21,61 @@ module NGramCrackers.DataTypes
 
 import qualified Data.Text as T
 
-
 -------------------------------------------------------------------------------
 -- Collection of ngrams in a paragraph
 --
 data ParaColl a = ParaColl [SentColl a] deriving (Show, Read, Eq)
+---- Instance declarations
+     -- Functor
+     -- Applicative?
+     -- Monad?
 
 -------------------------------------------------------------------------------
 -- Collection of ngrams in a sentence
-data SentColl a = SentColl [NGram a] deriving (Show, Read, Eq)
+data SentColl a = SentColl (NGSeq a) deriving (Show, Read, Eq)
+
+---- Instance declarations
+     -- Functor
+     -- Monoid
+     -- Applicative?
+     -- Monad?
+--instance Functor (SentColl) where
+    --fmap :: (a -> b) -> f a -> f b
+    --fmap f (SentColl ngrams) = SentColl (f ngrams)
+    --
 
 -------------------------------------------------------------------------------
 --NGram Type
-data NGram a = Wrd a | Bigram a | Trigram a | NGram Int a deriving (Show, Read, Eq)
+data NGram a =   Wrd a 
+               | Bigram a 
+               | Trigram a 
+               | NGram Int a deriving (Show, Read, Eq)
   -- Int represents the length of the ngram in words
+  -- Is this type too flexible? NGrams should really only be T.Text
+
+type NGSeq a = [(NGram a)]
+-- Type synonym for a list of NGram a
 
 ---- Instance declarations
+     -- Functor
+     -- Monoid
+     -- Applicative?
+     -- Monad?
+
 instance Functor (NGram) where
     --fmap :: (a -> b) -> f a -> f b
-    fmap f (Wrd txt) = Wrd (f txt)
-    fmap f (Bigram txt) = Bigram (f txt)
+    fmap f (Wrd txt)     = Wrd (f txt)
+    fmap f (Bigram txt)  = Bigram (f txt)
     fmap f (Trigram txt) = Trigram (f txt)
     fmap f (NGram n txt) = NGram n (f txt)
+
+{-instance Monoid (NGram) where
+    mempty  = NullGram
+    mappend x mempty = x
+    mappend mempty x = x
+    mappend x y = x : y : []
+    mconcat = undefined
+-}
 
 ngramInject :: T.Text -> NGram T.Text
 ngramInject txt | phraseLen < 1 = error "Not an n-gram"
@@ -51,6 +85,8 @@ ngramInject txt | phraseLen < 1 = error "Not an n-gram"
                 | phraseLen  < 8 = NGram phraseLen txt
                 | otherwise = error "Phrase too large" where
                        phraseLen = (length . T.words) txt
+
+-------------------------------------------------------------------------------
 
 data MetaTag = MetaTag { tag      :: T.Text
                        , contents :: T.Text
