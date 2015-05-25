@@ -277,14 +277,24 @@ properly tagged in the tree. Sorry about that if you find this! <3 rm
 ### Version 0.2.9 -- Definition
  - NGram a, SentColl a, ParaColl a implementations with Functor instatiation.
    - NGram fmap implementation exists
-   - SentColl fmap is in development
-   - ParaColl fmap is totally hypothetical
+   - SentColl fmap implementation exists
+   - ParaColl fmap is in skeleton form 
 
 ### Version 0.2.10 -- Definition
+ - NGram a, SentColl a, ParaColl a Monoid instances
+   - NGram Monoid implementation exists
+
+### Version 0.2.11 -- Definition
  - Metadata analytics
  - Trigram Mutual Information calculation and CLI integration
 
 ### Version 0.3.0 -- Definition (Break up into other releases)
+
+This version is likely to be a summary version to mark the implementation
+of several functionalities. Once everything is working with the various
+data types I've been trying out, it will feel to me like a milestone and
+new stage of development.
+
 - Specific Data Types:
   - NGrams (including 1-grams, i.e., words)
     - NGram a is now implemented to embody the length of the NGram
