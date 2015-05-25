@@ -50,7 +50,7 @@ getAlphasOnlyToText = T.filter (\char -> isAlpha char || isSpace char)
 {-| Return only alphanumeric characters from a string and return the
     result as a List.-}
 normToList :: T.Text -> [T.Text]
-normToList = T.words . getAlphasOnlyToText .  T.toLower 
+normToList = T.words . getAlphasOnlyToText . T.toLower
 
 {-| Get frequency of a single word's occurance in a string. Is eta-reduction
     the easiest reading way to do this function? The arguments are fairly
