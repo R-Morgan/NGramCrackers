@@ -20,7 +20,6 @@ module NGramCrackers.DataTypes
 , toMedium
 ) where
 
---import Data.Monoid
 import qualified Data.Text as T
 import NGramCrackers.Ops.Text ((<#>))
 
@@ -28,27 +27,28 @@ import NGramCrackers.Ops.Text ((<#>))
 -- Collection of ngrams in a paragraph
 --
 data ParaColl a = ParaColl [SentColl a] deriving (Show, Read, Eq)
----- Instance declarations
+-- Instance declarations
      -- Functor
+     -- Monoid
      -- Applicative?
      -- Monad?
 
 -------------------------------------------------------------------------------
 -- Collection of ngrams in a sentence
-data SentColl a = SentColl (NGSeq a) deriving (Show, Read, Eq)
+data SentColl a = NullSent | SentColl (NGSeq a) deriving (Show, Read, Eq)
 
----- Instance declarations
-     -- Functor
+-- Instance declarations
      -- Monoid
      -- Applicative?
      -- Monad?
 
 instance Functor (SentColl) where
 --    fmap :: (a -> b) -> f a -> f b
+    fmap f NullSent          = NullSent
     fmap f (SentColl ngrams) = SentColl ((map (fmap f)) ngrams)
 
 -------------------------------------------------------------------------------
---NGram Type
+-- NGram Type
 data NGram a =   NullGram
                -- | Wrd a
                -- | Bigram a
@@ -60,9 +60,7 @@ data NGram a =   NullGram
 type NGSeq a = [(NGram a)]
 -- Type synonym for a list of NGram a
 
----- Instance declarations
-     -- Functor
-     -- Monoid
+-- Instance declarations
      -- Applicative?
      -- Monad?
 
@@ -71,13 +69,14 @@ instance Functor (NGram) where
     --fmap f (Wrd txt)     = Wrd (f txt)
     --fmap f (Bigram txt)  = Bigram (f txt)
     --fmap f (Trigram txt) = Trigram (f txt)
+    fmap f NullGram      = NullGram
     fmap f (NGram n txt) = NGram n (f txt)
 
 instance Monoid (NGram T.Text) where
     mempty  = NullGram
 
-    mappend (NGram n txt) NullGram = (NGram n txt)
-    mappend NullGram (NGram n txt)      = (NGram n txt)
+    mappend (NGram n txt) NullGram       = (NGram n txt)
+    mappend NullGram (NGram n txt)       = (NGram n txt)
     -- Turns out that you can't use mempty in place of NullGram in the identity
     -- parts of the mappend definition
     mappend (NGram n txt) (NGram m txt') = (NGram (n + m) (txt <#> " " <#> txt'))
@@ -137,7 +136,7 @@ data Biography = Yes | No | Autobiography
 data PageRange =  PageRange PageBound PageBound  deriving (Show, Read, Eq)
 data PageBound = Start Int | End Int deriving (Show, Read, Eq)
 
--- Difficult y Level
+-- Difficulty Level
 data Level = LitFic | PopFic | Tech | Lay | PopNonFic | OtherLvl T.Text
 
 toLevel :: T.Text -> Level
