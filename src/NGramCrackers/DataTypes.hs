@@ -1,4 +1,5 @@
-{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE OverloadedStrings
+           , FlexibleInstances #-}
 
 module NGramCrackers.DataTypes
 ( ParaColl (..)
@@ -19,7 +20,9 @@ module NGramCrackers.DataTypes
 , toMedium
 ) where
 
+--import Data.Monoid
 import qualified Data.Text as T
+import NGramCrackers.Ops.Text ((<#>))
 
 -------------------------------------------------------------------------------
 -- Collection of ngrams in a paragraph
@@ -39,17 +42,18 @@ data SentColl a = SentColl (NGSeq a) deriving (Show, Read, Eq)
      -- Monoid
      -- Applicative?
      -- Monad?
---instance Functor (SentColl) where
-    --fmap :: (a -> b) -> f a -> f b
-    --fmap f (SentColl ngrams) = SentColl (f ngrams)
-    --
+
+instance Functor (SentColl) where
+--    fmap :: (a -> b) -> f a -> f b
+    fmap f (SentColl ngrams) = SentColl ((map (fmap f)) ngrams)
 
 -------------------------------------------------------------------------------
 --NGram Type
-data NGram a =   Wrd a 
-               | Bigram a 
-               | Trigram a 
-               | NGram Int a deriving (Show, Read, Eq)
+data NGram a =   NullGram
+               -- | Wrd a
+               -- | Bigram a
+               -- | Trigram a
+               | NGram Int a deriving (Show, Read, Eq, Ord)
   -- Int represents the length of the ngram in words
   -- Is this type too flexible? NGrams should really only be T.Text
 
@@ -64,24 +68,27 @@ type NGSeq a = [(NGram a)]
 
 instance Functor (NGram) where
     --fmap :: (a -> b) -> f a -> f b
-    fmap f (Wrd txt)     = Wrd (f txt)
-    fmap f (Bigram txt)  = Bigram (f txt)
-    fmap f (Trigram txt) = Trigram (f txt)
+    --fmap f (Wrd txt)     = Wrd (f txt)
+    --fmap f (Bigram txt)  = Bigram (f txt)
+    --fmap f (Trigram txt) = Trigram (f txt)
     fmap f (NGram n txt) = NGram n (f txt)
 
-{-instance Monoid (NGram) where
+instance Monoid (NGram T.Text) where
     mempty  = NullGram
-    mappend x mempty = x
-    mappend mempty x = x
-    mappend x y = x : y : []
+
+    mappend (NGram n txt) NullGram = (NGram n txt)
+    mappend NullGram (NGram n txt)      = (NGram n txt)
+    -- Turns out that you can't use mempty in place of NullGram in the identity
+    -- parts of the mappend definition
+    mappend (NGram n txt) (NGram m txt') = (NGram (n + m) (txt <#> " " <#> txt'))
+
     mconcat = undefined
--}
 
 ngramInject :: T.Text -> NGram T.Text
 ngramInject txt | phraseLen < 1 = error "Not an n-gram"
-                | phraseLen == 1 = Wrd txt
-                | phraseLen == 2 = Bigram txt
-                | phraseLen == 3 = Trigram txt
+--                | phraseLen == 1 = Wrd txt
+--                | phraseLen == 2 = Bigram txt
+--                | phraseLen == 3 = Trigram txt
                 | phraseLen  < 8 = NGram phraseLen txt
                 | otherwise = error "Phrase too large" where
                        phraseLen = (length . T.words) txt
