@@ -67,11 +67,32 @@ type SentColl a = [(NGram a)]
      -- Monoid
      -- Applicative?
      -- Monad?
+--type SentColSeq a = [(SentColl a)]
+-- Type synonym for a list of NGram a
 
-instance Functor (SentColl) where
+--instance Functor (SentColl) where
 --    fmap :: (a -> b) -> f a -> f b
-    fmap f NullSent          = NullSent
-    fmap f (SentColl ngrams) = SentColl ((map (fmap f)) ngrams)
+--    fmap f NullSent          = NullSent
+    --fmap f (SentColl ngrams) = SentColl (f ngrams)
+--    fmap f (SentColl ngrams) = SentColl ((map (fmap f)) ngrams)
+    -- This implementation of fmap pipes the function to be done on the
+    -- NGram level. I reckon this will make it difficult to do something like
+    -- get the length of the list of NGram. This is a useful function, but I
+    -- think it goes too deeply into the container structure to be the proper
+    -- implementation of fmap for this type.
+
+--instance Monoid (SentColl T.Text) where
+-- Is this really best described as Monoid? Problem with mappend is that
+-- to do that to  SentCollS merges two sentence collections into one SentColl
+-- container. In reality, concatentation of two SentColls should be really be
+-- in a list -- i.e. a ParaColl.
+    --mempty  = NullSent
+
+    --mappend (SentColl ngrams) NullSent = (SentColl ngrams)
+    --mappend NullSent (SentColl ngrams) = (SentColl ngrams)
+    --mappend (SentColl ngrams) (SentColl ngrams') = (SentColl $ ngrams ++ ngrams')
+
+--    mconcat = undefined
 
 -------------------------------------------------------------------------------
 -- NGram Type
