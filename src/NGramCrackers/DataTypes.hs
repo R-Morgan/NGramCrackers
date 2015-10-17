@@ -23,6 +23,21 @@ module NGramCrackers.DataTypes
 import qualified Data.Text as T
 import NGramCrackers.Ops.Text ((<#>))
 
+-------------------------------------------------------------------------------
+dtester :: DocCol T.Text
+dtester = [ [tester, tester, tester]
+          , [tester, tester]
+          ]
+
+ptester :: ParaColl T.Text
+ptester = [tester, tester]
+
+tester :: SentColl T.Text 
+tester = ngrams where
+           ngrams = map ngramInject ["foo", "bar", "baz", "shay"]
+
+
+-------------------------------------------------------------------------------
 type DocCol a = [ParaColl a]
 -------------------------------------------------------------------------------
 -- Collection of ngrams in a paragraph
@@ -34,10 +49,19 @@ data ParaColl a = ParaColl [SentColl a] deriving (Show, Read, Eq)
      -- Applicative?
      -- Monad?
 
+--instance Functor (ParaColl) where
+--    fmap :: (a -> b) -> f a -> f b
+    --fmap f NullPara             = NullPara
+--    fmap f (ParaColl ngrams) = ParaColl (f ngrams)
+    --fmap f (ParaColl sentColls) = ParaColl ((map (fmap f)) sentColls)
+    -- Similar issue here as with the fmap implementation in SentColl
+
+type ParaColl a = [SentColl a]
 -------------------------------------------------------------------------------
 -- Collection of ngrams in a sentence
 data SentColl a = NullSent | SentColl (NGSeq a) deriving (Show, Read, Eq)
 
+type SentColl a = [(NGram a)]
 -- Instance declarations
      -- Monoid
      -- Applicative?
