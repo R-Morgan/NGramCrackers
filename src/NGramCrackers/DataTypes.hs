@@ -2,21 +2,21 @@
            , FlexibleInstances #-}
 
 module NGramCrackers.DataTypes
-( ParaColl (..)
-, SentColl (..)
-, NGram (..)
-, NGSeq (..)
-, MetaTag (..)
-, Date (..)
-, SDate (..)
-, Month (..) 
-, Day (..)
-, Year (..)
-, Tag (..)
+( DocCol    (..)
+, ParaColl  (..)
+, SentColl  (..)
+, NGram     (..)
+, MetaTag   (..)
+, Date      (..)
+, SDate     (..)
+, Month     (..) 
+, Day       (..)
+, Year      (..)
+, Tag       (..)
+, Medium    (..)
 , PageRange (..)
 , PageBound (..)
 , Level     (..)
-, Medium (..)
 , toMedium
 ) where
 
