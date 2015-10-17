@@ -96,15 +96,15 @@ type SentColl a = [(NGram a)]
 
 -------------------------------------------------------------------------------
 -- NGram Type
-data NGram a =   NullGram
+data NGram a =  NullGram
                -- | Wrd a
                -- | Bigram a
                -- | Trigram a
-               | NGram Int a deriving (Show, Read, Eq, Ord)
+              | NGram Int a deriving (Show, Read, Eq, Ord)
   -- Int represents the length of the ngram in words
   -- Is this type too flexible? NGrams should really only be T.Text
 
-type NGSeq a = [(NGram a)]
+--type NGSeq a = [(NGram)]
 -- Type synonym for a list of NGram a
 
 -- Instance declarations
