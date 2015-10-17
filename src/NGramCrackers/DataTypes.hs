@@ -43,7 +43,7 @@ type DocCol a = [ParaColl a]
 -------------------------------------------------------------------------------
 -- Collection of ngrams in a paragraph
 --
-data ParaColl a = ParaColl [SentColl a] deriving (Show, Read, Eq)
+--data ParaColl a = NullPara | ParaColl (SentColSeq a) deriving (Show, Read, Eq)
 -- Instance declarations
      -- Functor
      -- Monoid
@@ -60,7 +60,7 @@ data ParaColl a = ParaColl [SentColl a] deriving (Show, Read, Eq)
 type ParaColl a = [SentColl a]
 -------------------------------------------------------------------------------
 -- Collection of ngrams in a sentence
-data SentColl a = NullSent | SentColl (NGSeq a) deriving (Show, Read, Eq)
+--data SentColl a = NullSent | SentColl (NGSeq a) deriving (Show, Read, Eq)
 
 type SentColl a = [(NGram a)]
 -- Instance declarations
