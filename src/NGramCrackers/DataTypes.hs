@@ -23,6 +23,7 @@ module NGramCrackers.DataTypes
 import qualified Data.Text as T
 import NGramCrackers.Ops.Text ((<#>))
 
+type DocCol a = [ParaColl a]
 -------------------------------------------------------------------------------
 -- Collection of ngrams in a paragraph
 --
