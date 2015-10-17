@@ -32,13 +32,14 @@ dtester = [ [tester, tester, tester]
 ptester :: ParaColl T.Text
 ptester = [tester, tester]
 
-tester :: SentColl T.Text 
+tester :: SentColl T.Text
 tester = ngrams where
            ngrams = map ngramInject ["foo", "bar", "baz", "shay"]
 
 
 -------------------------------------------------------------------------------
 type DocCol a = [ParaColl a]
+
 -------------------------------------------------------------------------------
 -- Collection of ngrams in a paragraph
 --
