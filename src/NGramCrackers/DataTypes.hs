@@ -18,6 +18,7 @@ module NGramCrackers.DataTypes
 , PageBound (..)
 , Level     (..)
 , toMedium
+, ngramInject
 ) where
 
 import qualified Data.Text as T
