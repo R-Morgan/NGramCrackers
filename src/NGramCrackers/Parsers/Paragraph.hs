@@ -45,6 +45,9 @@ wordString :: PT.Parser T.Text
 -- Probably useful for parsing MetaTags
 wordString = T.unwords <$> sepBy word seppr
 
+ngram :: PT.Parser (NGram T.Text)
+ngram = (ngramInject) <$> word
+
 word :: PT.Parser T.Text
 -- The use of T.pack <$> is necessary because of the type many1 letter returns.
 -- fmapping T.pack into the Parser makes it possible to return a parser of the
