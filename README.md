@@ -20,35 +20,27 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 Project Purpose
 ---
-While studying Applied Linguistics and working on my MA, I found the study
-of automated, corpus-based text analysis. While the analyses were fascinating,
-the actually tools were frustrating for two reasons:
+My graduate work in Applied Linguistics required the study of automated, 
+corpus-based text analysis. While the analyses were fascinating, the actual 
+tools were frustrating for several reasons:
 
+- The graphical interfaces were clunky and unsatisfactory
+- The programmes would not output results in useable formats
+- A lack of metadata analytics
 - The software was non-Free, and thus not easily extendedable or patchable
-- The software interfaces were not satisfactory
 
 ### Free/Libre software and Applied Linguistics
-Corpus linguists need high quality, Free software analytic tools that are
-capable of handling 5+ million word corpora spread over many documents.
-Corpus linguists should not be bound to proprietary OSes because the best
-tools available are not cross-platform. 
-
 Unfortunately, many of the most well-known programmes in my AppLing circles are 
 proprietary. This is to say that the copyright holders have likely not published 
 the source code -- or if they have, without the freedom to modify and distribute
-the source code. However, I prefer to use Free( https://www.gnu.org/philosophy/free-sw.html), 
-software.  Free, though, is not the same as *gratis*. Free software is that for
-which the source code is available and modifiable. While Free software is often
-gratis, it need not be.
+the source code.  Corpus linguists should not be bound to proprietary software 
+because the best tools available are not cross-platform.
 
-Publishing source code and permitting modification and redistribution has
-several advantages over the proprietary model. First, others can study the
-source to *understand* how the programme does what it does. Second, other users
-can implement new features or otherwise extend the programme. The developer(s)
-can then choose to accept or reject the proposed change or extension. The dev(s)
-then has been saved work! Finally, publishing the source code saves everyone 
-work. Another programmer can then build on previously done work. Thus, the
-species does not have to keep reinventing the wheel, as it were.
+These researchers need high-quality, Free( https://www.gnu.org/philosophy/free-sw.html) 
+software analytic tools because this blackbox approach to research is not
+adequate. These tools must capable of handling corpora of millions--or 
+billions!--of words that are spread over many documents. Current concordance 
+software also seems to lack the capacity for automated metadata analysis.
 
 In Applied Linguistics, though, there is much we can't be sure about in the
 common software for corpus-based analytics. For instance, MonoconcPro's language
@@ -78,18 +70,16 @@ Apache 2.0( https://www.gnu.org/licenses/license-list.html#apache2), or other
 Free, permisive, non-copyleft licence is not satisfactory for me.
 
 ### CLI-based solutions for quantitative text analysis
-My other gripe is the interface. Programmes like MonoconcPro or AntConc are 
-intended for Applied Linguists who are less like to be Computational Linguists
-who do not use the CLI. Thus, in order to promote accessibility, these
-programmes make heavy use of graphical user interfaces (GUIs). While many users
-expect this functionality, a GUI can reduce the productivity of users who mostly
-use the CLI. 
+My other gripe with the most common concordance software are the interfaces. 
+Programmes like MonoconcPro or AntConc feature Graphical User Interfaces (GUIs)
+in order to promote accessibility. While many users expect this functionality, 
+a GUI can reduce the productivity of users who mostly use the CLI. 
 
 At the other end of the spectrum are full NLP programming libraries. When I was
 thesising, I was not a good enough programmer to pick up a new language super
 quickly, much less implement all the functions I needed. I was trapped in the
 odd limbo of hating GUIs but not being a skilled enough programmer to figure
-a solution with a programming library.
+a solution with a programming library in a timely fashion.
 
 These experiences inspired the idea of an intermediary step from consumer-GUI
 frontends to fully functional text processing libraries and  APIs.  Thus, the
@@ -325,7 +315,7 @@ Version 1.0.0 should include:
 
   - N-gram extraction
   - Frequencies
-  - MI and LL computations
+  - Mutual Information (MI) and Log Likelihood (LL) computations
   - T-scores
   - Other text stats
   - Number of differents files that the ngram occurs
@@ -354,7 +344,7 @@ Version 1.0.0 should include:
 
 - CLI Argument Handling
 
-- Testing Suite implemented in quickCheck
+- Testing suite
 
 - Cabal-based installation of library!
 
@@ -365,6 +355,5 @@ Version 1.0.0 should include:
  - SGML
  - JSON-based API output
  - Markdown
- - Twitter/GNUSocial
   
 - Literate Haskell documentation
