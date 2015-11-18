@@ -13,10 +13,13 @@ module NGramCrackers.Ops.Text
 ) where
 
 import qualified Data.Text as T
+
 import Data.Char (isAlpha, isAlphaNum, isSpace, toLower)
 import Data.List (map, nub)
+import Data.Monoid ((<>))
 
 import NGramCrackers.Utilities.List
+
 
 {-| Infix synonym for T.append. Handy for gluing bits of Text together -}
 (<#>) :: T.Text -> T.Text -> T.Text
@@ -37,6 +40,9 @@ getNGramsFromText n packed -- packed is a packed T.Text string
     | n > 7     = error "n must be a positive integer less than 7"
     | otherwise = map T.unwords $ getNGramsFromTextList n wordList
                     where wordList = T.words packed
+
+getTrueNGrams :: Int -> [NGram T.Text] -> [[NGram T.Text]]
+getTrueNGrams = getNSeqFromList
 
 getNGramsFromTextList :: Int -> [T.Text] -> [[T.Text]]
 getNGramsFromTextList = getNSeqFromList
