@@ -22,30 +22,27 @@ import NGramCrackers.Ops.Infixes
 import NGramCrackers.Utilities.List
 
 {-| Extract bigrams from a string -}
-bigrams :: T.Text -> [T.Text]
+bigrams :: T.Text -> [NGram T.Text]
 bigrams = getNGramsFromText 2 
 
 {-| Extract trigrams from a string -}
-trigrams :: T.Text -> [T.Text]
+trigrams :: T.Text -> [NGram T.Text]
 trigrams = getNGramsFromText 3 
 
 {-| Extract n-grams from a string -}
-getNGramsFromText :: Int -> T.Text -> [T.Text]
+getNGramsFromText :: Int -> T.Text -> [NGram T.Text]
 getNGramsFromText n packed -- packed is a packed T.Text string
     | n < 0     = error "n must be a positive integer less than 7"
     | n > 7     = error "n must be a positive integer less than 7"
-    | otherwise = map T.unwords $ getNGramsFromTextList n wordList
-                    where wordList = T.words packed
+    | otherwise = getTrueNGrams n wordList
+                    where wordList = map ngramInject $ T.words packed
 
-getTrueNGrams :: Int -> [NGram T.Text] -> [[NGram T.Text]]
-getTrueNGrams = getNSeqFromList
-
-getTNG :: Int -> [NGram T.Text] -> [NGram T.Text]
-getTNG n [] = []
-getTNG n list@(x:xs) 
+getTrueNGrams :: Int -> [NGram T.Text] -> [NGram T.Text]
+getTrueNGrams n [] = []
+getTrueNGrams n list@(x:xs) 
     | n < 0     = error "n must be a positive integer less than 7"
     | n > 7     = error "n must be a positive integer less than 7"
-    | length list >= n = ng : getTNG n xs 
+    | length list >= n = ng : getTrueNGrams n xs 
     | otherwise = [] where
       ng = Prelude.foldr ((<>)) NullGram phrase
       phrase = take n list
@@ -91,5 +88,3 @@ typeTokenRatio string = typeStr <#> ps types <#> tokStr <#> ps tokens <#> ttrStr
                              tokStr  = T.pack ", Tokens: "  
                              ttrStr  = T.pack ", TTR: "
                              ps      = T.pack . show
-
-
