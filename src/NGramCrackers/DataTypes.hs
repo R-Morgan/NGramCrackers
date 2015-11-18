@@ -19,10 +19,13 @@ module NGramCrackers.DataTypes
 , Level     (..)
 , toMedium
 , ngramInject
+, dtester
+, ptester
+, tester
 ) where
 
 import qualified Data.Text as T
-import NGramCrackers.Ops.Text ((<#>))
+import NGramCrackers.Ops.Infixes ((<#>))
 
 -------------------------------------------------------------------------------
 dtester :: DocCol T.Text
