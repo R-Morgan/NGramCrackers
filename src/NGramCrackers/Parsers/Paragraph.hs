@@ -7,14 +7,16 @@ module NGramCrackers.Parsers.Paragraph
 , wordString
 ) where
 
+import Data.Text as T
+import Text.Parsec.Text as PT
 
 import Control.Applicative ((<$>), (<*), (*>), (<*>), (<|>), liftA3)
 import Data.Functor (void)
 import Data.List (concat, unwords)
-import Data.Text as T                    
-import Text.Parsec.Text as PT 
 import Text.ParserCombinators.Parsec hiding ((<|>))
+
 import NGramCrackers.DataTypes
+import NGramCrackers.Ops.Retyped
 
 parseSent :: T.Text -> Either ParseError [T.Text]
 parseSent = parse sentence "unknown"
@@ -45,6 +47,9 @@ wordString :: PT.Parser T.Text
 -- Probably useful for parsing MetaTags
 wordString = T.unwords <$> sepBy word seppr
 
+ngramSeries :: PT.Parser [(NGram T.Text)]
+ngramSeries = sepBy ngram seppr
+
 ngram :: PT.Parser (NGram T.Text)
 ngram = (ngramInject) <$> word
 
@@ -53,6 +58,9 @@ word :: PT.Parser T.Text
 -- fmapping T.pack into the Parser makes it possible to return a parser of the
 -- appropriate type.
 word = T.pack <$> many1 letter 
+
+numToNG :: PT.Parser (NGram T.Text)
+numToNG = fmap ngramInject number
 
 number :: PT.Parser T.Text
 number = T.pack <$> many1 digit
