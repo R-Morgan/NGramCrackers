@@ -30,13 +30,13 @@ parseMultiPara = parse docBody "unknown"
 docMetadata :: [MetaTag]
 docMetadata = undefined
 
-docBody :: PT.Parser [[[(NGram T.Text)]]]
+docBody :: PT.Parser (DocCol T.Text)
 docBody = endBy paragraph eop
 
-paragraph :: PT.Parser [[(NGram T.Text)]]
+paragraph :: PT.Parser (ParaColl T.Text)
 paragraph = endBy sentence eos
 
-sentence :: PT.Parser [(NGram T.Text)]
+sentence :: PT.Parser (SentColl T.Text)
 sentence = sepBy sentParts seppr
 
 sentParts :: PT.Parser (NGram T.Text)
@@ -47,7 +47,7 @@ wordString :: PT.Parser T.Text
 -- Probably useful for parsing MetaTags
 wordString = T.unwords <$> sepBy word seppr
 
-ngramSeries :: PT.Parser [(NGram T.Text)]
+ngramSeries :: PT.Parser (SentColl T.Text)
 ngramSeries = sepBy ngram seppr
 
 ngram :: PT.Parser (NGram T.Text)
