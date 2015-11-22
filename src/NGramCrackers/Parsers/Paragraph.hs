@@ -18,29 +18,29 @@ import Text.ParserCombinators.Parsec hiding ((<|>))
 import NGramCrackers.DataTypes
 import NGramCrackers.Ops.Retyped
 
-parseSent :: T.Text -> Either ParseError [T.Text]
+parseSent :: T.Text -> Either ParseError [(NGram T.Text)]
 parseSent = parse sentence "unknown"
 
-parseParagraph :: T.Text -> Either ParseError [[T.Text]]
+parseParagraph :: T.Text -> Either ParseError [[(NGram T.Text)]]
 parseParagraph = parse paragraph "unknown"
 
-parseMultiPara :: T.Text ->  Either ParseError [[[T.Text]]]
+parseMultiPara :: T.Text ->  Either ParseError [[[(NGram T.Text)]]]
 parseMultiPara = parse docBody "unknown"
 
 docMetadata :: [MetaTag]
 docMetadata = undefined
 
-docBody :: PT.Parser [[[T.Text]]]
+docBody :: PT.Parser [[[(NGram T.Text)]]]
 docBody = endBy paragraph eop
 
-paragraph :: PT.Parser [[T.Text]]
+paragraph :: PT.Parser [[(NGram T.Text)]]
 paragraph = endBy sentence eos
 
-sentence :: PT.Parser [T.Text]
+sentence :: PT.Parser [(NGram T.Text)]
 sentence = sepBy sentParts seppr
 
-sentParts :: PT.Parser T.Text
-sentParts = word <|> number
+sentParts :: PT.Parser (NGram T.Text)
+sentParts = ngram <|> numToNG
 
 wordString :: PT.Parser T.Text
 -- Useful for non-sentence word strings where no numbers need to be parsed.
