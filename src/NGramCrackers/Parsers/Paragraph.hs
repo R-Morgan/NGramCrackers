@@ -18,14 +18,14 @@ import Text.ParserCombinators.Parsec hiding ((<|>))
 import NGramCrackers.DataTypes
 import NGramCrackers.Ops.Retyped
 
-parseSent :: T.Text -> Either ParseError (SentColl T.Text)
-parseSent = parse sentence "unknown"
+parseMultiPara :: T.Text ->  Either ParseError (DocCol T.Text)
+parseMultiPara = parse docBody "unknown"
 
 parseParagraph :: T.Text -> Either ParseError (ParaColl T.Text)
 parseParagraph = parse paragraph "unknown"
 
-parseMultiPara :: T.Text ->  Either ParseError (DocCol T.Text)
-parseMultiPara = parse docBody "unknown"
+parseSent :: T.Text -> Either ParseError (SentColl T.Text)
+parseSent = parse sentence "unknown"
 
 docMetadata :: [MetaTag]
 docMetadata = undefined
