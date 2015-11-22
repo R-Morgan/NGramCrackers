@@ -22,15 +22,15 @@ import NGramCrackers.Ops.Infixes
 import NGramCrackers.Utilities.List
 
 {-| Extract bigrams from a string -}
-bigrams :: T.Text -> [NGram T.Text]
+bigrams :: T.Text -> SentColl T.Text
 bigrams = getNGramsFromText 2 
 
 {-| Extract trigrams from a string -}
-trigrams :: T.Text -> [NGram T.Text]
+trigrams :: T.Text -> SentColl T.Text
 trigrams = getNGramsFromText 3 
 
 {-| Extract n-grams from a string -}
-getNGramsFromText :: Int -> T.Text -> [NGram T.Text]
+getNGramsFromText :: Int -> T.Text -> SentColl T.Text
 getNGramsFromText n packed -- packed is a packed T.Text string
     | n < 0     = error "n must be a positive integer less than 7"
     | n > 7     = error "n must be a positive integer less than 7"
