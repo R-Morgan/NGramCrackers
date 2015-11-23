@@ -18,8 +18,8 @@ import Data.Char (isAlpha, isAlphaNum, isSpace, toLower)
 import Data.List (map, nub)
 import Data.Monoid ((<>))
 
+import NGramCrackers.DataTypes
 import NGramCrackers.Utilities.List
-
 
 {-| Infix synonym for T.append. Handy for gluing bits of Text together -}
 (<#>) :: T.Text -> T.Text -> T.Text
