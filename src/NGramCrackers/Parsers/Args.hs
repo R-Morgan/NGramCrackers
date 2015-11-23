@@ -15,6 +15,7 @@ import qualified Data.Text.IO as TIO
 import qualified Data.Text    as T
 import qualified Data.List    as DL (map, concat, concatMap)
 
+import NGramCrackers.DataTypes
 import NGramCrackers.NGramCrackers
 import NGramCrackers.Parsers.Paragraph
 import NGramCrackers.Utilities.Tuple
@@ -182,7 +183,7 @@ exec opts@Extract{..} = do outHandle <- SIO.openFile output SIO.WriteMode
                            --SIO.hClose inHandle
                            SIO.hClose outHandle
 
-statsFormatter :: [[[T.Text]]] -> T.Text
+statsFormatter :: DocCol T.Text -> T.Text
 statsFormatter stream = (mean <#> sd <#> var) where
                            mean = "Mean: " <#> (ps . meanSentsPerParagraph) stream    <#> " "
                            sd   = "SD: "  <#> (ps . sdSentsPerParagraph)   stream     <#> " "
