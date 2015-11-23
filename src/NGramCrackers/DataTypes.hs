@@ -50,7 +50,7 @@ type SentColl a = [(NGram a)]
 
 -------------------------------------------------------------------------------
 -- NGram Type
-data NGram a =  NullGram
+data NGram a =  NullGram -- Included so the type can be made a Monoid Instance
                -- | Wrd a
                -- | Bigram a
                -- | Trigram a
