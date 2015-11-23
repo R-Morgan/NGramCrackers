@@ -16,6 +16,7 @@ import qualified Data.Map  as M
 import qualified Data.Text as T
 import qualified Data.Set as S
 
+import NGramCrackers.DataTypes
 import NGramCrackers.Ops.Text
 import NGramCrackers.Utilities.List
 import NGramCrackers.Utilities.Tuple
@@ -128,19 +129,19 @@ varSentLength paragraph = variance lengths where
                           lengths = map (fromIntegral . length) paragraph
 
 {-| Takes a paragraph and gets the number of sentence in it. -}
-sentsPerParagraph :: [[T.Text]] -> Double
+sentsPerParagraph :: ParaColl T.Text -> Double
 sentsPerParagraph = fromIntegral . length
 
 {-| Takes a list of paragraphs and gets the mean number of sentences per 
     paragrpah. -}
-meanSentsPerParagraph :: [[[T.Text]]] -> Double
+meanSentsPerParagraph :: DocCol T.Text -> Double
 meanSentsPerParagraph = mean . map sentsPerParagraph
 
 {-| Takes a paragraph and gets the number of sentence in it. -}
-sdSentsPerParagraph :: [[[T.Text]]] -> Double
+sdSentsPerParagraph :: DocCol T.Text -> Double
 sdSentsPerParagraph = standardDev . map sentsPerParagraph
 
 {-| Takes a paragraph and gets the variance of sentences in it. -}
-varSentsPerParagraph :: [[[T.Text]]] -> Double
+varSentsPerParagraph :: DocCol T.Text -> Double
 varSentsPerParagraph = variance . map sentsPerParagraph
 
