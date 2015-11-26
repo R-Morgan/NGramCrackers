@@ -190,6 +190,6 @@ statsFormatter stream = (mean <#> sd <#> var) where
                            var  = "Variance: " <#> (ps . varSentsPerParagraph) stream <#> " "
                            ps   = T.pack . show
 
-ngramPrinter :: [[[T.Text]]] -> (T.Text -> [T.Text]) -> [(T.Text, Int)] 
+ngramPrinter :: DocCol T.Text -> (NGram T.Text -> SentColl T.Text) -> [(NGram T.Text, Int)] 
 ngramPrinter r extractor = ngramCountProfile $ transformer r
                     where transformer = DL.concatMap (extractor . T.unwords) . DL.concat
