@@ -39,8 +39,8 @@ paragraph = endBy sentence eos
 sentence :: PT.Parser (SentColl T.Text)
 sentence = sepBy sentParts seppr
 
-sentParts :: PT.Parser (NGram T.Text)
-sentParts = ngram <|> numToNG
+sentParts :: PT.Parser (NG T.Text)
+sentParts = NGramCrackers.Parsers.Paragraph.ngram <|> numToNG
 
 wordString :: PT.Parser T.Text
 -- Useful for non-sentence word strings where no numbers need to be parsed.
@@ -48,10 +48,10 @@ wordString :: PT.Parser T.Text
 wordString = T.unwords <$> sepBy word seppr
 
 ngramSeries :: PT.Parser (SentColl T.Text)
-ngramSeries = sepBy ngram seppr
+ngramSeries = sepBy NGramCrackers.Parsers.Paragraph.ngram seppr
 
-ngram :: PT.Parser (NGram T.Text)
-ngram = (ngramInject) <$> word
+ngram :: PT.Parser (NG T.Text)
+ngram = (ngInject) <$> word
 
 word :: PT.Parser T.Text
 -- The use of T.pack <$> is necessary because of the type many1 letter returns.
@@ -59,8 +59,8 @@ word :: PT.Parser T.Text
 -- appropriate type.
 word = T.pack <$> many1 letter 
 
-numToNG :: PT.Parser (NGram T.Text)
-numToNG = fmap ngramInject number
+numToNG :: PT.Parser (NG T.Text)
+numToNG = fmap ngInject number
 
 number :: PT.Parser T.Text
 number = T.pack <$> many1 digit
