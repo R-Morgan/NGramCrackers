@@ -5,6 +5,7 @@ module NGramCrackers.DataTypes
 ( DocCol    (..)
 , ParaColl  (..)
 , SentColl  (..)
+, NG        (..)
 , NGram     (..)
 , MetaTag   (..)
 , Date      (..)
@@ -18,6 +19,7 @@ module NGramCrackers.DataTypes
 , PageBound (..)
 , Level     (..)
 , toMedium
+, ngInject
 , ngramInject
 , dtester
 , ptester
@@ -38,7 +40,7 @@ ptester = [tester, tester]
 
 tester :: SentColl T.Text
 tester = ngrams where
-           ngrams = map ngramInject ["foo", "bar", "baz", "shay"]
+           ngrams = map ngInject ["foo", "bar", "baz", "shay"]
 
 
 -------------------------------------------------------------------------------
@@ -46,7 +48,7 @@ tester = ngrams where
 
 type DocCol a = [ParaColl a]
 type ParaColl a = [SentColl a]
-type SentColl a = [(NGram a)]
+type SentColl a = [(NG a)]
 
 -------------------------------------------------------------------------------
 -- NGram Type
@@ -64,6 +66,33 @@ data NGram a =  NullGram -- Included so the type can be made a Monoid Instance
      -- Monad?
      -- Special Show instance?
      -- Other?
+
+data NG a = NG { ngram :: Maybe a
+                  , len   :: Int } deriving (Show, Read, Eq, Ord)
+
+instance Functor (NG) where
+    fmap f NG{ ngram = Nothing, len = 0 }      = NG { ngram = Nothing, len = 0 }
+    fmap f NG{ ngram  = Just m , len   = x }   = NG { ngram = Just $ f m , len   = x }
+
+instance Monoid (NG T.Text) where
+    mempty  = NG { ngram = Nothing , len   = 0 }
+
+    mappend NG { ngram = Nothing , len = 0} NG{ ngram = Just txt, len = n} =
+      NG{ ngram = Just txt, len = n }
+
+    mappend NG{ ngram = Just txt, len = n} NG{ ngram = Nothing , len = 0} =
+      NG{ ngram = Just txt, len = n }
+    -- Turns out that you can't use mempty in place of NullGram in the identity
+    -- parts of the mappend definition
+    --
+    mappend NG{ ngram = Just txt, len = n } NG { ngram = Just txt', len = m } =
+      NG { ngram = (Just $ txt <#> " " <#> txt'), len = (n + m) }
+    -- mappend allows for the concatenation of the ngrams, while also adding
+    -- their lengths together. Monoids are pretty slick.
+
+ngInject :: T.Text -> NG T.Text
+ngInject ("") = NG { ngram = Nothing,  len   = 0}
+ngInject txt  = NG { ngram = Just txt, len   = (length . T.words) txt }
 
 instance Functor (NGram) where
     --fmap :: (a -> b) -> f a -> f b
@@ -209,5 +238,3 @@ toLevel text | text == "litf" = LitFic
     --mappend (SentColl ngrams) (SentColl ngrams') = (SentColl $ ngrams ++ ngrams')
 
 --    mconcat = undefined
-
-
