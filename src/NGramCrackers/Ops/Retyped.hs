@@ -22,13 +22,13 @@ import NGramCrackers.DataTypes
 import NGramCrackers.Ops.Infixes
 import NGramCrackers.Utilities.List
 
-{-| Extract bigrams from a string -}
-bigrams :: T.Text -> SentColl T.Text
-bigrams = getNGramsFromText 2 
+{-| Extract bigrams from a list of NGs -}
+bigrams :: SentColl T.Text -> SentColl T.Text
+bigrams = getTrueNGrams 2
 
-{-| Extract trigrams from a string -}
-trigrams :: T.Text -> SentColl T.Text
-trigrams = getNGramsFromText 3 
+{-| Extract trigrams from a list of NGs -}
+trigrams :: SentColl T.Text -> SentColl T.Text
+trigrams = getTrueNGrams 3
 
 {-| Extract n-grams from a string -}
 getNGramsFromText :: Int -> T.Text -> SentColl T.Text
