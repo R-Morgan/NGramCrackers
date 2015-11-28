@@ -15,9 +15,8 @@ module NGramCrackers.Utilities.Tuple
 
 import qualified Data.Maybe as M (fromJust)
 import qualified Data.Text  as T
-
-(<#>) :: T.Text -> T.Text -> T.Text
-(<#>) = T.append
+import NGramCrackers.DataTypes
+import NGramCrackers.Ops.Infixes
 
 fst' :: (a, b, c) -> a
 fst' (x, _, _) = x
@@ -46,9 +45,9 @@ stringifyLexemeCount x = wordStr <#> lexeme <#> countStr <#>
                                  lexeme   = fst x
                                  countStr = T.pack " ----- Count: " 
 
-doubleToCSV :: (T.Text, Int) -> T.Text
-doubleToCSV x = ngram <#> commaChar <#> (T.pack . show . snd) x
-                 where ngram = fst x
+doubleToCSV :: (NG T.Text, Int) -> T.Text
+doubleToCSV x = ng <#> commaChar <#> (T.pack . show . snd) x
+                 where ng = (M.fromJust . ngram . fst) x
                        commaChar = T.singleton ','
 
 tripleToCSV :: (T.Text, Int, Maybe Double) -> T.Text
