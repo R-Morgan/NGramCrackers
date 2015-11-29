@@ -64,8 +64,8 @@ wcMap doc = wcMap' stream where
               wcMap' = foldl countElem M.empty
               stream = concatMap concat doc
 
-wcMaptoList :: M.Map (NG T.Text) Count -> [(NG T.Text, Count)]
-wcMaptoList = M.toList
+wcMapToList :: M.Map (NG T.Text) Count -> [(NG T.Text, Count)]
+wcMapToList = M.toList
 
 {-| Borrowed from: http://nlpwp.org/book/chap-words.xhtml. -}
 countElem :: (Ord k) => M.Map k Count -> k -> M.Map k Count
