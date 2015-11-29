@@ -5,6 +5,7 @@ module NGramCrackers.DataTypes
 ( DocCol    (..)
 , ParaColl  (..)
 , SentColl  (..)
+, Count     (..)
 , NG        (..)
 , NGram     (..)
 , MetaTag   (..)
