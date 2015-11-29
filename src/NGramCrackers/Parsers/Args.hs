@@ -18,13 +18,13 @@ import qualified Data.List    as DL (map, concat, concatMap)
 import NGramCrackers.DataTypes
 import NGramCrackers.NGramCrackers
 import NGramCrackers.Ops.Infixes
+import NGramCrackers.Ops.Pretty
 import NGramCrackers.Ops.Retyped
 import NGramCrackers.Parsers.Paragraph
 import NGramCrackers.Quant.Counts
 import NGramCrackers.Quant.Stats
 import NGramCrackers.Utilities.Tuple
 import NGramCrackers.Utilities.List
-
 
 {-| Data declaration of record type for programme options -}
 data Args = Profile {  wordC     :: Bool
@@ -156,7 +156,7 @@ exec opts@Extract{..} = do outHandle <- SIO.openFile output SIO.WriteMode
 
                                 Right r -> TIO.hPutStrLn outHandle "bigram,count" >>
                                              mapM_ (TIO.hPutStrLn outHandle . doubleToCSV)
-                                             (ngramPrinter r bigrams)
+                                             (ngramLister r bigrams)
                                           
                            when trigram $
                              case parseMultiPara contents of
@@ -165,7 +165,7 @@ exec opts@Extract{..} = do outHandle <- SIO.openFile output SIO.WriteMode
 
                                 Right r -> TIO.hPutStrLn outHandle "trigram,count" >>
                                            mapM_ (TIO.hPutStrLn outHandle . doubleToCSV) 
-                                             (ngramPrinter r trigrams)
+                                             (ngramLister r trigrams)
 
                            when (ngram > 3 && ngram < 8) $
                              case parseMultiPara contents of
@@ -174,7 +174,7 @@ exec opts@Extract{..} = do outHandle <- SIO.openFile output SIO.WriteMode
 
                                 Right r -> TIO.hPutStrLn outHandle "trigram,count" >>
                                            mapM_ (TIO.hPutStrLn outHandle . doubleToCSV) 
-                                             (ngramPrinter r $ getNGramsFromText ngram)
+                                             (ngramLister r $ getTrueNGrams ngram)
 
                            when debug $
                              case parseMultiPara contents of
@@ -184,14 +184,3 @@ exec opts@Extract{..} = do outHandle <- SIO.openFile output SIO.WriteMode
 
                            --SIO.hClose inHandle
                            SIO.hClose outHandle
-
-statsFormatter :: DocCol T.Text -> T.Text
-statsFormatter stream = (mean <#> sd <#> var) where
-                           mean = "Mean: " <#> (ps . meanSentsPerParagraph) stream    <#> " "
-                           sd   = "SD: "  <#> (ps . sdSentsPerParagraph)   stream     <#> " "
-                           var  = "Variance: " <#> (ps . varSentsPerParagraph) stream <#> " "
-                           ps   = T.pack . show
-
-ngramPrinter :: DocCol T.Text -> (NGram T.Text -> SentColl T.Text) -> [(NGram T.Text, Int)] 
-ngramPrinter r extractor = ngramCountProfile $ transformer r
-                    where transformer = DL.concatMap (extractor . T.unwords) . DL.concat
