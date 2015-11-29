@@ -47,7 +47,7 @@ stringifyLexemeCount x = wordStr <#> lexeme <#> countStr <#>
 
 doubleToCSV :: (NG T.Text, Int) -> T.Text
 doubleToCSV x = ng <#> commaChar <#> (T.pack . show . snd) x
-                 where ng = (M.fromJust . ngram . fst) x
+                 where ng = (M.fromJust . getNG . fst) x
                        commaChar = T.singleton ','
 
 tripleToCSV :: (T.Text, Int, Maybe Double) -> T.Text

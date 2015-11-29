@@ -38,7 +38,7 @@ bigramWordsLookup :: NG T.Text -> M.Map (NG T.Text) Count -> (NG T.Text, Maybe C
 -- TODO: Possibly awkward to use tuple format. Possibly not. Evaluate.
 -- TODO: Generalise this function to ngrams
 bigramWordsLookup bg m = (bg, aC, bC) where
-                    wrds = T.words $ M.fromJust $ ngram bg
+                    wrds = T.words $ M.fromJust $ getNG bg
                     aC = M.lookup a m
                     bC = M.lookup b m
                     a  = ngInject $ head wrds

@@ -45,7 +45,7 @@ getTrueNGrams n list@(x:xs)
     | n > 7     = error "n must be a positive integer less than 7"
     | length list >= n = ng : getTrueNGrams n xs 
     | otherwise = [] where
-      ng = Prelude.foldr ((<>)) NG{ ngram = Nothing, len = 0} phrase
+      ng = Prelude.foldr ((<>)) NG{ getNG = Nothing, len = 0} phrase
       phrase = take n list
 
 getNGramsFromTextList :: Int -> [T.Text] -> [[T.Text]]
