@@ -146,8 +146,7 @@ exec opts@Extract{..} = do outHandle <- SIO.openFile output SIO.WriteMode
                                               print e
 
                                 Right r -> TIO.hPutStrLn outHandle "word,count" >> 
-                                           mapM_ (TIO.hPutStrLn outHandle . doubleToCSV) 
-                                             (wcMapToList $ wcMap r)
+                                             formatOutput outHandle (wcMapToList $ wcMap r)
 
                            when bigram $
                              case parseMultiPara contents of
@@ -155,8 +154,7 @@ exec opts@Extract{..} = do outHandle <- SIO.openFile output SIO.WriteMode
                                               print e
 
                                 Right r -> TIO.hPutStrLn outHandle "bigram,count" >>
-                                             mapM_ (TIO.hPutStrLn outHandle . doubleToCSV)
-                                             (ngramLister r bigrams)
+                                             formatOutput outHandle (ngramLister r bigrams)
                                           
                            when trigram $
                              case parseMultiPara contents of
@@ -164,8 +162,7 @@ exec opts@Extract{..} = do outHandle <- SIO.openFile output SIO.WriteMode
                                               print e
 
                                 Right r -> TIO.hPutStrLn outHandle "trigram,count" >>
-                                           mapM_ (TIO.hPutStrLn outHandle . doubleToCSV) 
-                                             (ngramLister r trigrams)
+                                             formatOutput outHandle (ngramLister r trigrams)
 
                            when (ngram > 3 && ngram < 8) $
                              case parseMultiPara contents of
@@ -173,8 +170,9 @@ exec opts@Extract{..} = do outHandle <- SIO.openFile output SIO.WriteMode
                                               print e
 
                                 Right r -> TIO.hPutStrLn outHandle "trigram,count" >>
-                                           mapM_ (TIO.hPutStrLn outHandle . doubleToCSV) 
-                                             (ngramLister r $ getTrueNGrams ngram)
+                                             formatOutput outHandle (ngramLister r $
+                                             getTrueNGrams ngram)
+
 
                            when debug $
                              case parseMultiPara contents of
