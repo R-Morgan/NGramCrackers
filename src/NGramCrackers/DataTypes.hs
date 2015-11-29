@@ -50,6 +50,8 @@ type DocCol a = [ParaColl a]
 type ParaColl a = [SentColl a]
 type SentColl a = [(NG a)]
 
+type Count = Int -- Useful for various modules dealing with counts of phrasal
+                 -- structures
 -------------------------------------------------------------------------------
 -- NGram Type
 data NGram a =  NullGram -- Included so the type can be made a Monoid Instance

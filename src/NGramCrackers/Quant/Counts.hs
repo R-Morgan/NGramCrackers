@@ -3,6 +3,7 @@ module NGramCrackers.Quant.Counts
 ( bigramMap
 , ngramMap
 , wcMap
+, wcMapToList
 , countElem
 , wordSet
 , wordSetDoc
@@ -26,14 +27,14 @@ import NGramCrackers.Ops.Retyped
 import NGramCrackers.Utilities.List
 
 {-| Produces Map of bigrams in a document-}
-bigramMap :: DocCol T.Text -> M.Map (NG T.Text) Int
+bigramMap :: DocCol T.Text -> M.Map (NG T.Text) Count
 bigramMap doc = bigramMap' stream where
                   bigramMap' = foldl countElem M.empty
                   stream = (concatMap bigrams . concat) doc
 
 {-| Looks up counts of a bigrams constituent words in a Map. Useful for the
     calculation of pMI -}
-bigramWordsLookup :: NG T.Text -> M.Map (NG T.Text) Int -> (NG T.Text, Maybe Int, Maybe Int)
+bigramWordsLookup :: NG T.Text -> M.Map (NG T.Text) Count -> (NG T.Text, Maybe Count, Maybe Count)
 -- TODO: Possibly awkward to use tuple format. Possibly not. Evaluate.
 -- TODO: Generalise this function to ngrams
 bigramWordsLookup bg m = (bg, aC, bC) where
@@ -46,25 +47,28 @@ bigramWordsLookup bg m = (bg, aC, bC) where
                     -- of implementing a monad for this type.
 
 {-| Looks up bigram's count in a Map. Useful for the calculation of pMI -}
-bigramLookup :: NG T.Text -> M.Map (NG T.Text) Int -> (NG T.Text, Maybe Int)
+bigramLookup :: NG T.Text -> M.Map (NG T.Text) Count -> (NG T.Text, Maybe Count)
 bigramLookup bg m = (bg, count) where
 -- m should be a Map of bigrams and their counts, not just words
                       count = M.lookup bg m
 
 {-| Generalised version of bigramMap -}
-ngramMap :: (SentColl T.Text -> SentColl T.Text) -> DocCol T.Text -> M.Map (NG T.Text) Int
+ngramMap :: (SentColl T.Text -> SentColl T.Text) -> DocCol T.Text -> M.Map (NG T.Text) Count
 ngramMap f doc = ngramMap' stream where
                    ngramMap' = foldl countElem M.empty
                    stream = (concatMap f . concat) doc
 
-{-| Borrowed from: http://nlpwp.org/book/chap-words.xhtml. -}
-wcMap :: DocCol T.Text -> M.Map (NG T.Text) Int
+{-| Borrowed from: http://nlpwp.org/book/chap-words.xhtml. Word Count Map  -}
+wcMap :: DocCol T.Text -> M.Map (NG T.Text) Count
 wcMap doc = wcMap' stream where
               wcMap' = foldl countElem M.empty
               stream = concatMap concat doc
 
+wcMaptoList :: M.Map (NG T.Text) Count -> [(NG T.Text, Count)]
+wcMaptoList = M.toList
+
 {-| Borrowed from: http://nlpwp.org/book/chap-words.xhtml. -}
-countElem :: (Ord k) => M.Map k Int -> k -> M.Map k Int
+countElem :: (Ord k) => M.Map k Count -> k -> M.Map k Count
 countElem m e = case M.lookup e m of
                   Just v  -> M.insert e (v + 1) m
                   Nothing -> M.insert e 1 m
@@ -81,11 +85,11 @@ wordSetDoc = S.fromList . concatMap concat
 bigramSetDoc :: DocCol T.Text -> S.Set (NG T.Text)
 bigramSetDoc = S.fromList . concatMap bigrams . concat
 
-countWordSetElem :: S.Set (NG T.Text) -> DocCol T.Text -> [(NG T.Text, Int)]
+countWordSetElem :: S.Set (NG T.Text) -> DocCol T.Text -> [(NG T.Text, Count)]
 countWordSetElem lexSet doc = countWordSetElem' lexSet concattedDoc where
                                 concattedDoc = concatMap concat doc
                             
-countWordSetElem' :: S.Set (NG T.Text) -> [NG T.Text] -> [(NG T.Text, Int)]
+countWordSetElem' :: S.Set (NG T.Text) -> [NG T.Text] -> [(NG T.Text, Count)]
 countWordSetElem' lexSet concattedDoc | S.null lexSet       = []
                                       | L.null concattedDoc = []
                                       | otherwise = (word, count) : 
