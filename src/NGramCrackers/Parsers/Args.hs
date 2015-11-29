@@ -17,11 +17,13 @@ import qualified Data.List    as DL (map, concat, concatMap)
 
 import NGramCrackers.DataTypes
 import NGramCrackers.NGramCrackers
+import NGramCrackers.Ops.Infixes
+import NGramCrackers.Ops.Retyped
 import NGramCrackers.Parsers.Paragraph
+import NGramCrackers.Quant.Counts
+import NGramCrackers.Quant.Stats
 import NGramCrackers.Utilities.Tuple
 import NGramCrackers.Utilities.List
-import NGramCrackers.Ops.Text
-import NGramCrackers.Quant.Stats
 
 
 {-| Data declaration of record type for programme options -}
@@ -145,7 +147,7 @@ exec opts@Extract{..} = do outHandle <- SIO.openFile output SIO.WriteMode
 
                                 Right r -> TIO.hPutStrLn outHandle "word,count" >> 
                                            mapM_ (TIO.hPutStrLn outHandle . doubleToCSV) 
-                                             (ngramCountProfile $ concatMap DL.concat r)
+                                             (wcMapToList $ wcMap r)
 
                            when bigram $
                              case parseMultiPara contents of
