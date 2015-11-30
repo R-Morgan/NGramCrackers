@@ -48,5 +48,3 @@ typeTokenRatio tokens = (typesTotal, tokenTotal, ratio)
                           where typesTotal = (fromIntegral . length . nub) tokens
                                 tokenTotal = (fromIntegral . length) tokens
                                 ratio      = typesTotal / tokenTotal 
-
-
