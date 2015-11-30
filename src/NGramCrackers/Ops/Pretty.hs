@@ -1,16 +1,19 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 module NGramCrackers.Ops.Pretty
-( formatOutput
+( 
+  formatOutput
 , ngramLister
 , ngRecFormatter
 , printMaybe
 , statsFormatter
+, typeTokenRatio
 ) where
+
+import Data.List (nub)
 
 import qualified Data.Text.IO as TIO
 import qualified System.IO    as SIO
-
 import qualified Data.Text as T
 
 import NGramCrackers.DataTypes
@@ -39,3 +42,14 @@ statsFormatter stream = (mean <#> sd <#> var) where
                            sd   = "SD: "  <#> (ps . sdSentsPerParagraph)   stream     <#> " "
                            var  = "Variance: " <#> (ps . varSentsPerParagraph) stream <#> " "
                            ps   = T.pack . show
+
+typeTokenRatio ::  T.Text -> T.Text
+typeTokenRatio string = typeStr <#> ps types <#> tokStr <#> ps tokens <#> ttrStr
+                                <#> ratio
+                       where types = (fromIntegral . length . nub . T.words) string
+                             tokens = (fromIntegral . length . T.words) string
+                             ratio = (T.pack . show) $ types / tokens
+                             typeStr = T.pack "Types: "
+                             tokStr  = T.pack ", Tokens: "
+                             ttrStr  = T.pack ", TTR: "
+                             ps      = T.pack . show
