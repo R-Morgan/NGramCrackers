@@ -4,12 +4,7 @@ module NGramCrackers.Ops.Retyped
 , trigrams
 , getNGramsFromText
 , getTrueNGrams
-, getNGramsFromTextList
-, getAlphasOnlyToText
-, normToList
-, getWordFrequency
 , countWords
-, typeTokenRatio
 ) where
 
 import qualified Data.Text as T
@@ -48,44 +43,8 @@ getTrueNGrams n list@(x:xs)
       ng = Prelude.foldr ((<>)) NG{ getNG = Nothing, len = 0} phrase
       phrase = take n list
 
-getNGramsFromTextList :: Int -> [T.Text] -> [[T.Text]]
-getNGramsFromTextList = getNSeqFromList
-
-{-| Return only alphabetic characters from a string and return the
-    result as a string. Output of this function may need processing
-    into a list, tuple, etc. -}
-getAlphasOnlyToText :: T.Text -> T.Text
-getAlphasOnlyToText = T.filter (\char -> isAlpha char || isSpace char)
-
-{-| Return only alphanumeric characters from a string and return the
-    result as a List.-}
-normToList :: T.Text -> [T.Text]
-normToList = T.words . getAlphasOnlyToText . T.toLower
-
-{-| Get frequency of a single word's occurance in a string. Is eta-reduction
-    the easiest reading way to do this function? The arguments are fairly
-    instructive. However, the type declaration does say what kind of args
-    it takes.  With type synonyms or further exploring the type system,
-    the declaration would be more informative-}
-
-getWordFrequency:: T.Text -> T.Text -> Int
--- No eta-reduction for readability
-getWordFrequency word text = (length . filter (== word) . T.words) text
-
-{-| These functions output the specified strings, so they can be kept and
- developed separately from the lists that get used in generating the
- the help, version, and about type displays -}
-
 countWords :: T.Text -> Int
+-- Cheap hack that  should be done away with in the main options area
+-- This is not a good place for the function, but it will do temporarily
 countWords =  length . T.words
 
-typeTokenRatio ::  T.Text -> T.Text 
-typeTokenRatio string = typeStr <#> ps types <#> tokStr <#> ps tokens <#> ttrStr 
-                                <#> ratio  
-                       where types = (fromIntegral . length . nub . T.words) string
-                             tokens = (fromIntegral . length . T.words) string
-                             ratio = (T.pack . show) $ types / tokens
-                             typeStr = T.pack "Types: "  
-                             tokStr  = T.pack ", Tokens: "  
-                             ttrStr  = T.pack ", TTR: "
-                             ps      = T.pack . show
