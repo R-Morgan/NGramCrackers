@@ -68,15 +68,3 @@ getWordFrequency word text = (length . filter (== word) . T.words) text
 
 countWords :: T.Text -> Int
 countWords =  length . T.words
-
-typeTokenRatio ::  T.Text -> T.Text 
-typeTokenRatio string = typeStr <#> ps types <#> tokStr <#> ps tokens <#> ttrStr 
-                                <#> ratio  
-                       where types = (fromIntegral . length . nub . T.words) string
-                             tokens = (fromIntegral . length . T.words) string
-                             ratio = (T.pack . show) $ types / tokens
-                             typeStr = T.pack "Types: "  
-                             tokStr  = T.pack ", Tokens: "  
-                             ttrStr  = T.pack ", TTR: "
-                             ps      = T.pack . show
-
