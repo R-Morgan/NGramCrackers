@@ -21,9 +21,9 @@ import qualified Data.Set   as S
 import qualified Data.Text  as T
 
 import NGramCrackers.DataTypes
+import NGramCrackers.Ops.NG
 import NGramCrackers.Parsers.Paragraph
 import NGramCrackers.Quant.Dispersion
-import NGramCrackers.Ops.Retyped
 import NGramCrackers.Utilities.List
 
 {-| Produces Map of bigrams in a document-}

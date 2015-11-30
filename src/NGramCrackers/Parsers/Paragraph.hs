@@ -16,7 +16,7 @@ import Data.List (concat, unwords)
 import Text.ParserCombinators.Parsec hiding ((<|>))
 
 import NGramCrackers.DataTypes
-import NGramCrackers.Ops.Retyped
+import NGramCrackers.Ops.NG
 
 parseMultiPara :: T.Text ->  Either ParseError (DocCol T.Text)
 parseMultiPara = parse docBody "unknown"
