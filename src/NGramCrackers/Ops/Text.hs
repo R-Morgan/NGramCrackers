@@ -8,8 +8,6 @@ module NGramCrackers.Ops.Text
 , normToList
 , getWordFrequency
 , countWords
-, typeTokenRatio
-, (<#>)
 ) where
 
 import qualified Data.Text as T
