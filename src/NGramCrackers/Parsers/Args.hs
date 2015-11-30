@@ -114,6 +114,8 @@ exec opts@Profile{..} = do outHandle <- SIO.openFile output SIO.WriteMode
 
                            when wordC $ TIO.hPutStrLn outHandle $ 
                              (T.pack . show . countWords) contents
+                             -- countWords is a gross, deprecated way of
+                             -- counting lexemes
 
                            when ttr   $ TIO.hPutStrLn outHandle $ typeTokenRatio contents
 
