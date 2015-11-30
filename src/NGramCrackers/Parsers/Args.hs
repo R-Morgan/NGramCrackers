@@ -16,15 +16,14 @@ import qualified Data.Text    as T
 import qualified Data.List    as DL (map, concat, concatMap)
 
 import NGramCrackers.DataTypes
-import NGramCrackers.NGramCrackers
 import NGramCrackers.Ops.Infixes
+import NGramCrackers.Ops.NG
 import NGramCrackers.Ops.Pretty
-import NGramCrackers.Ops.Retyped
 import NGramCrackers.Parsers.Paragraph
 import NGramCrackers.Quant.Counts
 import NGramCrackers.Quant.Stats
-import NGramCrackers.Utilities.Tuple
 import NGramCrackers.Utilities.List
+import NGramCrackers.Utilities.Tuple
 
 {-| Data declaration of record type for programme options -}
 data Args = Profile {  wordC     :: Bool
