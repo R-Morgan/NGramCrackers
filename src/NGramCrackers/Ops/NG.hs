@@ -1,4 +1,4 @@
-module NGramCrackers.Ops.Retyped
+module NGramCrackers.Ops.NG
 (
   bigrams
 , trigrams
