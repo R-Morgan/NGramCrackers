@@ -7,49 +7,60 @@ module NGramCrackers.Parsers.Paragraph
 , wordString
 ) where
 
+import Data.Text as T
+import Text.Parsec.Text as PT
 
 import Control.Applicative ((<$>), (<*), (*>), (<*>), (<|>), liftA3)
 import Data.Functor (void)
 import Data.List (concat, unwords)
-import Data.Text as T                    
-import Text.Parsec.Text as PT 
 import Text.ParserCombinators.Parsec hiding ((<|>))
+
 import NGramCrackers.DataTypes
+import NGramCrackers.Ops.NG
 
-parseSent :: T.Text -> Either ParseError [T.Text]
-parseSent = parse sentence "unknown"
+parseMultiPara :: T.Text ->  Either ParseError (DocCol T.Text)
+parseMultiPara = parse docBody "unknown"
 
-parseParagraph :: T.Text -> Either ParseError [[T.Text]]
+parseParagraph :: T.Text -> Either ParseError (ParaColl T.Text)
 parseParagraph = parse paragraph "unknown"
 
-parseMultiPara :: T.Text ->  Either ParseError [[[T.Text]]]
-parseMultiPara = parse docBody "unknown"
+parseSent :: T.Text -> Either ParseError (SentColl T.Text)
+parseSent = parse sentence "unknown"
 
 docMetadata :: [MetaTag]
 docMetadata = undefined
 
-docBody :: PT.Parser [[[T.Text]]]
+docBody :: PT.Parser (DocCol T.Text)
 docBody = endBy paragraph eop
 
-paragraph :: PT.Parser [[T.Text]]
+paragraph :: PT.Parser (ParaColl T.Text)
 paragraph = endBy sentence eos
 
-sentence :: PT.Parser [T.Text]
+sentence :: PT.Parser (SentColl T.Text)
 sentence = sepBy sentParts seppr
 
-sentParts :: PT.Parser T.Text
-sentParts = word <|> number
+sentParts :: PT.Parser (NG T.Text)
+sentParts = NGramCrackers.Parsers.Paragraph.ngram <|> numToNG
 
 wordString :: PT.Parser T.Text
 -- Useful for non-sentence word strings where no numbers need to be parsed.
 -- Probably useful for parsing MetaTags
 wordString = T.unwords <$> sepBy word seppr
 
+ngramSeries :: PT.Parser (SentColl T.Text)
+ngramSeries = sepBy NGramCrackers.Parsers.Paragraph.ngram seppr
+
+ngram :: PT.Parser (NG T.Text)
+ngram = (ngInject) <$> word
+
 word :: PT.Parser T.Text
 -- The use of T.pack <$> is necessary because of the type many1 letter returns.
 -- fmapping T.pack into the Parser makes it possible to return a parser of the
 -- appropriate type.
 word = T.pack <$> many1 letter 
+
+numToNG :: PT.Parser (NG T.Text)
+numToNG = fmap ngInject number
 
 number :: PT.Parser T.Text
 number = T.pack <$> many1 digit

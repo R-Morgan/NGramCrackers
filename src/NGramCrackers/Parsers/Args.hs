@@ -15,13 +15,15 @@ import qualified Data.Text.IO as TIO
 import qualified Data.Text    as T
 import qualified Data.List    as DL (map, concat, concatMap)
 
-import NGramCrackers.NGramCrackers
+import NGramCrackers.DataTypes
+import NGramCrackers.Ops.Infixes
+import NGramCrackers.Ops.NG
+import NGramCrackers.Ops.Pretty
 import NGramCrackers.Parsers.Paragraph
-import NGramCrackers.Utilities.Tuple
-import NGramCrackers.Utilities.List
-import NGramCrackers.Ops.Text
+import NGramCrackers.Quant.Counts
 import NGramCrackers.Quant.Stats
-
+import NGramCrackers.Utilities.List
+import NGramCrackers.Utilities.Tuple
 
 {-| Data declaration of record type for programme options -}
 data Args = Profile {  wordC     :: Bool
@@ -111,6 +113,8 @@ exec opts@Profile{..} = do outHandle <- SIO.openFile output SIO.WriteMode
 
                            when wordC $ TIO.hPutStrLn outHandle $ 
                              (T.pack . show . countWords) contents
+                             -- countWords is a gross, deprecated way of
+                             -- counting lexemes
 
                            when ttr   $ TIO.hPutStrLn outHandle $ typeTokenRatio contents
 
@@ -143,8 +147,7 @@ exec opts@Extract{..} = do outHandle <- SIO.openFile output SIO.WriteMode
                                               print e
 
                                 Right r -> TIO.hPutStrLn outHandle "word,count" >> 
-                                           mapM_ (TIO.hPutStrLn outHandle . doubleToCSV) 
-                                             (ngramCountProfile $ concatMap DL.concat r)
+                                             formatOutput outHandle (wcMapToList $ wcMap r)
 
                            when bigram $
                              case parseMultiPara contents of
@@ -152,8 +155,7 @@ exec opts@Extract{..} = do outHandle <- SIO.openFile output SIO.WriteMode
                                               print e
 
                                 Right r -> TIO.hPutStrLn outHandle "bigram,count" >>
-                                             mapM_ (TIO.hPutStrLn outHandle . doubleToCSV)
-                                             (ngramPrinter r bigrams)
+                                             formatOutput outHandle (ngramLister r bigrams)
                                           
                            when trigram $
                              case parseMultiPara contents of
@@ -161,8 +163,7 @@ exec opts@Extract{..} = do outHandle <- SIO.openFile output SIO.WriteMode
                                               print e
 
                                 Right r -> TIO.hPutStrLn outHandle "trigram,count" >>
-                                           mapM_ (TIO.hPutStrLn outHandle . doubleToCSV) 
-                                             (ngramPrinter r trigrams)
+                                             formatOutput outHandle (ngramLister r trigrams)
 
                            when (ngram > 3 && ngram < 8) $
                              case parseMultiPara contents of
@@ -170,8 +171,9 @@ exec opts@Extract{..} = do outHandle <- SIO.openFile output SIO.WriteMode
                                               print e
 
                                 Right r -> TIO.hPutStrLn outHandle "trigram,count" >>
-                                           mapM_ (TIO.hPutStrLn outHandle . doubleToCSV) 
-                                             (ngramPrinter r $ getNGramsFromText ngram)
+                                             formatOutput outHandle (ngramLister r $
+                                             getTrueNGrams ngram)
+
 
                            when debug $
                              case parseMultiPara contents of
@@ -181,14 +183,3 @@ exec opts@Extract{..} = do outHandle <- SIO.openFile output SIO.WriteMode
 
                            --SIO.hClose inHandle
                            SIO.hClose outHandle
-
-statsFormatter :: [[[T.Text]]] -> T.Text
-statsFormatter stream = (mean <#> sd <#> var) where
-                           mean = "Mean: " <#> (ps . meanSentsPerParagraph) stream    <#> " "
-                           sd   = "SD: "  <#> (ps . sdSentsPerParagraph)   stream     <#> " "
-                           var  = "Variance: " <#> (ps . varSentsPerParagraph) stream <#> " "
-                           ps   = T.pack . show
-
-ngramPrinter :: [[[T.Text]]] -> (T.Text -> [T.Text]) -> [(T.Text, Int)] 
-ngramPrinter r extractor = ngramCountProfile $ transformer r
-                    where transformer = DL.concatMap (extractor . T.unwords) . DL.concat
