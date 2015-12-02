@@ -51,6 +51,8 @@ High
 - Look for more areas to implement type synonyms. Some of the Set and Map
   sigs are unwieldy
 
+- Relicence
+
 - Tidy up as much  as possible for 0.3.0 release.
 
 ######
