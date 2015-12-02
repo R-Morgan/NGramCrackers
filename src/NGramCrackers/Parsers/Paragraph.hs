@@ -1,7 +1,8 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 module NGramCrackers.Parsers.Paragraph
-( parseSent
+( 
+  parseSent
 , parseParagraph
 , parseMultiPara
 , wordString
@@ -28,6 +29,7 @@ parseSent :: T.Text -> Either ParseError (SentColl T.Text)
 parseSent = parse sentence "unknown"
 
 docMetadata :: [MetaTag]
+-- May need to be moved to the Metadata module
 docMetadata = undefined
 
 docBody :: PT.Parser (DocCol T.Text)
@@ -42,16 +44,21 @@ sentence = sepBy sentParts seppr
 sentParts :: PT.Parser (NG T.Text)
 sentParts = ngram <|> numToNG
 
+ngramSeries :: PT.Parser (SentColl T.Text)
+ngramSeries = sepBy ngram seppr
+
+numToNG :: PT.Parser (NG T.Text)
+numToNG = fmap ngInject number
+
+{-| This parser is the basis for most all the parsers above. The parser puts
+    a parsed word into the NG record context. -}
+ngram :: PT.Parser (NG T.Text)
+ngram = (ngInject) <$> word
+
 wordString :: PT.Parser T.Text
 -- Useful for non-sentence word strings where no numbers need to be parsed.
 -- Probably useful for parsing MetaTags
 wordString = T.unwords <$> sepBy word seppr
-
-ngramSeries :: PT.Parser (SentColl T.Text)
-ngramSeries = sepBy ngram seppr
-
-ngram :: PT.Parser (NG T.Text)
-ngram = (ngInject) <$> word
 
 word :: PT.Parser T.Text
 -- The use of T.pack <$> is necessary because of the type many1 letter returns.
@@ -59,12 +66,13 @@ word :: PT.Parser T.Text
 -- appropriate type.
 word = T.pack <$> many1 letter 
 
-numToNG :: PT.Parser (NG T.Text)
-numToNG = fmap ngInject number
-
 number :: PT.Parser T.Text
 number = T.pack <$> many1 digit
-                                                     
+
+--------------------------------------------------------------------------------
+-- Separation parsers, used to parse and discard punctuation
+--------------------------------------------------------------------------------
+
 seppr :: PT.Parser ()
 -- Since the results of this parser are just thrown away, we need the `void`
 -- function from Data.Functor
