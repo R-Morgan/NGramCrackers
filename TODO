@@ -5,6 +5,8 @@ High
 ######
 
 - implement command line argument parsing and handling [Testing]
+- As of 01.12.2015, CL argument handling has been working quite
+  well.
 
    - Implement multiple modes [Testing]
       
@@ -32,24 +34,6 @@ High
          -b        bigrams
          -t        trigrams
          -n [Int]  ngrams
-
-- implement quickCheck tests [testing]
-   
-   - test the text manipulation stuff -- i.e., the pure code
-
-   - IO tests -- not sure how to do that
-
-- Fix Bigram MI Profile function
- 
- - The difficulty here seems to be with acting recursively on the map. Some sort
-   of foldy-ness may be helpful (eg., start with with an empty map and fold
-   the appropriate types into the map at each step)
-
-- Write function to get MI of one bigram, given the bigram and a frequency
-  map of the bigrams and the word counts
-  
-  04.19.2015: bigramMI takes a bigram and a document and gets a single bigram's
-              MI.
 
 - Revise README.md
  
@@ -86,6 +70,24 @@ Med
   be parsed as the same word
 
   - Likely possibly with `map T.lower`
+
+- implement quickCheck tests [testing]
+   
+   - test the text manipulation stuff -- i.e., the pure code
+
+   - IO tests -- not sure how to do that
+
+- Fix Bigram MI Profile function
+ 
+ - The difficulty here seems to be with acting recursively on the map. Some sort
+   of foldy-ness may be helpful (eg., start with with an empty map and fold
+   the appropriate types into the map at each step)
+
+- Write function to get MI of one bigram, given the bigram and a frequency
+  map of the bigrams and the word counts
+
+  04.19.2015: bigramMI takes a bigram and a document and gets a single bigram's
+              MI.
 
 ######
 Low
