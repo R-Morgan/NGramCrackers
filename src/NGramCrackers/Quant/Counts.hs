@@ -22,7 +22,7 @@ import qualified Data.Text  as T
 
 import NGramCrackers.DataTypes
 import NGramCrackers.Ops.NG
-import NGramCrackers.Parsers.Paragraph
+import NGramCrackers.Parsers.Body
 import NGramCrackers.Quant.Dispersion
 import NGramCrackers.Utilities.List
 

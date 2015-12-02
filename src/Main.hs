@@ -7,7 +7,7 @@ import System.Console.CmdArgs (cmdArgsRun)
 
 import NGramCrackers.NGramCrackers
 import NGramCrackers.Parsers.Args
-import NGramCrackers.Parsers.Paragraph
+import NGramCrackers.Parsers.Body
 import NGramCrackers.Utilities.Tuple
 
 main :: IO ()

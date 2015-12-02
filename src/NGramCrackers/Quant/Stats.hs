@@ -18,7 +18,7 @@ import qualified Data.Set as S
 
 import NGramCrackers.DataTypes
 import NGramCrackers.Ops.Text
-import NGramCrackers.Parsers.Paragraph
+import NGramCrackers.Parsers.Body
 import NGramCrackers.Quant.Counts
 import NGramCrackers.Quant.Dispersion
 import NGramCrackers.Utilities.List

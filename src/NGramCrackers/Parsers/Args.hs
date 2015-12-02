@@ -1,7 +1,8 @@
 {-# LANGUAGE DeriveDataTypeable, OverloadedStrings, RecordWildCards #-}
 
 module NGramCrackers.Parsers.Args
-( optionHandler
+( 
+  optionHandler
 , myModes
 , exec
 ) where
@@ -19,7 +20,7 @@ import NGramCrackers.DataTypes
 import NGramCrackers.Ops.Infixes
 import NGramCrackers.Ops.NG
 import NGramCrackers.Ops.Pretty
-import NGramCrackers.Parsers.Paragraph
+import NGramCrackers.Parsers.Body
 import NGramCrackers.Quant.Counts
 import NGramCrackers.Quant.Stats
 import NGramCrackers.Utilities.List

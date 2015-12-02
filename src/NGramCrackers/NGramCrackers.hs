@@ -14,7 +14,7 @@ import qualified Data.Vector as V
 
 import NGramCrackers.Ops.Text
 import NGramCrackers.Utilities.List
-import NGramCrackers.Parsers.Paragraph
+import NGramCrackers.Parsers.Body
 import NGramCrackers.Quant.Dispersion
 import NGramCrackers.Quant.Counts
 
