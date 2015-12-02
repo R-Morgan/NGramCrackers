@@ -1,14 +1,11 @@
 {-# LANGUAGE DeriveDataTypeable, RecordWildCards #-}
 {-# OPTIONS_GHC -Wall -O2 #-}
 
-import System.IO
-import System.Environment (getArgs, withArgs)
 import System.Console.CmdArgs (cmdArgsRun)
+import System.Environment (getArgs, withArgs)
+import System.IO
 
-import NGramCrackers.NGramCrackers
 import NGramCrackers.Parsers.Args
-import NGramCrackers.Parsers.Body
-import NGramCrackers.Utilities.Tuple
 
 main :: IO ()
 main = getArgs >>= \args ->  
