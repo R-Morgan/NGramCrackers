@@ -79,6 +79,8 @@ Med
 
    - IO tests -- not sure how to do that
 
+   - Update testsuite subdir library
+
 - Fix Bigram MI Profile function
  
  - The difficulty here seems to be with acting recursively on the map. Some sort
