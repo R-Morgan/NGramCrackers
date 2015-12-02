@@ -8,6 +8,9 @@ module NGramCrackers.Parsers.Paragraph
 , wordString
 ) where
 
+{- Module name is NG because that is the basic data type upon which the parsers
+ - are based. -}
+
 import Data.Text as T
 import Text.Parsec.Text as PT
 
@@ -48,26 +51,20 @@ ngramSeries :: PT.Parser (SentColl T.Text)
 ngramSeries = sepBy ngram seppr
 
 numToNG :: PT.Parser (NG T.Text)
-numToNG = fmap ngInject number
+numToNG = fmap ngInject number where number = T.pack <$> many1 digit
 
 {-| This parser is the basis for most all the parsers above. The parser puts
     a parsed word into the NG record context. -}
 ngram :: PT.Parser (NG T.Text)
-ngram = (ngInject) <$> word
+ngram = (ngInject) <$> word where word = T.pack <$> many1 letter
 
 wordString :: PT.Parser T.Text
 -- Useful for non-sentence word strings where no numbers need to be parsed.
--- Probably useful for parsing MetaTags
-wordString = T.unwords <$> sepBy word seppr
-
-word :: PT.Parser T.Text
+--  Probably useful for parsing MetaTags
+wordString = T.unwords <$> sepBy word seppr where word = T.pack <$> many1 letter
 -- The use of T.pack <$> is necessary because of the type many1 letter returns.
 -- fmapping T.pack into the Parser makes it possible to return a parser of the
 -- appropriate type.
-word = T.pack <$> many1 letter 
-
-number :: PT.Parser T.Text
-number = T.pack <$> many1 digit
 
 --------------------------------------------------------------------------------
 -- Separation parsers, used to parse and discard punctuation
