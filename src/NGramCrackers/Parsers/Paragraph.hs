@@ -40,7 +40,7 @@ sentence :: PT.Parser (SentColl T.Text)
 sentence = sepBy sentParts seppr
 
 sentParts :: PT.Parser (NG T.Text)
-sentParts = NGramCrackers.Parsers.Paragraph.ngram <|> numToNG
+sentParts = ngram <|> numToNG
 
 wordString :: PT.Parser T.Text
 -- Useful for non-sentence word strings where no numbers need to be parsed.
@@ -48,7 +48,7 @@ wordString :: PT.Parser T.Text
 wordString = T.unwords <$> sepBy word seppr
 
 ngramSeries :: PT.Parser (SentColl T.Text)
-ngramSeries = sepBy NGramCrackers.Parsers.Paragraph.ngram seppr
+ngramSeries = sepBy ngram seppr
 
 ngram :: PT.Parser (NG T.Text)
 ngram = (ngInject) <$> word
