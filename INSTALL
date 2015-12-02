@@ -4,7 +4,7 @@ $ cabal sandbox init
 
 $ cabal install -j
 
-The binaries are in the .cabal-sandbox file and can be run with the usuali
+The binaries are in the .cabal-sandbox file and can be run with the usual
 options.
 
 #############
@@ -21,7 +21,7 @@ this is the best default behaviour, though, to be sourcing random shell scripts.
 #############
 Current
 #############
-$ ghc -Wall -O2 -o Main.hs -prof -v
+$ ghc -Wall -O2 -o ngc Main.hs -prof -v
 
 ##########
 Deprecated
