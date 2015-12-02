@@ -50,6 +50,25 @@ High
   
   04.19.2015: bigramMI takes a bigram and a document and gets a single bigram's
               MI.
+
+- Revise README.md
+ 
+- Move version history into a new file
+
+- Test cabal build system
+
+- Refactor and rename modules to eliminate junk drawer modules and outdated
+  names. Make sure all modules are coherent.
+
+- Write module explanation
+
+- Update version plans
+
+- Look for more areas to implement type synonyms. Some of the Set and Map
+  sigs are unwieldy
+
+- Tidy up as much  as possible for 0.3.0 release.
+
 ######
 Med
 ######
@@ -72,7 +91,10 @@ Med
 Low
 ######
 
-- Implement data types like Corpus, Document, Paragraph, Sentence, Word
+- Implement data types like Corpus, Metadata
+  
+  The whole API has been refactored around the NG record type and various
+  type synonyms based around lists. 
 
 - Metadata parsing capabilities [Testing]
 
