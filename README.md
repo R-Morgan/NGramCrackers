@@ -135,6 +135,29 @@ API, written in Haskell, of the same name.
    paste output from a GUI to a spreadsheet programme to get a CSV to use in 
    an analysis conducted with external software.
 
+Module Map
+------------------------
+NGramCrackers has many submodules that may need some explanation. The modules
+are currently divided into five sets:
+
+### Top Level
+Where NGramCrackers.DataTypes lives! All types and typeclass instances are
+currently defined here.
+
+### Ops
+Operations on various types of text bop about in here, including Text, String,
+and the NG record type defined in DataTypes.
+
+### Parsers
+The parsers party in this module!
+
+### Quant
+The math operations live here!
+
+### Utilities
+Need some List and Tuple ops? Look no further! Not totally sure that Utilities
+and Ops are all that different. This set of modules may be merged into ops.
+
 Versioning Information
 ------------------------
 
