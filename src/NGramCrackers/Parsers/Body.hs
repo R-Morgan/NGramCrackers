@@ -1,15 +1,12 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module NGramCrackers.Parsers.Paragraph
+module NGramCrackers.Parsers.Body
 (
   parseSent
 , parseParagraph
 , parseMultiPara
 , wordString
 ) where
-
-{- Module name is NG because that is the basic data type upon which the parsers
- - are based. -}
 
 import Data.Text as T
 import Text.Parsec.Text as PT
