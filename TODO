@@ -37,14 +37,10 @@ High
 
 - Revise README.md
  
-- Move version history into a new file
-
-- Test cabal build system
-
 - Refactor and rename modules to eliminate junk drawer modules and outdated
   names. Make sure all modules are coherent.
 
-- Write module explanation
+- Write module explanation [Expand]
 
 - Update version plans
 
@@ -53,7 +49,7 @@ High
 
 - Relicence
 
-- Tidy up as much  as possible for 0.3.0 release.
+- Tidy up as much as possible for 0.3.0 release.
 
 ######
 Med
