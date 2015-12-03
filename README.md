@@ -60,7 +60,7 @@ impedes the further pursuit of knowledge that should be at the centre of
 academia. This (in)action also makes independent peer review more challenging or
 even impossible. If your code isn't easily peer-reviewable, why should anyone 
 use, much less trust or trust or pay, for it? As a side note, *patenting*
-software is a foul grotesquery.
+software is ijustcanteven.
 
 To this end, this code has been licenced under the GNU GPL v3 to ensure that
 all derivative works are also Free. As an educator, this is critical and why a
@@ -217,28 +217,31 @@ needed for the forseeable future. Version 0.2.4 is untagged in the commit tree
 because of poor planning on the part of yours truly. Version 0.2.5 has been
 properly tagged in the tree. Sorry about that if you find this! <3 rm
 
+
+### Version 0.3.0 -- Definition
+Version 0.3.0 is a total retooling of the backend API. NGramCrackers now feels
+like a much different program, so I've overhauled the planned versions. 
+
+ - NG a, a record type to house ngrams and some of their associated properties.
+   NGs are Functors and Monoids.
+ 
+ - Type synonyms implemented for:
+     - SentColl -- collection of n-grams in a sentence
+     - ParaColl -- collection of n-grams in a paragraph
+     - DocCol -- collection of n-grams in a multiparagraph document
+     - Count -- an integer representing counts of words (wish these could be
+       restricted to the Natural numbers)
+
+ - Slightly more concise argument handling statements
+
 ### Version 0.2.8 -- Definition
  - Bigram Mutual Information calculation CLI integration
- - More concide argument handling case statement. This involves moving the
-   behaviour of each case into their own functions.
  - Test module with various types of text that are known to work with the
    current version of NGC
-
-### Version 0.2.9 -- Definition
- - NGram a, SentColl a, ParaColl a implementations with Functor instatiation.
-   - NGram fmap implementation exists
-   - SentColl fmap implementation exists
-   - ParaColl fmap is in skeleton form 
-
-### Version 0.2.10 -- Definition
- - NGram a, SentColl a, ParaColl a Monoid instances
-   - NGram Monoid implementation exists
 
 ### Version 0.2.11 -- Definition
  - Metadata analytics
  - Trigram Mutual Information calculation and CLI integration
-
-### Version 0.3.0 -- Definition (Break up into other releases)
 
 This version is likely to be a summary version to mark the implementation
 of several functionalities. Once everything is working with the various
@@ -248,8 +251,6 @@ new stage of development.
 - Specific Data Types:
   - NGrams (including 1-grams, i.e., words)
     - NGram a is now implemented to embody the length of the NGram
-  - SentColl -- collection of n-grams in a sentence
-  - ParaColl -- collection of n-grams in a paragraph
 
 - Pretty printing capabilities
 - Metadata analytics
