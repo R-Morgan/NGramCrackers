@@ -217,14 +217,28 @@ needed for the forseeable future. Version 0.2.4 is untagged in the commit tree
 because of poor planning on the part of yours truly. Version 0.2.5 has been
 properly tagged in the tree. Sorry about that if you find this! <3 rm
 
-
 ### Version 0.3.0 -- Definition
 Version 0.3.0 is a total retooling of the backend API. NGramCrackers now feels
 like a much different program, so I've overhauled the planned versions. 
 
  - NG a, a record type to house ngrams and some of their associated properties.
-   NGs are Functors and Monoids.
- 
+   NGs are Functors and Monoids. The old API based around nested lists of Text
+   ([[[T.Text]]]) worked, but I want to be able to have ngrams in the programme
+   to be able to carry around information, such as frequency and MI, without
+   each statistic having to be calculated each time. I am not sure it will save
+   memory or make the programme faster, however. MI seems likely to extremely
+   costly in computing, especially for multiword strings. Similarly, if an ngram
+   has its word length encoded, there is no need to break up the T.Text
+   component and iterate through it to provide a word count.
+
+ - Major, breaking changes to module naming and structure:
+     - NGramCrackers.Ops.Infixes to hold any infixes
+     - NGramCrackers.Ops.NG for operations on the new NG record type
+     - NGramCrackers.Ops.Pretty for formatting output
+     - NGramCrackers.Parsers.Body used to be NGramCrackers.Parsers.Paragraph
+       but now reflects the module's actual function, which is to parse the
+       bodies of input documents
+
  - Type synonyms implemented for:
      - SentColl -- collection of n-grams in a sentence
      - ParaColl -- collection of n-grams in a paragraph
@@ -233,26 +247,19 @@ like a much different program, so I've overhauled the planned versions.
        restricted to the Natural numbers)
 
  - Slightly more concise argument handling statements
+ 
+ - More exposed functions for testing
 
-### Version 0.2.8 -- Definition
+### Version 0.3.x -- Definition
+Features for future implementation. Unsure of exact versioning for these ideas.
+
  - Bigram Mutual Information calculation CLI integration
  - Test module with various types of text that are known to work with the
    current version of NGC
 
-### Version 0.2.11 -- Definition
  - Metadata analytics
  - Trigram Mutual Information calculation and CLI integration
 
-This version is likely to be a summary version to mark the implementation
-of several functionalities. Once everything is working with the various
-data types I've been trying out, it will feel to me like a milestone and
-new stage of development.
-
-- Specific Data Types:
-  - NGrams (including 1-grams, i.e., words)
-    - NGram a is now implemented to embody the length of the NGram
-
-- Pretty printing capabilities
 - Metadata analytics
 - Vector-based sequences?
 
