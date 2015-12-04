@@ -1,5 +1,5 @@
-{-# LANGUAGE OverloadedStrings
-           , FlexibleInstances #-}
+{-# LANGUAGE  OverloadedStrings
+            , FlexibleInstances #-}
 
 module NGramCrackers.DataTypes
 ( DocCol    (..)
@@ -28,7 +28,9 @@ module NGramCrackers.DataTypes
 ) where
 
 import qualified Data.Text as T
+
 import NGramCrackers.Ops.Infixes ((<#>))
+-- Could this infix be replaced with mappend?
 
 -------------------------------------------------------------------------------
 dtester :: DocCol T.Text
@@ -54,16 +56,7 @@ type SentColl a = [(NG a)]
 type Count = Int -- Useful for various modules dealing with counts of phrasal
                  -- structures
 -------------------------------------------------------------------------------
--- NGram Type
-data NGram a =  NullGram -- Included so the type can be made a Monoid Instance
-               -- | Wrd a
-               -- | Bigram a
-               -- | Trigram a
-              | NGram Int a deriving (Show, Read, Eq, Ord)
-  -- Int represents the length of the ngram in words
-  -- Is this type too flexible? NGrams should really only be T.Text. Not sure
-  -- how best to address this.
-  
+
 -- Instance declarations
      -- Applicative?
      -- Monad?
@@ -96,38 +89,6 @@ instance Monoid (NG T.Text) where
 ngInject :: T.Text -> NG T.Text
 ngInject ("") = NG { getNG = Nothing,  len   = 0}
 ngInject txt  = NG { getNG = Just txt, len   = (length . T.words) txt }
-
-instance Functor (NGram) where
-    --fmap :: (a -> b) -> f a -> f b
-    --fmap f (Wrd txt)     = Wrd (f txt)
-    --fmap f (Bigram txt)  = Bigram (f txt)
-    --fmap f (Trigram txt) = Trigram (f txt)
-    fmap f NullGram      = NullGram
-    fmap f (NGram n txt) = NGram n (f txt)
-
-instance Monoid (NGram T.Text) where
-    mempty  = NullGram
-
-    mappend (NGram n txt) NullGram       = (NGram n txt)
-    mappend NullGram (NGram n txt)       = (NGram n txt)
-    -- Turns out that you can't use mempty in place of NullGram in the identity
-    -- parts of the mappend definition
-    mappend (NGram n txt) (NGram m txt') = (NGram (n + m) (txt <#> " " <#> txt'))
-    -- mappend allows for the concatenation of the ngrams, while also adding
-    -- their lengths together. Monoids are pretty slick.
-    
-    mconcat = undefined
-
-{-| Takes a bit of Text and injects into the NGram context. Will likely
- -  be used to get streams of text into contextualised lists -}
-ngramInject :: T.Text -> NGram T.Text
-ngramInject txt | phraseLen < 1 = error "Not an n-gram"
---                | phraseLen == 1 = Wrd txt
---                | phraseLen == 2 = Bigram txt
---                | phraseLen == 3 = Trigram txt
-                | phraseLen  < 8 = NGram phraseLen txt
-                | otherwise = error "Phrase too large" where
-                       phraseLen = (length . T.words) txt
 
 -------------------------------------------------------------------------------
 -- Metadata data declarations
@@ -184,60 +145,3 @@ toLevel text | text == "litf" = LitFic
              | text == "lay"  = Lay
              | text == "popn" = PopNonFic
              | otherwise = OtherLvl text
-
-
--------------------------------------------------------------------------------
--- Yicky experimental instances that may not actually serve any real function
---
---
--------------------------------------------------------------------------------
--- Collection of ngrams in a paragraph
---
---data ParaColl a = NullPara | ParaColl (SentColSeq a) deriving (Show, Read, Eq)
--- Instance declarations
-     -- Functor
-     -- Monoid
-     -- Applicative?
-     -- Monad?
-
---instance Functor (ParaColl) where
---    fmap :: (a -> b) -> f a -> f b
-    --fmap f NullPara             = NullPara
---    fmap f (ParaColl ngrams) = ParaColl (f ngrams)
-    --fmap f (ParaColl sentColls) = ParaColl ((map (fmap f)) sentColls)
-    -- Similar issue here as with the fmap implementation in SentColl
-    
--------------------------------------------------------------------------------
--- Collection of ngrams in a sentence
---data SentColl a = NullSent | SentColl (NGSeq a) deriving (Show, Read, Eq)
---
--- Instance declarations
-     -- Monoid
-     -- Applicative?
-     -- Monad?
---type SentColSeq a = [(SentColl a)]
--- Type synonym for a list of NGram a
-
---instance Functor (SentColl) where
---    fmap :: (a -> b) -> f a -> f b
---    fmap f NullSent          = NullSent
-    --fmap f (SentColl ngrams) = SentColl (f ngrams)
---    fmap f (SentColl ngrams) = SentColl ((map (fmap f)) ngrams)
-    -- This implementation of fmap pipes the function to be done on the
-    -- NGram level. I reckon this will make it difficult to do something like
-    -- get the length of the list of NGram. This is a useful function, but I
-    -- think it goes too deeply into the container structure to be the proper
-    -- implementation of fmap for this type.
-
---instance Monoid (SentColl T.Text) where
--- Is this really best described as Monoid? Problem with mappend is that
--- to do that to  SentCollS merges two sentence collections into one SentColl
--- container. In reality, concatentation of two SentColls should be really be
--- in a list -- i.e. a ParaColl.
-    --mempty  = NullSent
-
-    --mappend (SentColl ngrams) NullSent = (SentColl ngrams)
-    --mappend NullSent (SentColl ngrams) = (SentColl ngrams)
-    --mappend (SentColl ngrams) (SentColl ngrams') = (SentColl $ ngrams ++ ngrams')
-
---    mconcat = undefined
