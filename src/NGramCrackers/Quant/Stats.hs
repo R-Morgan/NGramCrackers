@@ -14,7 +14,7 @@ module NGramCrackers.Quant.Stats
 import qualified Data.List as L
 import qualified Data.Map  as M
 import qualified Data.Text as T
-import qualified Data.Set as S
+import qualified Data.Set  as S
 
 import NGramCrackers.DataTypes
 import NGramCrackers.Ops.Text
@@ -33,20 +33,6 @@ ttrSet tokens = (typesTot, tokenTot, ratio)
                          -- Could this be done more efficiently w/Vector?
                          ratio    = typesTot / tokenTot
 
-{- 
- - Proto-code for making a Map out of a S.Set of bigrams and a parsed document.
-   Takes from the code that counts the elements of a list and collects the
-   results in a Map. This may be the skeleton for a more efficient
-   implementation.
-
-bigramMIRec :: S.Set T.Text -> [[[T.Text]]] -> M.Map T.Text Maybe Double -> M.Map T.Text Maybe Double
-bigramMIRec s doc m = case M.lookup bg m of
-                        Nothing -> insert m bg mi
-                        Just -> Nothing where 
-                          mi = (snd . bigramMI) bg doc
-                          bg = findMin s
--}
-
 bigramMIMap :: DocCol T.Text -> M.Map (NG T.Text) (Maybe Double)
 bigramMIMap doc = M.fromList $ bigramMIRecurs bgSet doc where
                     bgSet = bigramSetDoc doc
@@ -59,27 +45,6 @@ bigramMIRecurs bgSet doc | S.null bgSet       = []
                            bg = S.findMin bgSet
                            mi = snd $ bigramMI bg doc
                            newSet = S.deleteMin bgSet
-{-
- - Early version of bigramMIMap. The idea was some how to avoid using the
-   fromList function to get the Map as the result. I was thinking that some sort
-   of fold might work, but I'm not really sure. This may be deleted or
-   refactored at a later time.
-
-bigramMIProfile :: [[[T.Text]]] -> M.Map T.Text Double
-bigramMIProfile doc = pMI bgFreq pW1 pW2 total where
-                        wset   = (wordSet . concatMap concat) doc
-                        bset   = bigramSetDoc doc
-                        wmap   = wcMap doc
-                        bmap   = bigramMap doc
-                        total  = (length . concatMap concat) doc
-                        bgFreq = M.lookup bigram bmap
-                        pW1    = w1c / total
-                        pW2    = w2c / total 
-                        w1c    = (snd . bigramWordsLookup) bmap
-                        w2c    = (thrd . bigramWordsLookup) bmap
-                        bigram = S.elemAt 0 bset
-                        bigramList = DL.concatMap (extractor . T.unwords) . DL.concat doc
--}
 
 bigramMI :: NG T.Text -> DocCol T.Text -> (NG T.Text, Maybe Double)
 bigramMI bg doc = (bg, mutInf) where
@@ -144,3 +109,42 @@ sdSentsPerParagraph = standardDev . map sentsPerParagraph
 {-| Takes a paragraph and gets the variance of sentences in it. -}
 varSentsPerParagraph :: DocCol T.Text -> Double
 varSentsPerParagraph = variance . map sentsPerParagraph
+
+-------------------------------------------------------------------------------
+-- Protocode (If merged into master, delete in master)
+-------------------------------------------------------------------------------
+{-
+ - Proto-code for making a Map out of a S.Set of bigrams and a parsed document.
+   Takes from the code that counts the elements of a list and collects the
+   results in a Map. This may be the skeleton for a more efficient
+   implementation.
+
+bigramMIRec :: S.Set T.Text -> [[[T.Text]]] -> M.Map T.Text Maybe Double -> M.Map T.Text Maybe Double
+bigramMIRec s doc m = case M.lookup bg m of
+                        Nothing -> insert m bg mi
+                        Just -> Nothing where
+                          mi = (snd . bigramMI) bg doc
+                          bg = findMin s
+-}
+
+{-
+ - Early version of bigramMIMap. The idea was some how to avoid using the
+   fromList function to get the Map as the result. I was thinking that some sort
+   of fold might work, but I'm not really sure. This may be deleted or
+   refactored at a later time.
+
+bigramMIProfile :: [[[T.Text]]] -> M.Map T.Text Double
+bigramMIProfile doc = pMI bgFreq pW1 pW2 total where
+                        wset   = (wordSet . concatMap concat) doc
+                        bset   = bigramSetDoc doc
+                        wmap   = wcMap doc
+                        bmap   = bigramMap doc
+                        total  = (length . concatMap concat) doc
+                        bgFreq = M.lookup bigram bmap
+                        pW1    = w1c / total
+                        pW2    = w2c / total
+                        w1c    = (snd . bigramWordsLookup) bmap
+                        w2c    = (thrd . bigramWordsLookup) bmap
+                        bigram = S.elemAt 0 bset
+                        bigramList = DL.concatMap (extractor . T.unwords) . DL.concat doc
+-}
