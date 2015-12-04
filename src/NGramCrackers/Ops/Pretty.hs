@@ -8,13 +8,16 @@ module NGramCrackers.Ops.Pretty
 , printMaybe
 , statsFormatter
 , typeTokenRatio
+, doubleToCSV
+, tripleToCSV
 ) where
 
 import Data.List (nub)
 
+import qualified Data.Maybe   as M (fromJust)
+import qualified Data.Text    as T
 import qualified Data.Text.IO as TIO
 import qualified System.IO    as SIO
-import qualified Data.Text as T
 
 import NGramCrackers.DataTypes
 import NGramCrackers.Ops.Infixes
@@ -53,3 +56,17 @@ typeTokenRatio string = typeStr <#> ps types <#> tokStr <#> ps tokens <#> ttrStr
                              tokStr  = T.pack ", Tokens: "
                              ttrStr  = T.pack ", TTR: "
                              ps      = T.pack . show
+
+doubleToCSV :: (NG T.Text, Int) -> T.Text
+doubleToCSV x = ng <#> commaChar <#> (T.pack . show . snd) x
+                 where ng = (M.fromJust . getNG . fst) x
+                       commaChar = T.singleton ','
+
+tripleToCSV :: (T.Text, Int, Maybe Double) -> T.Text
+tripleToCSV trpl = ngram <#> commaChar <#> count <#> commaChar <#> pmi where
+                     ngram     = fst' trpl
+                     count     = (T.pack . show . snd') trpl
+                     pmi       = M.fromJust $ T.pack <$> show <$> thrd trpl
+                     -- fromJust unwrapps the Maybe T.Text value. This doesn't
+                     -- seem like the best way to do this.
+                     commaChar = T.singleton ','

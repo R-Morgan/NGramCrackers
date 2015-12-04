@@ -5,8 +5,6 @@ module NGramCrackers.Utilities.Tuple
 , compareDoubles
 , compareDoublesInList
 , stringifyLexemeCount
-, doubleToCSV
-, tripleToCSV
 , combineCountsMIs
 , combineCountMITup
 , compareTriples
@@ -44,20 +42,6 @@ stringifyLexemeCount x = wordStr <#> lexeme <#> countStr <#>
                            where wordStr  = T.pack "Word: " 
                                  lexeme   = fst x
                                  countStr = T.pack " ----- Count: " 
-
-doubleToCSV :: (NG T.Text, Int) -> T.Text
-doubleToCSV x = ng <#> commaChar <#> (T.pack . show . snd) x
-                 where ng = (M.fromJust . getNG . fst) x
-                       commaChar = T.singleton ','
-
-tripleToCSV :: (T.Text, Int, Maybe Double) -> T.Text
-tripleToCSV trpl = ngram <#> commaChar <#> count <#> commaChar <#> pmi where
-                     ngram     = fst' trpl
-                     count     = (T.pack . show . snd') trpl
-                     pmi       = M.fromJust $ T.pack <$> show <$> thrd trpl
-                     -- fromJust unwrapps the Maybe T.Text value. This doesn't
-                     -- seem like the best way to do this.
-                     commaChar = T.singleton ','
 
 combineCountsMIs :: [(T.Text, Int)] -> [(T.Text, Maybe Double)] -> [(T.Text, Int, Maybe Double)]
 combineCountsMIs cntTups miTups  = zipWith combineCountMITup cntTups miTups
