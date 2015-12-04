@@ -109,78 +109,70 @@ _COPYRIGHT = "(C) Rianna Morgan 2015"
     before some when expressions to determine what to print to file. The file
     handles are then closed. -}
 exec :: Args -> IO ()
-exec opts@Profile{..} = do outHandle <- SIO.openFile output SIO.WriteMode
-                           contents <- TIO.hGetContents =<< SIO.openFile input SIO.ReadMode -- contents :: T.Text 
+exec opts@Profile{..} = do
+  outHandle <- SIO.openFile output SIO.WriteMode
+  contents <- TIO.hGetContents =<< SIO.openFile input SIO.ReadMode -- contents :: T.Text
 
-                           when wordC $ TIO.hPutStrLn outHandle $ 
-                             (T.pack . show . countWords) contents
-                             -- countWords is a gross, deprecated way of
-                             -- counting lexemes
+  when wordC $ TIO.hPutStrLn outHandle $ (T.pack . show . countWords) contents
+  -- countWords is a gross, deprecated way of
+  -- counting lexemes
 
-                           when ttr   $ TIO.hPutStrLn outHandle $ typeTokenRatio contents
+  when ttr   $ TIO.hPutStrLn outHandle $ typeTokenRatio contents
 
-                           when sentC $
-                             case parseMultiPara contents of
-                                  Left e  -> do SIO.putStrLn "Error parsing input." 
-                                                print e
+  when sentC $ case parseMultiPara contents of
+    Left e  -> do SIO.putStrLn "Error parsing input."
+                  print e
                                   
-                                  Right r -> TIO.hPutStrLn outHandle $ ps ms where
-                                                ms = meanSentsPerParagraph r
-                                                ps = T.pack . show
+    Right r -> TIO.hPutStrLn outHandle $ ps ms where ms = meanSentsPerParagraph r
+                                                     ps = T.pack . show
 
-                           when sentStats $  
-                             case parseMultiPara contents of
-                                  Left e  -> do SIO.putStrLn "Error parsing input." 
-                                                print e
+  when sentStats $ case parseMultiPara contents of
+    Left e  -> do SIO.putStrLn "Error parsing input."
+                  print e
                                   
-                                  Right r ->  TIO.hPutStrLn outHandle "Sentence per paragraph statics" >>
-                                              TIO.hPutStrLn outHandle (statsFormatter r)
+    Right r ->  TIO.hPutStrLn outHandle "Sentence per paragraph statics" >>
+                  TIO.hPutStrLn outHandle (statsFormatter r)
 
-                           --SIO.hClose inHandle
-                           SIO.hClose outHandle
+  --SIO.hClose inHandle
+  SIO.hClose outHandle
 
-exec opts@Extract{..} = do outHandle <- SIO.openFile output SIO.WriteMode
-                           contents <- TIO.hGetContents =<< SIO.openFile input SIO.ReadMode -- contents :: T.Text 
+exec opts@Extract{..} = do
+  outHandle <- SIO.openFile output SIO.WriteMode
+  contents <- TIO.hGetContents =<< SIO.openFile input SIO.ReadMode -- contents :: T.Text
 
-                           when lexemes $ 
-                             case parseMultiPara contents of
-                                Left e  -> do SIO.putStrLn "Error parsing input: "
-                                              print e
+  when lexemes $ case parseMultiPara contents of
+    Left e  -> do SIO.putStrLn "Error parsing input: "
+                  print e
 
-                                Right r -> TIO.hPutStrLn outHandle "word,count" >> 
-                                             formatOutput outHandle (wcMapToList $ wcMap r)
+    Right r -> TIO.hPutStrLn outHandle "word,count" >>
+                 formatOutput outHandle (wcMapToList $ wcMap r)
 
-                           when bigram $
-                             case parseMultiPara contents of
-                                Left e  -> do SIO.putStrLn "Error parsing inputg: "
-                                              print e
+  when bigram $ case parseMultiPara contents of
+    Left e  -> do SIO.putStrLn "Error parsing input: "
+                  print e
 
-                                Right r -> TIO.hPutStrLn outHandle "bigram,count" >>
-                                             formatOutput outHandle (ngramLister r bigrams)
+    Right r -> TIO.hPutStrLn outHandle "bigram,count" >>
+                 formatOutput outHandle (ngramLister r bigrams)
                                           
-                           when trigram $
-                             case parseMultiPara contents of
-                                Left e  -> do SIO.putStrLn "Error parsing input: "
-                                              print e
+  when trigram $ case parseMultiPara contents of
+    Left e  -> do SIO.putStrLn "Error parsing input: "
+                  print e
 
-                                Right r -> TIO.hPutStrLn outHandle "trigram,count" >>
-                                             formatOutput outHandle (ngramLister r trigrams)
+    Right r -> TIO.hPutStrLn outHandle "trigram,count" >>
+                 formatOutput outHandle (ngramLister r trigrams)
 
-                           when (ngram > 3 && ngram < 8) $
-                             case parseMultiPara contents of
-                                Left e  -> do SIO.putStrLn "Error parsing input: "
-                                              print e
+  when (ngram > 3 && ngram < 8) $ case parseMultiPara contents of
+    Left e  -> do SIO.putStrLn "Error parsing input: "
+                  print e
 
-                                Right r -> TIO.hPutStrLn outHandle "trigram,count" >>
-                                             formatOutput outHandle (ngramLister r $
-                                             getTrueNGrams ngram)
+    Right r -> TIO.hPutStrLn outHandle "trigram,count" >>
+                 formatOutput outHandle (ngramLister r $ getTrueNGrams ngram)
 
 
-                           when debug $
-                             case parseMultiPara contents of
-                                Left e  -> do SIO.putStrLn "Error parsing input: "
-                                              print e
-                                Right r -> SIO.putStrLn "Multiparagraph parsing result: " >> print r
+  when debug $ case parseMultiPara contents of
+    Left e  -> do SIO.putStrLn "Error parsing input: "
+                  print e
+    Right r -> SIO.putStrLn "Multiparagraph parsing result: " >> print r
 
-                           --SIO.hClose inHandle
-                           SIO.hClose outHandle
+  --SIO.hClose inHandle
+  SIO.hClose outHandle
