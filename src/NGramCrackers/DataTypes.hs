@@ -7,7 +7,6 @@ module NGramCrackers.DataTypes
 , SentColl  (..)
 , Count     (..)
 , NG        (..)
-, NGram     (..)
 , MetaTag   (..)
 , Date      (..)
 , SDate     (..)
@@ -21,7 +20,6 @@ module NGramCrackers.DataTypes
 , Level     (..)
 , toMedium
 , ngInject
-, ngramInject
 , dtester
 , ptester
 , tester
