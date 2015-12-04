@@ -11,7 +11,6 @@ module NGramCrackers.Utilities.Tuple
 , compareTriplesInList
 ) where
 
-import qualified Data.Maybe as M (fromJust)
 import qualified Data.Text  as T
 import NGramCrackers.DataTypes
 import NGramCrackers.Ops.Infixes
