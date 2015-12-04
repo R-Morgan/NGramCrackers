@@ -36,6 +36,7 @@ ngRecFormatter (ng, count) = txt <#> "," <#> count' where txt    = printMaybe $ 
                                                           count' = (T.pack . show) count
 
 printMaybe :: Maybe T.Text -> T.Text
+-- May be useful for getting rid of the fromJusts in some code
 printMaybe Nothing = ""
 printMaybe (Just txt) = txt
 
