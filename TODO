@@ -35,14 +35,7 @@ High
          -t        trigrams
          -n [Int]  ngrams
 
-- Revise README.md
-
 - Write module explanation [Expand]
-
-- Update version plans
-
-- Look for more areas to implement type synonyms. Some of the Set and Map
-  sigs are unwieldy
 
 - Relicence
 

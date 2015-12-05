@@ -36,7 +36,7 @@ the source code -- or if they have, without the freedom to modify and distribute
 the source code.  Corpus linguists should not be bound to proprietary software 
 because the best tools available are not cross-platform.
 
-These researchers need high-quality, Free( https://www.gnu.org/philosophy/free-sw.html) 
+These researchers need high-quality, [Free](https://www.gnu.org/philosophy/free-sw.html) 
 software analytic tools because this blackbox approach to research is not
 adequate. These tools must capable of handling corpora of millions--or 
 billions!--of words that are spread over many documents. Current concordance 
@@ -62,14 +62,18 @@ even impossible. If your code isn't easily peer-reviewable, why should anyone
 use, much less trust or trust or pay, for it? As a side note, *patenting*
 software is ijustcanteven.
 
-To this end, this code has been licenced under the GNU GPL v3 to ensure that
-all derivative works are also Free. As an educator, this is critical and why a
-modified BSD( https://www.gnu.org/licenses/license-list.html#ModifiedBSD), Expat
-(MIT)( https://www.gnu.org/licenses/license-list.html#Expat),
-Apache 2.0( https://www.gnu.org/licenses/license-list.html#apache2), or other
-Free, permisive, non-copyleft licence is not satisfactory for me. NGramCrackers
-is chiefly an educational project for the public good, and it must always stay
-Free.
+To this end, this code has been relicenced under the [GNU AGPL 
+v3](https://gnu.org/licenses/why-affero-gpl.html) to ensure that all derivative
+works are also Free. As an educator, this is critical and why a [modified
+BSD](https://www.gnu.org/licenses/license-list.html#ModifiedBSD), Expat
+(MIT)(https://www.gnu.org/licenses/license-list.html#Expat), [Apache
+2.0](https://www.gnu.org/licenses/license-list.html#apache2), or other Free, 
+permisive, non-copyleft licence is not satisfactory for me. Even the GPL v3 does
+not offer strong enough protections because NGramCrackers could be swept up into
+a software-as-a-service without provision of the source code. I will not 
+tolerate this software being used to take advantage of those seeking to educate
+themselves. NGramCrackers is chiefly an educational project for the public good,
+and it must always stay Free.
 
 ### CLI-based solutions for quantitative text analysis
 My other gripe with the most common concordance software are the interfaces. 
@@ -84,15 +88,16 @@ odd limbo of hating GUIs but not being a skilled enough programmer to figure
 a solution with a programming library in a timely fashion.
 
 These experiences inspired the idea of an intermediary step from consumer-GUI
-frontends to fully functional text processing libraries and  APIs.  Thus, the
+frontends to fully functional text processing libraries and  APIs. Thus, the
 idea of NGramCrackers was born: A GPLed, CLI for doing simple text analysis.
 
 ### But Python NLTK!
 
-While I have played with the wonderful Python Natural Language Toolkit, I am not
-a Pythonista. Python is a great language, and I encourage friends who want to
-start coding to learn it. That said, I see no reason to limit development of NLP
-tools to Python.
+While I have played with the wonderful [Python Natural Language 
+Toolkit](http://www.nltk.org/), I am not a Pythonista. Python is a great 
+language, and I encourage friends who want to start coding to learn it. 
+That said, I see no reason to limit development of NLP tools to Python or any
+particular language.
 
 I was first introduced to Haskell in about 2005 by a friend who was writing an
 HPSG grammar of Dutch in it. He told me that because of Haskell's rich,
@@ -196,10 +201,14 @@ like a much different program, so I've overhauled the planned versions.
      - DocCol -- collection of n-grams in a multiparagraph document
      - Count -- an integer representing counts of words (wish these could be
        restricted to the Natural numbers)
+     - CrackerMap and CrackerSet for long type signatures that are a pain to
+       type
 
  - Slightly more concise argument handling statements in a more readable format
 
  - More exposed functions for testing
+
+ - Relicensure under the [AGPL v3](https://gnu.org/licenses/why-affero-gpl.html)
 
 ### Version 0.2.7
 New features added in this latest version of NGramCrackers! Now included are:
@@ -253,7 +262,9 @@ because of poor planning on the part of yours truly. Version 0.2.5 has been
 properly tagged in the tree. Sorry about that if you find this! <3 rm
 
 ### Version 0.3.x -- Planned Features
-Features for future implementation. Unsure of exact versioning for these ideas.
+Features for future implementation. When version 0.3.0 is finished up, the next
+steps will be figuring out exactly the order of implementation for the next
+versions.
 
 - Modification to NG type to include an MI field
 
@@ -262,15 +273,20 @@ Features for future implementation. Unsure of exact versioning for these ideas.
 - Test module with various types of text that are known to work with the
   current version of NGC
 
-- Metadata analytics
+- Metadate parsing
+
+- Combination of document and metadata parsing
+
+- Intradocument Metadata analytics
 
 - Trigram Mutual Information calculation and CLI integration
 
-- Metadata analytics
-
-- Vector-based sequences?
+- More shell functions for running the programme in different ways, both for
+  demonstration and profiling purposes
 
 - Haddock generated documentation
+
+- Vector-based sequences?
 
 ### Version 0.4.0 -- Planned Features
 - Literate Haskell Documentation
@@ -302,7 +318,7 @@ Version 1.0.0 should include:
 
 - Fully specified data types for:
      
-  - Words
+  - NGrams
   - Sentences
   - Paragraphs
   - Documents
