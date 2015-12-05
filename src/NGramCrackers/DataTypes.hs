@@ -2,22 +2,24 @@
             , FlexibleInstances #-}
 
 module NGramCrackers.DataTypes
-( DocCol    (..)
-, ParaColl  (..)
-, SentColl  (..)
-, Count     (..)
-, NG        (..)
-, MetaTag   (..)
-, Date      (..)
-, SDate     (..)
-, Month     (..) 
-, Day       (..)
-, Year      (..)
-, Tag       (..)
-, Medium    (..)
-, PageRange (..)
-, PageBound (..)
-, Level     (..)
+( DocCol     (..)
+, ParaColl   (..)
+, SentColl   (..)
+, Count      (..)
+, CrackerMap (..)
+, CrackerSet (..)
+, NG         (..)
+, MetaTag    (..)
+, Date       (..)
+, SDate      (..)
+, Month      (..)
+, Day        (..)
+, Year       (..)
+, Tag        (..)
+, Medium     (..)
+, PageRange  (..)
+, PageBound  (..)
+, Level      (..)
 , toMedium
 , ngInject
 , dtester
@@ -25,6 +27,8 @@ module NGramCrackers.DataTypes
 , tester
 ) where
 
+import qualified Data.Map  as M
+import qualified Data.Set  as S
 import qualified Data.Text as T
 
 import NGramCrackers.Ops.Infixes ((<#>))
@@ -53,6 +57,9 @@ type SentColl a = [(NG a)]
 
 type Count = Int -- Useful for various modules dealing with counts of phrasal
                  -- structures
+
+type CrackerMap = M.Map (NG T.Text) Count
+type CrackerSet = S.Set (NG T.Text)
 -------------------------------------------------------------------------------
 
 -- Instance declarations
