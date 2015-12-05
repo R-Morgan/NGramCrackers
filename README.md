@@ -67,7 +67,9 @@ all derivative works are also Free. As an educator, this is critical and why a
 modified BSD( https://www.gnu.org/licenses/license-list.html#ModifiedBSD), Expat
 (MIT)( https://www.gnu.org/licenses/license-list.html#Expat),
 Apache 2.0( https://www.gnu.org/licenses/license-list.html#apache2), or other
-Free, permisive, non-copyleft licence is not satisfactory for me.
+Free, permisive, non-copyleft licence is not satisfactory for me. NGramCrackers
+is chiefly an educational project for the public good, and it must always stay
+Free.
 
 ### CLI-based solutions for quantitative text analysis
 My other gripe with the most common concordance software are the interfaces. 
@@ -166,6 +168,39 @@ next release and later versions constitutes the functionality goals for
 NGramCrackers. The programme is still quite unstable with major API changes
 planned.
 
+### Version 0.3.0 -- Definition
+Version 0.3.0 is a total retooling of the backend API. NGramCrackers now feels
+like a much different program, so I've overhauled the planned versions.
+
+ - NG a, a record type to house ngrams and some of their associated properties.
+   NGs are Functors and Monoids. The old API based around nested lists of Text
+   ([[[T.Text]]]) worked, but I want to be able to have ngrams in the programme
+   to be able to carry around information, such as frequency and MI, without
+   each statistic having to be calculated each time. I am not sure it will save
+   memory or make the programme faster, however. MI seems likely to be extremely
+   costly in computing, especially for multiword strings. Similarly, if an ngram
+   has its word length encoded, there is no need to break up the T.Text
+   component and iterate through it to provide a word count.
+
+ - Major, breaking changes to module naming and structure:
+     - NGramCrackers.Ops.Infixes to hold any infixes
+     - NGramCrackers.Ops.NG for operations on the new NG record type
+     - NGramCrackers.Ops.Pretty for formatting output
+     - NGramCrackers.Parsers.Body used to be NGramCrackers.Parsers.Paragraph
+       but now reflects the module's actual function, which is to parse the
+       bodies of input documents
+
+ - Type synonyms implemented for:
+     - SentColl -- collection of n-grams in a sentence
+     - ParaColl -- collection of n-grams in a paragraph
+     - DocCol -- collection of n-grams in a multiparagraph document
+     - Count -- an integer representing counts of words (wish these could be
+       restricted to the Natural numbers)
+
+ - Slightly more concise argument handling statements in a more readable format
+
+ - More exposed functions for testing
+
 ### Version 0.2.7
 New features added in this latest version of NGramCrackers! Now included are:
 
@@ -217,53 +252,27 @@ needed for the forseeable future. Version 0.2.4 is untagged in the commit tree
 because of poor planning on the part of yours truly. Version 0.2.5 has been
 properly tagged in the tree. Sorry about that if you find this! <3 rm
 
-### Version 0.3.0 -- Definition
-Version 0.3.0 is a total retooling of the backend API. NGramCrackers now feels
-like a much different program, so I've overhauled the planned versions. 
-
- - NG a, a record type to house ngrams and some of their associated properties.
-   NGs are Functors and Monoids. The old API based around nested lists of Text
-   ([[[T.Text]]]) worked, but I want to be able to have ngrams in the programme
-   to be able to carry around information, such as frequency and MI, without
-   each statistic having to be calculated each time. I am not sure it will save
-   memory or make the programme faster, however. MI seems likely to extremely
-   costly in computing, especially for multiword strings. Similarly, if an ngram
-   has its word length encoded, there is no need to break up the T.Text
-   component and iterate through it to provide a word count.
-
- - Major, breaking changes to module naming and structure:
-     - NGramCrackers.Ops.Infixes to hold any infixes
-     - NGramCrackers.Ops.NG for operations on the new NG record type
-     - NGramCrackers.Ops.Pretty for formatting output
-     - NGramCrackers.Parsers.Body used to be NGramCrackers.Parsers.Paragraph
-       but now reflects the module's actual function, which is to parse the
-       bodies of input documents
-
- - Type synonyms implemented for:
-     - SentColl -- collection of n-grams in a sentence
-     - ParaColl -- collection of n-grams in a paragraph
-     - DocCol -- collection of n-grams in a multiparagraph document
-     - Count -- an integer representing counts of words (wish these could be
-       restricted to the Natural numbers)
-
- - Slightly more concise argument handling statements
- 
- - More exposed functions for testing
-
-### Version 0.3.x -- Definition
+### Version 0.3.x -- Planned Features
 Features for future implementation. Unsure of exact versioning for these ideas.
 
- - Bigram Mutual Information calculation CLI integration
- - Test module with various types of text that are known to work with the
-   current version of NGC
+- Modification to NG type to include an MI field
 
- - Metadata analytics
- - Trigram Mutual Information calculation and CLI integration
+- Bigram Mutual Information calculation CLI integration
+
+- Test module with various types of text that are known to work with the
+  current version of NGC
 
 - Metadata analytics
+
+- Trigram Mutual Information calculation and CLI integration
+
+- Metadata analytics
+
 - Vector-based sequences?
 
-### Version 0.4.0 -- Definition
+- Haddock generated documentation
+
+### Version 0.4.0 -- Planned Features
 - Literate Haskell Documentation
 
 ### Version 1.0.0  -- Definition 4, Jan, 2015
