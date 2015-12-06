@@ -43,6 +43,7 @@ stringifyLexemeCount x = wordStr <#> lexeme <#> countStr <#>
                                  countStr = T.pack " ----- Count: " 
 
 combineCountsMIs :: [(T.Text, Int)] -> [(T.Text, Maybe Double)] -> [(T.Text, Int, Maybe Double)]
+-- eta-reduction avoided for readability
 combineCountsMIs cntTups miTups  = zipWith combineCountMITup cntTups miTups
 
 combineCountMITup :: (T.Text, Int) -> (T.Text, Maybe Double) -> (T.Text, Int, Maybe Double)

@@ -1,4 +1,4 @@
-{-# LANGUAGE DeriveDataTypeable, OverloadedStrings, RecordWildCards #-}
+{-# LANGUAGE OverloadedStrings, RecordWildCards #-}
 module NGramCrackers.Parsers.Metadata
 ( toMT
 , tagParser
@@ -24,18 +24,18 @@ import NGramCrackers.Parsers.Paragraph (wordString)
 {- Metadata parsing function -}
 
 tagParser :: PT.Parser T.Text
-tagParser = (between left right $ parser) <* many space'
-              where left   = (char '<')
-                    right  = (char '>') 
-                    parser = T.pack <$> (many1 letter)
+tagParser = between left right parser <* many space'
+              where left   = char '<'
+                    right  = char '>' 
+                    parser = T.pack <$> many1 letter
                     space' = char ' '
 
 -- TODO contentsParser needs to be able to handle parsing multiword sequences 
 -- and dates, not just strings of letters and numbers
 contentsParser :: PT.Parser T.Text
-contentsParser = T.pack <$> ((letts <|> nums) <* (many space'))
-                   where letts  = (many1 letter)
-                         nums   = (many1 digit)
+contentsParser = T.pack <$> ((letts <|> nums) <* many space')
+                   where letts  = many1 letter
+                         nums   = many1 digit
                          space' = char ' '
 
 mtParser :: PT.Parser MetaTag
@@ -56,33 +56,33 @@ handler MetaTag{..} = case tag of
                         "MED" -> Med $ toMedium contents
 --                        "LEV" -> Level contents
                         _     -> error "Invalid tag"
-                        where int  = ((read . T.unpack) contents) :: Int
+                        where int  = (read . T.unpack) contents :: Int
                                 --   T.Text ->  String -> Int
-                              date = EU.fromRight $ (parse dateParser "unknown" contents)
-                              year = (Year int)
+                              date = EU.fromRight $ parse dateParser "unknown" contents
+                              year = Year int
                                 -- this fromRight bit seems a bit...amateurish
-                              string = EU.fromRight $ (parse wordString "unknown" contents)
+                              string = EU.fromRight $ parse wordString "unknown" contents
  
 --entryParser :: PT.Parser Tag
 --entryParser = toEntry <$> tagParser <*> dateParser contentsParser
 
 metadataParser :: PT.Parser [MetaTag]
 metadataParser = sepBy mtParser newLn 
-                   where newLn = (char '\n')
+                   where newLn = char '\n'
 
 dateParser :: PT.Parser Date
 dateParser = liftA3 toDate month day year
-               where month = dP toMonth <$> (many1 digit) <* seppr
-                     day   = dP toDay   <$> (many1 digit) <* seppr
-                     year  = dP toYear  <$> (many1 digit)
-                     seppr = (char '/')
+               where month = dP toMonth <$> many1 digit <* seppr
+                     day   = dP toDay   <$> many1 digit <* seppr
+                     year  = dP toYear  <$> many1 digit
+                     seppr = char '/'
                      dP f  = f . read
 
 sDateParser :: PT.Parser SDate
 sDateParser = toSDate <$> month <*> day
-                where month = dP toMonth <$> (many1 digit) <* seppr 
-                      day   = dP toDay   <$> (many1 digit)
-                      seppr = (char '/')
+                where month = dP toMonth <$> many1 digit <* seppr 
+                      day   = dP toDay   <$> many1 digit
+                      seppr = char '/'
                       dP f  = f . read
 
 toMT :: T.Text -> T.Text -> MetaTag
@@ -112,7 +112,7 @@ toDay n | n < 1  = error "Not a day!"
         | otherwise = Day n
 
 toDate :: Month -> Day -> Year -> Date
-toDate m d y = Date m d y
+toDate = Date
 
 --dateFromSDate :: SDate -> Year -> Date
 --dateFromSDate (SDate sd) y  = Date sd y

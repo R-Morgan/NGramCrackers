@@ -1,4 +1,3 @@
-{-# LANGUAGE DeriveDataTypeable, RecordWildCards #-}
 {-# OPTIONS_GHC -Wall -O2 #-}
 
 import System.Console.CmdArgs (cmdArgsRun)

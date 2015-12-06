@@ -101,19 +101,19 @@ countWordSetElem' lexSet concattedDoc | S.null lexSet       = []
 
 test :: DocCol T.Text
 test = [sents, sents', sents''] where
-         sents  = map (map ngInject) $ map T.words [ "The quick brown fox jumped over the lazy dog"
+         sents  = map (map ngInject . T.words) [ "The quick brown fox jumped over the lazy dog"
                               , "Colourless green ideas sleep furiously"
                               , "Strange watching a VCA film not on purpose"
                               , "Heather Graham is bossy in this movie"
                               , "Each person has ridiculous boundary issues"
                               ]
-         sents' =map (map ngInject) $ map T.words [ "The quick brown fox jumped over the lazy dog"
+         sents' =  map (map ngInject . T.words) [ "The quick brown fox jumped over the lazy dog"
                               , "They had very bad behavioural examples as children"
                               , "I can't stand commercials that are too loud"
                               , "There should be laws against that sort of thing"
                               ]
 
-         sents'' = map (map ngInject) $ map T.words 
+         sents'' = map (map ngInject . T.words) 
                                 [ "The quick brown fox jumped over the lazy dog"
                                 , "This film is very unrealistic"
                                 , "Everyone radiates foolishness"

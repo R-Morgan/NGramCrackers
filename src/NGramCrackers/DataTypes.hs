@@ -53,7 +53,7 @@ tester = ngrams where
 
 type DocCol a = [ParaColl a]
 type ParaColl a = [SentColl a]
-type SentColl a = [(NG a)]
+type SentColl a = [NG a]
 
 type Count = Int -- Useful for various modules dealing with counts of phrasal
                  -- structures
@@ -71,7 +71,7 @@ type CrackerSet = S.Set (NG T.Text)
 data NG a = NG { getNG :: Maybe a
                , len   :: Int     } deriving (Show, Read, Eq, Ord)
 
-instance Functor (NG) where
+instance Functor NG where
     fmap f NG{ getNG  = Nothing, len = 0 }      = NG { getNG = Nothing, len = 0 }
     fmap f NG{ getNG  = Just m , len   = x }   = NG { getNG = Just $ f m , len   = x }
 
@@ -87,7 +87,7 @@ instance Monoid (NG T.Text) where
     -- parts of the mappend definition
     --
     mappend NG{ getNG = Just txt, len = n } NG { getNG = Just txt', len = m } =
-      NG { getNG = (Just $ txt <#> " " <#> txt'), len = (n + m) }
+      NG { getNG = Just $ txt <#> " " <#> txt', len = n + m }
     -- mappend allows for the concatenation of the ngrams, while also adding
     -- their lengths together. Monoids are pretty slick.
 

@@ -53,7 +53,7 @@ numToNG = fmap ngInject number where number = T.pack <$> many1 digit
 {-| This parser is the basis for most all the parsers above. The parser puts
     a parsed word into the NG record context. -}
 ngram :: PT.Parser (NG T.Text)
-ngram = (ngInject) <$> word where word = T.pack <$> many1 letter
+ngram = ngInject <$> word where word = T.pack <$> many1 letter
 
 wordString :: PT.Parser T.Text
 -- Useful for non-sentence word strings where no numbers need to be parsed.

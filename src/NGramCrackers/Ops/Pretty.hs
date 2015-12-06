@@ -67,7 +67,7 @@ tripleToCSV :: (T.Text, Int, Maybe Double) -> T.Text
 tripleToCSV trpl = ngram <#> commaChar <#> count <#> commaChar <#> pmi where
                      ngram     = fst' trpl
                      count     = (T.pack . show . snd') trpl
-                     pmi       = M.fromJust $ T.pack <$> show <$> thrd trpl
+                     pmi       = M.fromJust $ (T.pack . show <$> thrd trpl)
                      -- fromJust unwrapps the Maybe T.Text value. This doesn't
                      -- seem like the best way to do this.
                      commaChar = T.singleton ','
