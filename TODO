@@ -35,8 +35,6 @@ High
          -t        trigrams
          -n [Int]  ngrams
 
-- Tidy up as much as possible for 0.3.0 release.
-
 ######
 Med
 ######
