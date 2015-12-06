@@ -65,7 +65,7 @@ software is ijustcanteven.
 To this end, this code has been relicenced under the [GNU AGPL 
 v3](https://gnu.org/licenses/why-affero-gpl.html) to ensure that all derivative
 works are also Free. As an educator, this is critical and why a [modified
-BSD](https://www.gnu.org/licenses/license-list.html#ModifiedBSD),[Expat
+BSD](https://www.gnu.org/licenses/license-list.html#ModifiedBSD), [Expat
 (MIT)](https://www.gnu.org/licenses/license-list.html#Expat), [Apache
 2.0](https://www.gnu.org/licenses/license-list.html#apache2), or other Free, 
 permisive, non-copyleft licence is not satisfactory for me. Even the GPL v3 does
