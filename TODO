@@ -35,10 +35,6 @@ High
          -t        trigrams
          -n [Int]  ngrams
 
-- Write module explanation [Expand]
-
-- Relicence
-
 - Tidy up as much as possible for 0.3.0 release.
 
 ######

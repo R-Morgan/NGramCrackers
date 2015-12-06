@@ -24,6 +24,28 @@ This is the history of the previous versions and what new features were
 implemented for each release. Things were getting a bit long in the README.md,
 so the old changelogs will get put in here.
 
+### Version 0.2.5
+ - Return of multi-paragraph Parsing
+
+### Version 0.2.4
+
+Major, breaking API changes have been implemented!
+
+ - All code has been refactored to use Data.Text as the basic
+   type of text representation. This includes processing functions,
+   parsers, and IO. However, older versions of String processing
+   functions are still included in the source but are not actually
+   called.
+
+ - The CLI is currently only processing single paragraphs at a time
+   because of the difficulties associated with multiple possible
+   paragraph separators. Addressing this likely requires some way to
+   try parsers without consuming input.
+
+ - Rudimentary metadata parsing funcitonality
+
+ - Expanded type system for metadata descriptions
+
 ### Version 0.2.3
 New features:
  - Cabal-based build system for installation in a cabal sandbox. 
@@ -86,5 +108,3 @@ Primary features:
  - Separation of version, help, summary, etc. from myArgs, the argument
    record for the programme. getOpts is an abstraction to handle the use of
    cmdArgs before being passed into the optionHandler
-
-

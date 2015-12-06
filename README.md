@@ -3,10 +3,10 @@ NGramCrackers! CLI for quantitative text analysis.
 
 LICENCING INFO
 ---
-NGramCrackers, Copyright 2015, Arianna Morgan
+NGramCrackers, Copyright 2014-2015, Arianna Morgan
 
 This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
+it under the terms of the GNU Affero General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
@@ -15,7 +15,7 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
+You should have received a copy of the GNU Affero General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 Project Purpose
@@ -30,27 +30,27 @@ tools were frustrating for several reasons:
 - The software was non-Free, and thus not easily extendedable or patchable
 
 ### Free/Libre software and Applied Linguistics
-Unfortunately, many of the most well-known programmes in my AppLing circles are 
-proprietary. This is to say that the copyright holders have likely not published 
+Unfortunately, many of the most well-known programmes in my AppLing circles are
+proprietary. This is to say that the copyright holders have likely not published
 the source code -- or if they have, without the freedom to modify and distribute
-the source code.  Corpus linguists should not be bound to proprietary software 
+the source code. Corpus linguists should not be bound to proprietary software
 because the best tools available are not cross-platform.
 
 These researchers need high-quality, [Free](https://www.gnu.org/philosophy/free-sw.html) 
 software analytic tools because this blackbox approach to research is not
-adequate. These tools must capable of handling corpora of millions--or 
-billions!--of words that are spread over many documents. Current concordance 
+adequate. These tools must capable of handling corpora of millions--or
+billions!--of words that are spread over many documents. Current concordance
 software also seems to lack the capacity for automated metadata analysis.
 
 In Applied Linguistics, though, there is much we can't be sure about in the
 common software for corpus-based analytics. For instance, MonoconcPro's language
-of implementation is not readily acertained, much less the source code. 
-Similarly, AntConc, which is provided gratis and written in Perl (as far as I 
-know), does not ship with the source! If this has changed, I'd love to know. 
+of implementation is not readily ascertained, much less the source code.
+Similarly, AntConc, which is provided gratis and written in Perl (as far as I
+know), does not ship with the source! If this has changed, I'd love to know.
 
 As a Free software user, programmer, and advocate, this frustrated me to no end
 because the programmes simply did not do all of what I wished, and there was no
-way to fix them to provide that functionality to myself and others. 
+way to fix them to provide that functionality to myself and others.
 
 It is also bit disturbing when academics, especially those with tenure, release
 proprietary software without source code. Although there is nothing statutorily
@@ -65,8 +65,8 @@ software is ijustcanteven.
 To this end, this code has been relicenced under the [GNU AGPL 
 v3](https://gnu.org/licenses/why-affero-gpl.html) to ensure that all derivative
 works are also Free. As an educator, this is critical and why a [modified
-BSD](https://www.gnu.org/licenses/license-list.html#ModifiedBSD), Expat
-(MIT)(https://www.gnu.org/licenses/license-list.html#Expat), [Apache
+BSD](https://www.gnu.org/licenses/license-list.html#ModifiedBSD),[Expat
+(MIT)](https://www.gnu.org/licenses/license-list.html#Expat), [Apache
 2.0](https://www.gnu.org/licenses/license-list.html#apache2), or other Free, 
 permisive, non-copyleft licence is not satisfactory for me. Even the GPL v3 does
 not offer strong enough protections because NGramCrackers could be swept up into
@@ -94,10 +94,10 @@ idea of NGramCrackers was born: A GPLed, CLI for doing simple text analysis.
 ### But Python NLTK!
 
 While I have played with the wonderful [Python Natural Language 
-Toolkit](http://www.nltk.org/), I am not a Pythonista. Python is a great 
-language, and I encourage friends who want to start coding to learn it. 
-That said, I see no reason to limit development of NLP tools to Python or any
-particular language.
+Toolkit](http://www.nltk.org/), I am not a Pythonista.
+[Python](https://www.python.org/) is a great  language, and I encourage friends
+who want to start coding to learn it. That said, I see no reason to limit
+development of NLP tools to Python or any particular language.
 
 I was first introduced to Haskell in about 2005 by a friend who was writing an
 HPSG grammar of Dutch in it. He told me that because of Haskell's rich,
@@ -154,12 +154,25 @@ currently defined here.
 ### Ops
 Operations on various types of text bop about in here, including Text, String,
 and the NG record type defined in DataTypes.
+ - Infixes.hs are infixes, often to obviate the need for backticking functions
+ - NG.hs contains operations based on the NG type
+   most current API.
+ - String.hs and Text.hs are based on the triply-nested lists, thus these are
+   deprecated modules.
+ - Pretty.hs is an output formatting module
 
 ### Parsers
 The parsers party in this module!
+ - Args.hs contains CLI argument handling
+ - Body.hs contains parsers for the body of a document
+ - Metadata.hs contains parsers for a document's metadata
 
 ### Quant
 The math operations live here!
+ - Count.hs houses operations for counting ngrams
+ - Dispersion.hs contains statistical functions for calculating means and
+   variances. The code in here is really old and quite inelegant.
+ - Stats.hs contains statistical operations for use on language (e.g. MI)
 
 ### Utilities
 Need some List and Tuple ops? Look no further! Not totally sure that Utilities
@@ -231,28 +244,6 @@ More major breaking API changes have been made:
  - Scripts to allow compilation and execution of a binary with profiling
    capabilities enabled. The scripts must be sourced for the functions to
    available. ngc-pure executes the binary without profiling.
-
-### Version 0.2.5
- - Return of multi-paragraph Parsing
-
-### Version 0.2.4
-
-Major, breaking API changes have been implemented!
-
- - All code has been refactored to use Data.Text as the basic
-   type of text representation. This includes processing functions,
-   parsers, and IO. However, older versions of String processing
-   functions are still included in the source but are not actually
-   called.
-
- - The CLI is currently only processing single paragraphs at a time
-   because of the difficulties associated with multiple possible
-   paragraph separators. Addressing this likely requires some way to
-   try parsers without consuming input. 
-
- - Rudimentary metadata parsing funcitonality
-
- - Expanded type system for metadata descriptions
 
 Future Versions
 ---
