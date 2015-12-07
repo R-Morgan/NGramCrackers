@@ -6,6 +6,7 @@ module NGramCrackers.DataTypes
 , ParaColl   (..)
 , SentColl   (..)
 , Count      (..)
+, MI         (..)
 , CrackerMap (..)
 , CrackerSet (..)
 , NG         (..)
@@ -56,7 +57,7 @@ type ParaColl a = [SentColl a]
 type SentColl a = [NG a]
 
 type Count = Int -- Useful for modules dealing with counts of phrasal structures
-type MI    = Double -- (pointwise) mutual information score
+type MI    = Maybe Double -- (pointwise) mutual information score
 
 type CrackerMap = M.Map (NG T.Text) Count
 type CrackerSet = S.Set (NG T.Text)
