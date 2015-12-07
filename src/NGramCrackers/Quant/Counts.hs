@@ -73,6 +73,11 @@ countElem m e = case M.lookup e m of
                   Just v  -> M.insert e (v + 1) m
                   Nothing -> M.insert e 1 m
 
+-- Notes on the why of Sets. Because of the way MI is calculated, the structure
+-- of the document must be preserved; however, one still needs the unique
+-- elements of the Document to to obtain counts for them
+
+
 {- Makes a set from a list of words-}
 wordSet :: [NG T.Text] -> CrackerSet
 -- Haven't used type synonym because it's not necessarily a Sentence collection
@@ -84,6 +89,9 @@ wordSetDoc = S.fromList . concatMap concat
 
 bigramSetDoc :: DocCol T.Text -> CrackerSet
 bigramSetDoc = S.fromList . concatMap bigrams . concat
+
+ngramSetDoc :: (SentColl T.Text -> SentColl T.Text) -> DocCol T.Text -> CrackerSet
+ngramSetDoc ngf = S.fromList . concatMap ngf . concat
 
 countWordSetElem :: CrackerSet -> DocCol T.Text -> [(NG T.Text, Count)]
 countWordSetElem lexSet doc = countWordSetElem' lexSet concattedDoc where
