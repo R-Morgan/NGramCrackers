@@ -51,12 +51,12 @@ tester = ngrams where
 -------------------------------------------------------------------------------
 -- Type Synonyms for health and happiness
 
-type DocCol a = [ParaColl a]
+type DocCol a   = [ParaColl a]
 type ParaColl a = [SentColl a]
 type SentColl a = [NG a]
 
-type Count = Int -- Useful for various modules dealing with counts of phrasal
-                 -- structures
+type Count = Int -- Useful for modules dealing with counts of phrasal structures
+type MI    = Double -- (pointwise) mutual information score
 
 type CrackerMap = M.Map (NG T.Text) Count
 type CrackerSet = S.Set (NG T.Text)
