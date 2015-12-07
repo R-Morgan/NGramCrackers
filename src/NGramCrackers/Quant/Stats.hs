@@ -33,11 +33,11 @@ ttrSet tokens = (typesTot, tokenTot, ratio)
                          -- Could this be done more efficiently w/Vector?
                          ratio    = typesTot / tokenTot
 
-bigramMIMap :: DocCol T.Text -> M.Map (NG T.Text) (Maybe Double)
+bigramMIMap :: DocCol T.Text -> M.Map (NG T.Text) MI
 bigramMIMap doc = M.fromList $ bigramMIRecurs bgSet doc where
                     bgSet = bigramSetDoc doc
 
-bigramMIRecurs :: S.Set (NG T.Text) -> DocCol T.Text -> [(NG T.Text, Maybe Double)]
+bigramMIRecurs :: CrackerSet -> DocCol T.Text -> [(NG T.Text, MI)]
 bigramMIRecurs bgSet doc | S.null bgSet       = []
                          | L.null doc         = []
                          | otherwise = (bg, mi) : 
@@ -45,14 +45,19 @@ bigramMIRecurs bgSet doc | S.null bgSet       = []
                            bg = S.findMin bgSet
                            mi = snd $ bigramMI bg doc
                            newSet = S.deleteMin bgSet
+                           -- reduces set, so that S.findMin works in the next
+                           -- iteration
 
-bigramMI :: NG T.Text -> DocCol T.Text -> (NG T.Text, Maybe Double)
+bigramMI :: NG T.Text -> DocCol T.Text -> (NG T.Text, MI)
 bigramMI bg doc = (bg, mutInf) where
                            concattedDoc = concatMap concat doc
                            mutInf = pMI bgFreq pW1 pW2 total
-                           wset   = wordSet concattedDoc
-                           bset   = bigramSetDoc doc
+                           --wset   = wordSet concattedDoc
+                           --bset   = bigramSetDoc doc
+                           -- Set of bigrams in a Doccol
                            wmap   = wcMap doc
+                           -- Frequency Map, necessary for looking up how often
+                           -- each word occurs in the document
                            bmap   = bigramMap doc
                            total  = (fromIntegral . length) concattedDoc
                            bgWC   = bigramWordsLookup bg wmap
@@ -60,7 +65,7 @@ bigramMI bg doc = (bg, mutInf) where
                            pW2    = (/total) <$> (fromIntegral <$> thrd bgWC)
                            bgFreq = M.lookup bg bmap
 
-pMI :: Maybe Int -> Maybe Double -> Maybe Double -> Double -> Maybe Double
+pMI :: Maybe Int -> Maybe Double -> Maybe Double -> Double -> MI
 pMI Nothing _ _ _ = Nothing
 pMI _ Nothing _ _ = Nothing
 pMI _ _ Nothing _ = Nothing
@@ -72,6 +77,7 @@ pMI' :: Int -> Double -> Double -> Double -> Double
 pMI' _ 0 _ _              = error "Divide by zero"
 pMI' _ _ 0 _              = error "Divide by zero"
 pMI' _ _ _ 0              = error "Divide by zero"
+pMI' 0 _ _ _              = 0
 pMI' bgFreq pW1 pW2 total = log $ count / (pW1 * pW2 * total)
                               where count    = fromIntegral bgFreq
 
